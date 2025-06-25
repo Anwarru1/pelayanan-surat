@@ -106,7 +106,8 @@ class PengajuanSuratController extends Controller
 
     public function userList()
     {
-        $ajukan = PengajuanSurat::with(['jenisSurat', 'pengguna'])->get();
+        $userId = Auth::id(); // ambil ID user yang login
+        $ajukan = PengajuanSurat::where('pengguna_id', $userId)->with(['jenisSurat', 'pengguna'])->get(); // pastikan relasi 'jenisSurat' dimuat
         return view('pengguna.list-surat', compact('ajukan'));
     }
 
