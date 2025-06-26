@@ -6,6 +6,7 @@ use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 
 class PenggunaController extends Controller
 {
@@ -29,7 +30,7 @@ class PenggunaController extends Controller
             'password'  => 'required|string',
             'nama'      => 'required|string',
             'alamat'    => 'required|string',
-            'j_kel'     => 'required|in:laki-laki,perempuan',
+            'j_kel'     => 'required|in:Laki-laki,Perempuan',
             'agama'     => 'required|in:Islam,Kristen,Katolik,Hindu,Buddha,Konghucu',
             'status'    => 'required|in:Kawin,Belum Kawin,Cerai Mati,Cerai Hidup',
             'pekerjaan' => 'required|string',
@@ -80,8 +81,10 @@ class PenggunaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $pengguna = Pengguna::findOrFail($id);
+        
         $request->validate([
-            'nik'       => 'required|string|unique:pengguna,nik,' . $id,
+            'nik'       => ['required', Rule::unique('pengguna', 'nik')->ignore($pengguna->id)],
             'nama'      => 'required|string',
             'alamat'    => 'required|string',
             'j_kel'     => 'required|in:Laki-laki,Perempuan',

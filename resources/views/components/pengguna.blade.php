@@ -29,14 +29,14 @@
                     <div class="form-group">
                         <label>Jenis Kelamin</label><br>
                         <div class="form-check form-check-inline mb-3">   
-                            <input class="form-check-input" type="radio" name="j_kel" id="inlineRadio1"
+                            <input class="form-check-input" type="radio" name="j_kel" id="Laki-laki"
                                 value="Laki-laki">
-                            <label class="form-check-label" for="inlineRadio1">Laki-laki</label>
+                            <label class="form-check-label" for="Laki-laki">Laki-laki</label>
                         </div>
                         <div class="form-check form-check-inline mb-3">
-                            <input class="form-check-input" type="radio" name="j_kel" id="inlineRadio2"
+                            <input class="form-check-input" type="radio" name="j_kel" id="Perempuan"
                                 value="Perempuan">
-                            <label class="form-check-label" for="inlineRadio2">Perempuan</label>
+                            <label class="form-check-label" for="Perempuan">Perempuan</label>
                         </div>
                     </div>
                     
