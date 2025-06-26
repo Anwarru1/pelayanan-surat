@@ -88,4 +88,19 @@ class AdminController extends Controller
         Admin::destroy($id);
         return redirect()->route('data-user.index')->with('success', 'Admin dihapus.');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('selected_ids');
+        
+        if (!is_array($ids) || empty($ids)) {
+            return back()->withErrors(['Tidak ada data yang dipilih untuk dihapus.']);
+        }
+
+        Admin::whereIn('id', $ids)->delete();
+
+        return back()->with('success', 'Data admin berhasil dihapus.');
+    }
+
+
 }

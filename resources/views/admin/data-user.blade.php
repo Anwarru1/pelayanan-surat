@@ -28,54 +28,43 @@
                                                 <button type="button" class="btn btn-primary ml-3 float-right" data-toggle="modal"
                                                 data-target="#tambahAdmin" data-whatever="@mdo">Tambah +</button>
                                                 <x-admin></x-admin>
-                                                <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                    id="actionMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false"> Action </button>
-                                                <div class="dropdown-menu" aria-labelledby="actionMenuButton">
-                                                    <a class="dropdown-item" href="#">Export</a>
-                                                    <a class="dropdown-item" href="#">Delete</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                </div>
+                                                <button class="btn btn-danger" type="button" title="Hapus terpilih"
+                                                    onclick="event.preventDefault(); if(confirm('Yakin hapus data terpilih?')) document.getElementById('bulkDeleteAdminForm').submit();">
+                                                    <i class="fe fe-trash-2"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- table -->
-                                    <table class="table datatables" id="adminTable">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th></th>
-                                                <th>Id</th>
-                                                <th>Nama</th>
-                                                <th>Password</th>
-                                                <th>Role</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($admins as $index => $admin)
+                                    <form id="bulkDeleteAdminForm" action="{{ route('data-user.admin.bulk-delete') }}" method="POST">
+                                        @csrf
+                                        <table class="table datatables" id="adminTable">
+                                            <thead class="thead-dark">
                                                 <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input">
-                                                            <label class="custom-control-label"></label>
-                                                        </div>
-                                                    </td>
-                                                    <td>{{ $admin->id }}</td>
-                                                    <td>{{ $admin->username }}</td>
-                                                    <td>{{ $admin->password }}</td>
-                                                    <th>{{ $admin->role }}</th>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#adminEdit{{ $admin->id }}">Edit</button>
-                                                        <x-edit-admin :admin="$admin" />
-                                                        <form action="{{ route('data-user.admin.destroy', $admin->id) }}" method="POST" style="display:inline;">
-                                                            @csrf @method('DELETE')
-                                                            <button onclick="return confirm('Hapus Admin ini?')" class="btn btn-sm btn-danger">Hapus</button>
-                                                        </form>  
-                                                    </td>
+                                                    <th><input type="checkbox" id="checkAllAdmin"></th>
+                                                    <th>Id</th>
+                                                    <th>Nama</th>
+                                                    <th>Password</th>
+                                                    <th>Role</th>
+                                                    <th>Action</th>
                                                 </tr>
-                                            @endforeach
-                                        </tbody>                                        
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($admins as $admin)
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="selected_ids[]" value="{{ $admin->id }}" class="admin-checkbox">
+                                                        </td>
+                                                        <td>{{ $admin->id }}</td>
+                                                        <td>{{ $admin->username }}</td>
+                                                        <td>{{ $admin->password }}</td>
+                                                        <td>{{ $admin->role }}</td>
+                                                        <td> ... </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </form>
 
                                 </div>
                             </div>
@@ -94,63 +83,60 @@
                                                 <button type="button" class="btn btn-primary ml-3 float-right" data-toggle="modal"
                                                 data-target="#storePengguna" data-whatever="@mdo">Tambah +</button>
                                                 <x-pengguna></x-pengguna>
-                                                <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                    id="actionMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false"> Action </button>
-                                                <div class="dropdown-menu" aria-labelledby="actionMenuButton">
-                                                    <a class="dropdown-item" href="#">Export</a>
-                                                    <a class="dropdown-item" href="#">Delete</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                </div>
+                                                <button class="btn btn-danger" type="button" title="Hapus terpilih"
+                                                    onclick="event.preventDefault(); if(confirm('Yakin hapus data terpilih?')) document.getElementById('bulkDeletePenggunaForm').submit();">
+                                                    <i class="fe fe-trash-2"></i>
+                                                </button>
+
                                             </div>
                                         </div>
                                     </div>
                                     <!-- table -->
-                                    <table class="table datatables" id="penggunaTable">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th></th>
-                                                <th>Id</th>
-                                                <th>Nama</th>
-                                                <th>NIK</th>
-                                                <th>Password</th>
-                                                <th>Jenis Kelamin</th>
-                                                <th>Alamat</th>
-                                                <th>TTL</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($penggunas as $pengguna)
+                                    <form id="bulkDeletePenggunaForm" action="{{ route('data-user.pengguna.bulk-delete') }}" method="POST">
+                                        @csrf
+                                        <table class="table datatables" id="penggunaTable">
+                                            <thead class="thead-dark">
                                                 <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input">
-                                                            <label class="custom-control-label"></label>
-                                                        </div>
-                                                    </td>
-                                                    <td>{{ $pengguna->id }}</td>
-                                                    <td>{{ $pengguna->nama }}</td>
-                                                    <td>{{ $pengguna->nik }}</td>
-                                                    <td>{{ Str::limit($pengguna->password, 10, '...') }}</td>
-                                                    <td>{{ $pengguna->j_kel }}</td>
-                                                    <td>{{ Str::limit($pengguna->alamat, 10, '...') }}</td>
-                                                    <td>{{ $pengguna->tmp_lahir }}, 
-                                                        {{ \Carbon\Carbon::parse($pengguna->tgl_lahir)->format('d-m-Y') }}
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editPengguna{{ $pengguna->id }}">Edit</button>
-                                                        <x-edit-pengguna :pengguna="$pengguna" />
-                                                        <form action="{{ route('data-user.pengguna.destroy', $pengguna->id) }}" method="POST" style="display:inline;">
-                                                            @csrf @method('DELETE')
-                                                            <button onclick="return confirm('Hapus Pengguna ini?')" class="btn btn-sm btn-danger">Hapus</button>
-                                                        </form>  
-                                                        </div>
-                                                    </td>
+                                                    <th><input type="checkbox" id="checkAllPengguna"></th>
+                                                    <th>Id</th>
+                                                    <th>Nama</th>
+                                                    <th>NIK</th>
+                                                    <th>Password</th>
+                                                    <th>Jenis Kelamin</th>
+                                                    <th>Alamat</th>
+                                                    <th>TTL</th>
+                                                    <th>Action</th>
                                                 </tr>
-                                            @endforeach
-                                        </tbody>                                        
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($penggunas as $pengguna)
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="selected_ids[]" value="{{ $pengguna->id }}" class="pengguna-checkbox">
+                                                        </td>
+                                                        <td>{{ $pengguna->id }}</td>
+                                                        <td>{{ $pengguna->nama }}</td>
+                                                        <td>{{ $pengguna->nik }}</td>
+                                                        <td>{{ Str::limit($pengguna->password, 10, '...') }}</td>
+                                                        <td>{{ $pengguna->j_kel }}</td>
+                                                        <td>{{ Str::limit($pengguna->alamat, 10, '...') }}</td>
+                                                        <td>{{ $pengguna->tmp_lahir }}, 
+                                                            {{ \Carbon\Carbon::parse($pengguna->tgl_lahir)->format('d-m-Y') }}
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editPengguna{{ $pengguna->id }}">Edit</button>
+                                                            <x-edit-pengguna :pengguna="$pengguna" />
+                                                            <form action="{{ route('data-user.pengguna.destroy', $pengguna->id) }}" method="POST" style="display:inline;">
+                                                                @csrf @method('DELETE')
+                                                                <button onclick="return confirm('Hapus Pengguna ini?')" class="btn btn-sm btn-danger">Hapus</button>
+                                                            </form>  
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>                                        
+                                        </table>
+                                    </form>
                                 </div>
                             </div>
                         </div> <!-- simple table -->
@@ -188,6 +174,14 @@
                 targets: [0, 8] // checkbox dan action
             }]
         });
+
+        $('#checkAllAdmin').click(function () {
+            $('.admin-checkbox').prop('checked', this.checked);
+        });
+        $('#checkAllPengguna').click(function () {
+            $('.pengguna-checkbox').prop('checked', this.checked);
+        });
+
     });
 </script>
 @endpush

@@ -70,8 +70,10 @@ class PenggunaController extends Controller
      */
     public function edit($id)
     {
+        $pengguna = Pengguna::findOrFail($id);
         return view('pengguna.edit', compact('pengguna'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -116,7 +118,7 @@ class PenggunaController extends Controller
      */
     public function destroy($id)
     {
-         Pengguna::destroy($id);
+        Pengguna::destroy($id);
         return redirect()->route('data-user.index')->with('success', 'Pengguna dihapus.');
     }
 
@@ -157,4 +159,19 @@ class PenggunaController extends Controller
 
         return redirect()->route('login.pengguna')->with('success', 'Akun berhasil dibuat. Silakan login.');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('selected_ids');
+        
+        if (!is_array($ids) || empty($ids)) {
+            return back()->withErrors(['Tidak ada data yang dipilih untuk dihapus.']);
+        }
+
+        Pengguna::whereIn('id', $ids)->delete();
+
+        return back()->with('success', 'Data admin berhasil dihapus.');
+    }
+
+
 }

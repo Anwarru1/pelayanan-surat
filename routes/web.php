@@ -75,8 +75,12 @@ Route::middleware('auth:admin')->group(function () {
         // User Data
         Route::prefix('data-user')->name('data-user.')->group(function () {
             Route::get('/', [AdminController::class, 'index'])->name('index');
+            Route::post('/admin/bulk-delete', [AdminController::class, 'bulkDelete'])->name('admin.bulk-delete');
+            Route::post('/pengguna/bulk-delete', [PenggunaController::class, 'bulkDelete'])->name('pengguna.bulk-delete');
             Route::resource('admin', AdminController::class)->except(['index']);
             Route::resource('pengguna', PenggunaController::class)->except(['index']);
+
+            
         });
 
         // Jenis Surat
