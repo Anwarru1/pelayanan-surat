@@ -129,7 +129,9 @@ class PengajuanSuratController extends Controller
     public function tolak(Request $request, PengajuanSurat $pengajuanSurat)
     {
         $request->validate([
-            'keterangan' => 'required|string|max:255'
+            'keterangan'          => 'required|string|max:255'
+        ], [
+            'keterangan.required' => 'Alasan Penolakan wajib diisi'
         ]);
 
         $pengajuanSurat->update([
@@ -173,7 +175,9 @@ class PengajuanSuratController extends Controller
     public function isiNomorUrut(Request $request, PengajuanSurat $pengajuanSurat)
     {
         $request->validate([
-            'nomor_urutan' => 'required|numeric',
+            'nomor_urutan'          => 'required|numeric',
+        ], [
+            'nomor_urutan.required' => 'Nomor Surat wajib diisi',
         ]);
 
         $pengajuanSurat->update([

@@ -32,7 +32,7 @@ class HomeController extends Controller
             'suratSelesai'     => $suratSelesai,
             'suratDitolak'     => $suratDitolak,
             'suratDiproses'    => $suratDiproses,
-            'pengajuanTerbaru' => $pengajuanTerbaru
+            'pengajuanTerbaru' => $pengajuanTerbaru,
         ]);
     
     }
@@ -52,4 +52,6 @@ class HomeController extends Controller
 
         return redirect()->back()->with('success', 'Pesan berhasil dikirim.');
     }
+
+
 }

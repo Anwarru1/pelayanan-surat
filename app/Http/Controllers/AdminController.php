@@ -34,9 +34,9 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-            'role'     => 'required',
+            'username' => 'required|string',
+            'password' => 'required|min:6',
+            'role'     => 'required|in:admin,kepala desa',
         ]);
 
         Admin::create([

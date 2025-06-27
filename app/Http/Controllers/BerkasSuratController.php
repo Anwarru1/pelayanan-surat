@@ -130,6 +130,8 @@ class BerkasSuratController extends Controller
     {
         $request->validate([
             'keterangan' => 'required|string|max:255'
+        ], [
+            'keterangan.required' => 'Alasan Penolakan wajib diisi'
         ]);
 
         // Update status pengajuan menjadi ditolak dan simpan alasan
@@ -141,9 +143,9 @@ class BerkasSuratController extends Controller
 
         // Hapus berkas jika diperlukan (opsional)
         // Storage::delete('public/' . $berkas->file_surat);
-        $berkas->delete(); // Hapus berkas surat dari tabel
+        //$berkas->delete(); // Hapus berkas surat dari tabel
 
-        return back()->with('success', 'Pengajuan surat berhasil ditolak dan berkas dihapus.');
+        return back()->with('success', 'Pengajuan surat berhasil ditolak');
     }
 
 

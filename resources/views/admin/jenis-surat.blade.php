@@ -27,12 +27,6 @@
                           <div class="dropdown float-right">
                             <button type="button" class="btn btn-primary ml-3 float-right" data-toggle="modal" data-target="#tambahJenisSurat" data-whatever="@mdo">Tambah +</button>
                             <x-tambah-jenis-surat />
-                            <button class="btn btn-dark dropdown-toggle" type="button" id="actionMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action </button>
-                            <div class="dropdown-menu" aria-labelledby="actionMenuButton">
-                              <a class="dropdown-item" href="#">Export</a>
-                              <a class="dropdown-item" href="#">Delete</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
                           </div>
                         </div>
                       </div>

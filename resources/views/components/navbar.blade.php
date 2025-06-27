@@ -19,32 +19,37 @@
     </li>
 
     <!-- Dropdown Pesan -->
-    <li class="nav-item dropdown d-flex align-items-center mx-2">
-      <a class="nav-link dropdown-toggle text-muted pr-0" href="#" role="button" data-toggle="dropdown">
-        <i class="fe fe-mail"></i>
-        @if($pesanBaru->count() > 0)
-          <span class="dot dot-md bg-danger"></span>
-        @endif
-      </a>
+    @auth('admin')
+      @if(Route::has('admin.pesan'))
+        <li class="nav-item dropdown d-flex align-items-center mx-2">
+          <a class="nav-link dropdown-toggle text-muted pr-0" href="#" role="button" data-toggle="dropdown">
+            <i class="fe fe-mail"></i>
+            @if($pesanBaru->count() > 0)
+              <span class="dot dot-md bg-danger"></span>
+            @endif
+          </a>
 
-      <div class="dropdown-menu dropdown-menu-right">
-        <h6 class="dropdown-header">Pesan Terbaru</h6>
-        @forelse($pesanBaru as $pesan)
-          <a class="dropdown-item" href="{{ route('admin.pesan') }}">
-            <strong>{{ $pesan->pengguna->nama }}</strong>: 
-            {{ \Illuminate\Support\Str::limit($pesan->isi, 30) }}
-          </a>
-        @empty
-          <a class="dropdown-item text-muted" href="{{ route('admin.pesan') }}">
-            Tidak ada pesan baru
-          </a>
-        @endforelse
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item text-center text-primary" href="{{ route('admin.pesan') }}">
-          Lihat Semua Pesan
-        </a>
-      </div>
-    </li>
+          <div class="dropdown-menu dropdown-menu-right">
+            <h6 class="dropdown-header">Pesan Terbaru</h6>
+            @forelse($pesanBaru as $pesan)
+              <a class="dropdown-item" href="{{ route('admin.pesan') }}">
+                <strong>{{ $pesan->pengguna->nama }}</strong>: 
+                {{ \Illuminate\Support\Str::limit($pesan->isi, 30) }}
+              </a>
+            @empty
+              <a class="dropdown-item text-muted" href="{{ route('admin.pesan') }}">
+                Tidak ada pesan baru
+              </a>
+            @endforelse
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-center text-primary" href="{{ route('admin.pesan') }}">
+              Lihat Semua Pesan
+            </a>
+          </div>
+        </li>
+      @endif
+    @endauth
+
 
     <!-- Logout -->
     <li class="nav-item mx-2 d-flex align-items-center">

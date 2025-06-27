@@ -29,9 +29,11 @@ class JenisSuratController extends Controller
             'template'           => 'required|file|mimes:docx|max:2048',
             'keterangan_default' => 'nullable|string',
         ], [
-            'syarat.required'    => 'Minimal harus ada 1 syarat',
-            'syarat.*.required'  => 'Setiap syarat tidak boleh kosong',
-            'template.mimes'     => 'Template harus berupa file .docx',
+            'kode_surat.required'       => 'Kode Surat wajib diisi',
+            'nama_jenis_surat.required' => 'Nama Jenis Surat wajib diisi',
+            'syarat.required'           => 'Minimal harus ada 1 syarat',
+            'syarat.*.required'         => 'Setiap syarat tidak boleh kosong',
+            'template.mimes'            => 'Template harus berupa file .docx',
         ]);
 
         $syarat = $request->syarat;

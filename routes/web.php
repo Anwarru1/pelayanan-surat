@@ -70,7 +70,7 @@ Route::middleware('auth:admin')->group(function () {
             Route::post('/nomor-urut', 'isiNomorUrut')->name('pengajuan-surat.nomor-urut');
             Route::post('/terima', 'terima')->name('pengajuan-surat.terima');
         });
-        Route::get('/pengajuan-surat/{pengajuan}/preview', [PengajuanSuratController::class, 'previewDocx'])->name('pengajuan-surat.preview');
+        Route::get('/pengajuan-surat/{pengajuan}/preview', [PengajuanSuratController::class, 'previewPdf'])->name('pengajuan-surat.preview');
 
         // User Data
         Route::prefix('data-user')->name('data-user.')->group(function () {

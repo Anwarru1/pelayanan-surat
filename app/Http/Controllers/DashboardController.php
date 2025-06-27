@@ -9,6 +9,7 @@ use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\PesanPengguna;
 
 class DashboardController extends Controller
@@ -60,5 +61,19 @@ class DashboardController extends Controller
         $pesan->update(['is_read' => true]);
 
         return redirect()->back()->with('success', 'Pesan ditandai sebagai dibaca.');
+    }
+
+    public function balasPesan(Request $request, $id)
+    {
+        $request->validate([
+            'balasan' => 'required|string',
+        ]);
+
+        $pesan = PesanPengguna::findOrFail($id);
+        $pesan->update([
+            'balasan' => $request->balasan,
+        ]);
+
+        return redirect()->back()->with('success', 'Pesan berhasil dibalas.');
     }
 }

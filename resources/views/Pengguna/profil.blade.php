@@ -102,7 +102,7 @@
                   @error('new_password')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
-                  <small class="form-text text-muted">Minimal 8 karakter, kombinasi huruf, angka & simbol.</small>
+                  <small class="form-text text-muted">Minimal 8 karakter.</small>
                 </div>
 
                 <div class="form-group">
@@ -164,6 +164,10 @@
                   <option value="Belum Kawin" {{ Auth::user()->status == 'Belum Kawin' ? 'selected' : '' }}>Belum Kawin</option>
                 </select>
               </div>
+            </div>
+            <div class="form-group">
+              <label for="nama">Nomor HP</label>
+              <input type="text" id="nomor_hp" name="nomor_hp" class="form-control" value="{{ Auth::user()->nomor_hp }}" required>
             </div>
           </div>
 

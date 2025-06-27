@@ -67,7 +67,7 @@
               <form action="{{ route('pengajuan-surat.nomor-urut', $p->id) }}" method="POST">
                   @csrf
                   <label>Nomor Urut Surat</label>
-                  <input type="number" name="nomor_urutan" class="form-control" value="{{ $p->nomor_urutan }}">
+                  <input type="number" name="nomor_urutan" class="form-control" value="{{ $p->nomor_urutan }}" id="nomorUrut{{ $p->id }}">
                   <button type="submit" class="btn btn-sm btn-primary mt-2">Simpan</button>
               </form>
             </td>
@@ -78,20 +78,26 @@
         <div class="mt-3">
           @php
               $berkas = \App\Models\BerkasSurat::where('pengajuan_surat_id', $p->id)->first();
+              $nomorFilled = !empty($p->nomor_urutan);
           @endphp
+
           @if ($berkas && $berkas->file_surat)
             <a href="{{ asset('storage/' . $berkas->file_surat) }}" class="btn btn-info" target="_blank">
               <i class="fe fe-eye"></i> Lihat Surat
             </a>
           @endif
-          <a href="{{ route('pengajuan-surat.preview', $p->id) }}" class="btn btn-secondary" target="_blank">
+          {{-- Disable tombol jika belum ada nomor urut --}}
+          <a href="{{ route('pengajuan-surat.preview', $p->id) }}" 
+            class="btn btn-secondary {{ !$nomorFilled ? 'disabled' : '' }}" 
+            {{ !$nomorFilled ? 'aria-disabled=true' : '' }} 
+            id="btnPreview{{ $p->id }}">
             <i class="fe fe-file-text"></i> Generate Surat
           </a>
 
           
           @if ($p->status === 'menunggu')
             <button class="btn btn-danger" onclick="showForm('tolakForm{{ $p->id }}')">Tolak</button>
-            <button class="btn btn-success" onclick="showForm('terimaForm{{ $p->id }}')">Terima</button>
+            <button class="btn btn-success" onclick="validateTerima('{{ $p->id }}')" id="btnTerimaTrigger{{ $p->id }}">Terima</button>
           @endif
         </div>
 
@@ -122,10 +128,18 @@
 <script>
   function showForm(id) {
     const tolak = document.getElementById('tolakForm{{ $p->id }}');
-    const terima = document.getElementById('terimaForm{{ $p->id }}');
+    const terima = document.getElementById('terimaForm{{ $p->id }}').classList.add('d-none');
     tolak.classList.add('d-none');
-    terima.classList.add('d-none');
     document.getElementById(id).classList.remove('d-none');
+  }
+
+  function validateTerima(id) {
+    const nomorInput = document.getElementById('nomorUrut' + id);
+    if (!nomorInput.value.trim()) {
+      alert('Silakan isi nomor urutan surat terlebih dahulu sebelum menerima.');
+    } else {
+      showForm('terimaForm' + id);
+    }
   }
 
   // Auto show modal if session has 'modal_id'

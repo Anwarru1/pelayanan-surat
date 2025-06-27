@@ -59,9 +59,12 @@
                             <td>
                               @if($berkas->pengajuanSurat && $berkas->pengajuanSurat->status == 'diterima')
                                 <span class="badge badge-success">Selesai</span>
+                              @elseif($berkas->pengajuanSurat && $berkas->pengajuanSurat->status == 'ditolak')
+                                <span class="badge badge-danger">Ditolak</span>
                               @else
                                 <span class="badge badge-info">Diproses</span>
                               @endif
+
                             </td>
                             <td>
                               @if ($berkas->pengajuanSurat->status === 'diproses')

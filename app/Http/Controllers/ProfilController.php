@@ -44,8 +44,11 @@ class ProfilController extends Controller
             'new_password'     => [
                 'required',
                 'confirmed',
-                Password::min(8)
+                Password::min(6)
             ],
+        ], [
+            'current_password.required' => 'Password lama wajib diisi',
+            'new_password.required' => 'Password baru wajib diisi'
         ]);
 
         $user = Auth::user();

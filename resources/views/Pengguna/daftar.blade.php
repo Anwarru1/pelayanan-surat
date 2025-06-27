@@ -39,79 +39,109 @@
             <div class="text-center mb-4">
               <h3>Form Pendaftaran Pengguna</h3>
             </div>
-            <form action="{{ route('pengguna.register.store') }}" method="POST">
+            <form action="{{ route('pengguna.register.store') }}" method="POST" id="formDaftarPengguna">
               @csrf
 
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label>Nama</label>
-                  <input type="text" name="nama" class="form-control" required>
+                  <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" >
+                  @error('nama')
+                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                  @enderror
                 </div>
                 <div class="form-group col-md-6">
                   <label>NIK</label>
-                  <input type="text" name="nik" class="form-control" required>
+                  <input type="text" name="nik" class="form-control @error('nik') is-invalid @enderror"   >
+                  @error('nik')
+                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                  @enderror
                 </div>
               </div>
 
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label>Password</label>
-                  <input type="password" name="password" class="form-control" required>
+                  <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"   >
+                  @error('password')
+                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                  @enderror
                 </div>
                 <div class="form-group col-md-6">
                   <label>Konfirmasi Password</label>
-                  <input type="password" name="password_confirmation" class="form-control" required>
+                  <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror"   >
+                  @error('password_confirmation')
+                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                  @enderror
                 </div>
               </div>
 
               <div class="form-group">
                 <label>Jenis Kelamin</label><br>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="j_kel" id="laki" value="Laki-laki" required>
+                  <input class="form-check-input @error('j_kel') is-invalid @enderror" type="radio" name="j_kel" id="laki" value="Laki-laki"   >
                   <label class="form-check-label" for="laki">Laki-laki</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="j_kel" id="perempuan" value="Perempuan" required>
+                  <input class="form-check-input @error('j_kel') is-invalid @enderror" type="radio" name="j_kel" id="perempuan" value="Perempuan"   >
                   <label class="form-check-label" for="perempuan">Perempuan</label>
                 </div>
+                @error('j_kel')
+                  <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                @enderror
               </div>
 
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label>Status</label>
-                  <select name="status" class="custom-select" required>
+                  <select name="status" class="custom-select @error('status') is-invalid @enderror"   >
                     <option value="" disabled selected>Pilih Status</option>
                     <option value="Kawin">Kawin</option>
                     <option value="Belum Kawin">Belum Kawin</option>
                     <option value="Cerai Mati">Cerai Mati</option>
                     <option value="Cerai Hidup">Cerai Hidup</option>
                   </select>
+                  @error('status')
+                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                  @enderror
                 </div>
                 <div class="form-group col-md-6">
                   <label>Nomor HP</label>
-                  <input type="text" name="nomor_hp" class="form-control" required>
+                  <input type="text" name="nomor_hp" class="form-control @error('nomor_hp') is-invalid @enderror"   >
                 </div>
+                @error('nomor_hp')
+                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                @enderror
               </div>
 
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label>Tempat Lahir</label>
-                  <input type="text" name="tmp_lahir" class="form-control" required>
+                  <input type="text" name="tmp_lahir" class="form-control @error('tmp_lahir') is-invalid @enderror"   >
+                  @error('tmp_lahir')
+                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                  @enderror
                 </div>
                 <div class="form-group col-md-6">
                   <label>Tanggal Lahir</label>
-                  <input type="date" name="tgl_lahir" class="form-control" required>
+                  <input type="date" name="tgl_lahir" class="form-control @error('tgl_lahir') is-invalid @enderror"   >
+                  @error('tgl_lahir')
+                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                  @enderror
                 </div>
               </div>
 
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label>Pekerjaan</label>
-                  <input type="text" name="pekerjaan" class="form-control" required>
+                  <input type="text" name="pekerjaan" class="form-control @error('pekerjaan') is-invalid @enderror"   >
+                  @error('pekerjaan')
+                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                  @enderror
                 </div>
                 <div class="form-group col-md-6">
                   <label>Agama</label>
-                  <select name="agama" class="custom-select" required>
+                  <select name="agama" class="custom-select @error('agama') is-invalid @enderror"   >
                     <option value="" disabled selected>Pilih Agama</option>
                     <option value="Islam">Islam</option>
                     <option value="Kristen">Kristen</option>
@@ -120,12 +150,18 @@
                     <option value="Buddha">Buddha</option>
                     <option value="Konghucu">Konghucu</option>
                   </select>
+                  @error('agama')
+                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                  @enderror
                 </div>
               </div>
 
               <div class="form-group">
                 <label>Alamat</label>
-                <textarea name="alamat" class="form-control" required></textarea>
+                <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror"   ></textarea>
+                @error('alamat')
+                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                @enderror
               </div>
 
               <button type="submit" class="btn btn-primary btn-block">Daftar</button>
@@ -148,5 +184,82 @@
   <script src="js/config.js"></script>
   <script src="js/apps.js"></script>
 </body>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('formDaftarPengguna');
+    if (!form) return;
+
+    const fieldLabels = {
+        nik: 'NIK',
+        password: 'Password',
+        nama: 'Nama',
+        alamat: 'Alamat',
+        j_kel: 'Jenis Kelamin',
+        agama: 'Agama',
+        status: 'Status',
+        pekerjaan: 'Pekerjaan',
+        nomor_hp: 'Nomor HP',
+        tmp_lahir: 'Tempat Lahir',
+        tgl_lahir: 'Tanggal Lahir'
+    };
+
+    form.addEventListener('submit', function (e) {
+        let valid = true;
+
+        // Bersihkan error lama
+        form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+        form.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
+
+        Object.keys(fieldLabels).forEach(field => {
+            const el = form.querySelector(`[name="${field}"]`);
+            let isInvalid = false;
+
+            if (!el) return;
+
+            if (el.type === 'radio') {
+                const checked = form.querySelector(`[name="${field}"]:checked`);
+                if (!checked) isInvalid = true;
+            } else if (!el.value.trim()) {
+                isInvalid = true;
+            }
+
+            if (isInvalid) {
+                valid = false;
+
+                const label = fieldLabels[field];
+                const errorText = `${label} wajib diisi`;
+
+                if (el.type === 'radio') {
+                    const radios = form.querySelectorAll(`[name="${field}"]`);
+                    radios.forEach(radio => radio.classList.add('is-invalid'));
+
+                    const group = el.closest('.form-group');
+                    if (group && !group.querySelector('.invalid-feedback')) {
+                        const feedback = document.createElement('div');
+                        feedback.className = 'invalid-feedback d-block';
+                        feedback.innerText = errorText;
+                        group.appendChild(feedback);
+                    }
+                } else {
+                    el.classList.add('is-invalid');
+                    const feedback = document.createElement('div');
+                    feedback.className = 'invalid-feedback';
+                    feedback.innerText = errorText;
+                    el.parentNode.appendChild(feedback);
+                }
+            }
+        });
+
+        if (!valid) {
+            e.preventDefault(); // Hentikan submit jika tidak valid
+        }
+    });
+});
+</script>
+
+
+
+
 
 </html>

@@ -69,4 +69,9 @@ class LaporanController extends Controller
 
         return $query->get();
     }
+
+    public function exportExcel(Request $request)
+    {
+        return Excel::download(new LaporanExport($request), 'laporan_surat.xlsx');
+    }
 }

@@ -26,8 +26,8 @@ class PenggunaController extends Controller
     {
         //validasi
         $request->validate([
-            'nik'       => 'required|string|unique:pengguna',
-            'password'  => 'required|string',
+            'nik'       => 'required|digits:16|unique:pengguna',
+            'password'  => 'required|string|min:6',
             'nama'      => 'required|string',
             'alamat'    => 'required|string',
             'j_kel'     => 'required|in:Laki-laki,Perempuan',
@@ -134,7 +134,7 @@ class PenggunaController extends Controller
     {
         $request->validate([
             'nama'      => 'required|string|max:100',
-            'nik'       => 'required|string|max:20|unique:pengguna',
+            'nik'       => 'required|string|digits:16|unique:pengguna',
             'password'  => 'required|min:6|confirmed',
             'alamat'    => 'required|string|max:255',
             'tgl_lahir' => 'required|date',
@@ -144,6 +144,20 @@ class PenggunaController extends Controller
             'nomor_hp'  => 'required|string',
             'j_kel'     => 'required|in:Laki-laki,Perempuan',
             'pekerjaan' => 'required|string|max:100',
+        ], [
+            'nik.required'       => 'NIK wajib diisi.',
+            'nik.digits'         => 'NIK harus terdiri dari 16 digit.',
+            'password.required'  => 'Password wajib diisi.',
+            'password.min'       => 'Password minimal 6 karakter.',
+            'nama.required'      => 'Nama wajib diisi',
+            'alamat.required'    => 'Alamat wajib disi',
+            'j_kel.required'     => 'Jenis Kelamin wajib disi',
+            'agama.required'     => 'Agama wajib disi',
+            'status.required'    => 'Status wajib disi',
+            'pekerjaan.required' => 'Pekerjaan wajib disi',
+            'nomor_hp.required'  => 'Nomor HP wajib disi',
+            'tmp_lahir.required' => 'Tempat Lahir wajib disi',
+            'tgl_lahir.required' => 'Tanggal Lahir wajib disi',
         ]);
 
         Pengguna::create([
