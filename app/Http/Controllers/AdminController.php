@@ -6,18 +6,18 @@ use App\Models\Admin;
 use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {   
-        $admins = Admin::all();
-        $penggunas = Pengguna::all();
 
-        return view('admin.data-user', compact('admins', 'penggunas'));
+        return view('admin.data-user');
     }
 
     /**
@@ -100,6 +100,22 @@ class AdminController extends Controller
         Admin::whereIn('id', $ids)->delete();
 
         return back()->with('success', 'Data admin berhasil dihapus.');
+    }
+
+        public function ajaxAdmin(Request $request)
+    {
+        Log::info('Masuk ajaxAdmin'); // debug
+        if ($request->ajax()) {
+            $data = Admin::select(['id', 'username', 'password', 'role']);
+
+            return DataTables::of($data)
+                ->addColumn('checkbox', fn($row) => '<input type="checkbox" class="admin-checkbox" value="'.$row->id.'">')
+                ->addColumn('action', fn($row) => '<button class="btn btn-sm btn-primary">Edit</button>')
+                ->rawColumns(['checkbox', 'action'])
+                ->make(true);
+        }
+
+        return response()->json(['message' => 'Bukan AJAX'], 400);
     }
 
 

@@ -20,7 +20,7 @@ class PengajuanSuratController extends Controller
     public function index()
     {
         \Carbon\Carbon::setLocale('id');
-        $pengajuan = PengajuanSurat::with(['jenisSurat', 'pengguna'])->get();
+        $pengajuan = PengajuanSurat::with(['jenisSurat', 'pengguna'])->latest()->get();
         return view('admin.pengajuan-surat', compact('pengajuan'));
     }
 

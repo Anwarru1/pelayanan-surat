@@ -46,7 +46,7 @@
                                 <label class="custom-control-label"></label>
                               </div>
                             </td>
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $pengajuan->count() - $loop->index }}</td>
                             <td>{{ $p->jenisSurat->nama_jenis_surat }}</td>
                             <td>{{ $p->pengguna->nama }}</td>
                             <td>{{ \Carbon\Carbon::parse($p->tanggal)->translatedFormat('l, d F Y') }}</td>

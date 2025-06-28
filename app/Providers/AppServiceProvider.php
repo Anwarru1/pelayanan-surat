@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('components.pengguna', 'pengguna');
         Blade::component('components.edit-admin', 'editAdmin');
         Blade::component('components.edit-pengguna', 'editPengguna');
+        Paginator::useBootstrap(); // atau useTailwind()
     }
 }

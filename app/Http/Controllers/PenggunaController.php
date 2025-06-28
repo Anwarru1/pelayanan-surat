@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class PenggunaController extends Controller
 {
@@ -14,6 +16,24 @@ class PenggunaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+    // Data pengguna
+public function ajaxPengguna(Request $request)
+{
+    if ($request->ajax()) {
+        return DataTables::of(Pengguna::query())
+            ->addColumn('checkbox', fn($row) => '<input type="checkbox" name="selected_ids[]" value="'.$row->id.'" class="pengguna-checkbox">')
+            ->addColumn('alamat', fn($row) => Str::limit($row->alamat, 10, '...'))
+            ->addColumn('password', fn($row) => Str::limit($row->password, 10, '...'))
+            ->addColumn('ttl', fn($row) => $row->tmp_lahir . ', ' . \Carbon\Carbon::parse($row->tgl_lahir)->format('d-m-Y'))
+            ->addColumn('action', function($row){
+                return view('components.pengguna-action', compact('row'))->render();
+            })
+            ->rawColumns(['checkbox', 'action'])
+            ->make(true);
+    }
+}
+
     public function create()
     {
         return view('pengguna.create');

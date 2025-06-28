@@ -17,15 +17,15 @@
     <link rel="stylesheet" href="{{ asset('css/uppy.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.steps.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.timepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ asset('css/quill.snow.css') }}">
     <link rel="stylesheet" href="{{ asset('css/daterangepicker.css') }}">
+    <!-- DataTables Bootstrap 4 -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="{{ asset('css/app-light.css') }}" id="lightTheme">
     <link rel="stylesheet" href="{{ asset('css/app-dark.css') }}" id="darkTheme" disabled>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @livewireStyles
   </head>
-  @stack('scripts')
   <body class="vertical  light  ">
     <div class="wrapper">
       <!--Navbar-->
@@ -40,6 +40,7 @@
         {{ $slot }}
       <!--End Content-->
     </div> <!-- .wrapper -->
+    @livewireScripts
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/moment.min.js') }}"></script>
@@ -56,11 +57,10 @@
     <script src="{{ asset('js/datamaps.custom.js') }}"></script>
     <script src="{{ asset('js/Chart.min.js') }}"></script>
 
-    <!-- Berkas Surat -->
-    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
-
     <!-- Data User -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
     <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('js/jquery.steps.min.js') }}"></script>
@@ -310,5 +310,7 @@
       gtag('js', new Date());
       gtag('config', 'UA-56159088-1');
     </script>
+    @stack('scripts')
+    
   </body>
 </html>
