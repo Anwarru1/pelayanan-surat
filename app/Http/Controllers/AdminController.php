@@ -102,21 +102,5 @@ class AdminController extends Controller
         return back()->with('success', 'Data admin berhasil dihapus.');
     }
 
-        public function ajaxAdmin(Request $request)
-    {
-        Log::info('Masuk ajaxAdmin'); // debug
-        if ($request->ajax()) {
-            $data = Admin::select(['id', 'username', 'password', 'role']);
-
-            return DataTables::of($data)
-                ->addColumn('checkbox', fn($row) => '<input type="checkbox" class="admin-checkbox" value="'.$row->id.'">')
-                ->addColumn('action', fn($row) => '<button class="btn btn-sm btn-primary">Edit</button>')
-                ->rawColumns(['checkbox', 'action'])
-                ->make(true);
-        }
-
-        return response()->json(['message' => 'Bukan AJAX'], 400);
-    }
-
 
 }

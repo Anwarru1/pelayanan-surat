@@ -44,7 +44,7 @@ class AdminSearch extends Component
             $this->selectAllCheckbox = false;
 
             // ✅ Perbaikan dispatchBrowserEvent
-            $this->dispatch('show-success', message: 'Data admin berhasil dihapus.');
+            $this->dispatch('show-success', message: 'Data admin yang dipilih berhasil dihapus.');
 
         }
     }

@@ -4,6 +4,11 @@
 
         <h1 class="h6 text-center mb-3">Login</h1>
 
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul class="mb-0">

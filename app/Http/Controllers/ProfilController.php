@@ -25,6 +25,7 @@ class ProfilController extends Controller
             'alamat'    => 'required|string|max:255',
             'status'    => 'required|in:Kawin,Belum Kawin',
             'pekerjaan' => 'required|string|max:100',
+            'nomor_hp'  => 'required|numeric',
         ]);
 
         $user->update($request->only([
@@ -32,6 +33,7 @@ class ProfilController extends Controller
             'alamat',
             'status',
             'pekerjaan',
+            'nomor_hp',
         ]));
 
         return back()->with('success', 'Profil berhasil diperbarui');

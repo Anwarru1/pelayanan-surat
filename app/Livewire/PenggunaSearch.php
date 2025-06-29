@@ -40,7 +40,7 @@ class PenggunaSearch extends Component
         Pengguna::whereIn('id', $this->selectedPenggunas)->delete();
         $this->selectedPenggunas = [];
         $this->selectAllCheckbox = false;
-        $this->dispatch('show-success', message: 'Data pengguna berhasil dihapus.');
+        $this->dispatch('show-success', message: 'Data pengguna yang dipilih berhasil dihapus.');
     }
 
     public function render()

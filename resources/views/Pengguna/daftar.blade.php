@@ -124,7 +124,7 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label>Tanggal Lahir</label>
-                  <input type="date" name="tgl_lahir" class="form-control @error('tgl_lahir') is-invalid @enderror"   >
+                  <input type="text" id="tgl_lahir" name="tgl_lahir" class="form-control @error('tgl_lahir') is-invalid @enderror" placeholder="dd-mm-yyyy">
                   @error('tgl_lahir')
                     <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                   @enderror
@@ -254,6 +254,33 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!valid) {
             e.preventDefault(); // Hentikan submit jika tidak valid
         }
+    });
+});
+
+$(function() {
+    $('#tgl_lahir').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        autoUpdateInput: false,
+        locale: {
+            format: 'DD-MM-YYYY',
+            daysOfWeek: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+            monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                         'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+            firstDay: 1,
+            applyLabel: 'Pilih',
+            cancelLabel: 'Batal'
+        }
+    });
+
+    // Isi input hanya saat pengguna memilih tanggal
+    $('#tgl_lahir').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('DD-MM-YYYY'));
+    });
+
+    // Bersihkan input jika dibatalkan
+    $('#tgl_lahir').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
     });
 });
 </script>

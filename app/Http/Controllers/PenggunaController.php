@@ -18,22 +18,6 @@ class PenggunaController extends Controller
      */
 
     // Data pengguna
-public function ajaxPengguna(Request $request)
-{
-    if ($request->ajax()) {
-        return DataTables::of(Pengguna::query())
-            ->addColumn('checkbox', fn($row) => '<input type="checkbox" name="selected_ids[]" value="'.$row->id.'" class="pengguna-checkbox">')
-            ->addColumn('alamat', fn($row) => Str::limit($row->alamat, 10, '...'))
-            ->addColumn('password', fn($row) => Str::limit($row->password, 10, '...'))
-            ->addColumn('ttl', fn($row) => $row->tmp_lahir . ', ' . \Carbon\Carbon::parse($row->tgl_lahir)->format('d-m-Y'))
-            ->addColumn('action', function($row){
-                return view('components.pengguna-action', compact('row'))->render();
-            })
-            ->rawColumns(['checkbox', 'action'])
-            ->make(true);
-    }
-}
-
     public function create()
     {
         return view('pengguna.create');
@@ -54,7 +38,7 @@ public function ajaxPengguna(Request $request)
             'agama'     => 'required|in:Islam,Kristen,Katolik,Hindu,Buddha,Konghucu',
             'status'    => 'required|in:Kawin,Belum Kawin,Cerai Mati,Cerai Hidup',
             'pekerjaan' => 'required|string',
-            'nomor_hp'  => 'required|string|unique:pengguna',
+            'nomor_hp'  => 'required|numeric|unique:pengguna',
             'tmp_lahir' => 'required|string',
             'tgl_lahir' => 'required|date',
         ]);
@@ -111,7 +95,7 @@ public function ajaxPengguna(Request $request)
             'agama'     => 'required|in:Islam,Kristen,Katolik,Hindu,Buddha,Konghucu',
             'status'    => 'required|in:Kawin,Belum Kawin,Cerai Mati,Cerai Hidup',
             'pekerjaan' => 'required|string',
-            'nomor_hp'  => 'required|string',
+            'nomor_hp'  => 'required|numeric',
             'tmp_lahir' => 'required|string',
             'tgl_lahir' => 'required|date',
         ]);
@@ -152,16 +136,17 @@ public function ajaxPengguna(Request $request)
 
     public function register(Request $request)
     {
+        \Carbon\Carbon::setLocale('id');
         $request->validate([
             'nama'      => 'required|string|max:100',
-            'nik'       => 'required|string|digits:16|unique:pengguna',
+            'nik'       => 'required|numeric|digits:16|unique:pengguna',
             'password'  => 'required|min:6|confirmed',
             'alamat'    => 'required|string|max:255',
             'tgl_lahir' => 'required|date',
             'tmp_lahir' => 'required|string|max:100',
             'agama'     => 'required|in:Islam,Kristen,Katolik,Hindu,Buddha,Konghucu',
             'status'    => 'required|in:Kawin,Belum Kawin,Cerai Mati,Cerai Hidup',
-            'nomor_hp'  => 'required|string',
+            'nomor_hp'  => 'required|numeric',
             'j_kel'     => 'required|in:Laki-laki,Perempuan',
             'pekerjaan' => 'required|string|max:100',
         ], [
@@ -185,7 +170,7 @@ public function ajaxPengguna(Request $request)
             'nik'       => $request->nik,
             'password'  => Hash::make($request->password),
             'alamat'    => $request->alamat,
-            'tgl_lahir' => $request->tgl_lahir,
+            'tgl_lahir' => Carbon::createFromFormat('d-m-Y', $request->tgl_lahir)->format('Y-m-d'),
             'tmp_lahir' => $request->tmp_lahir,
             'agama'     => $request->agama,
             'status'    => $request->status,

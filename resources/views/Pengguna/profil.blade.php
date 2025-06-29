@@ -167,7 +167,7 @@
             </div>
             <div class="form-group">
               <label for="nama">Nomor HP</label>
-              <input type="text" id="nomor_hp" name="nomor_hp" class="form-control" value="{{ Auth::user()->nomor_hp }}" required>
+              <input type="text" id="nomor_hp" name="nomor_hp" class="form-control" value="{{ Auth::user()->nomor_hp }}">
             </div>
           </div>
 
