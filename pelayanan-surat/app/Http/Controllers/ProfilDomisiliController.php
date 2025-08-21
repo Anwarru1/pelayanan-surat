@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\daftar;
+use App\Models\Pengguna;
 
 class ProfilDomisiliController extends Controller
 {
@@ -54,5 +56,72 @@ class ProfilDomisiliController extends Controller
 
         return back()->with('success','Profil berhasil disimpan.');
     }
+
+    public function verifikasiIndex()
+    {
+        // ambil semua warga domisili yang belum diverifikasi
+        $wargaBaru = daftar::where('is_verified', 0)->get();
+
+        return view('admin.verifikasi-domisili', compact('wargaBaru'));
+    }
+
+    public function verifikasi($id)
+    {
+        $domisili = daftar::findOrFail($id);
+
+        // pindahkan data ke tabel pengguna
+        $pengguna = Pengguna::create([
+            'nik'            => $domisili->nik,
+            'password'       => $domisili->password, // sudah di-hash ketika daftar
+            'nama'           => $domisili->nama,
+            'alamat'         => $domisili->alamat,
+            'tmp_lahir'      => $domisili->tmp_lahir,
+            'tgl_lahir'      => $domisili->tgl_lahir,
+            'j_kel'          => $domisili->j_kel,
+            'nomor_hp'       => $domisili->nomor_hp,
+            'pekerjaan'      => $domisili->pekerjaan,
+            'agama'          => $domisili->agama,
+            'status'         => $domisili->status,
+            'role'           => 'warga_domisili'
+        ]);
+
+        // update daftar_pengguna
+        $domisili->update(['is_verified' => 1]);
+
+        return redirect()->back()->with('success', 'Warga domisili berhasil diverifikasi!');
+    }
+
+    public function tolak(Request $request, $id)
+    {
+        $domisili = daftar::findOrFail($id);
+
+        // kalau mau hapus akun
+        $domisili->delete();
+
+        return redirect()->back()->with('error', 'Warga domisili ditolak dan datanya dihapus.');
+    }
+
+    public function show($id)
+    {
+        $warga = DaftarPengguna::findOrFail($id);
+
+        // cek apakah semua field sudah lengkap
+        $isLengkap = $warga->nik && $warga->nama && $warga->alamat && 
+                    $warga->ttl && $warga->jenis_kelamin && 
+                    $warga->nomor_hp && $warga->pekerjaan && 
+                    $warga->agama && $warga->status_pernikahan && 
+                    $warga->data_tambahan;
+
+        if (!$isLengkap) {
+            return redirect()->route('admin.verifikasi.index')
+                            ->with('error', 'Data belum lengkap, tidak bisa ditampilkan.');
+        }
+
+        // data_tambahan JSON -> decode
+        $dataTambahan = json_decode($warga->data_tambahan, true);
+
+        return view('admin.verifikasi-domisili.show', compact('warga', 'dataTambahan'));
+    }
+
 
 }

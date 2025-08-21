@@ -49,6 +49,12 @@
                         </a>
                     </li>
                     <li class="nav-item w-100">
+                        <a class="nav-link" href="{{ route('verifikasi.index') }}">
+                            <i class="fe fe-users fe-16"></i>
+                            <span class="ml-3 item-text">Verifikasi Domisili</span>
+                        </a>
+                    </li>
+                    <li class="nav-item w-100">
                         <a class="nav-link" href="{{ route('laporan.index') }}">
                             <i class="fe fe-archive fe-16"></i>
                             <span class="ml-3 item-text">Laporan</span>

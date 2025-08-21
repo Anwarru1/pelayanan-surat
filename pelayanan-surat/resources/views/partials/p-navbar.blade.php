@@ -13,7 +13,8 @@
       </a>
     </li>
 
-    @auth('pengguna')   <!-- Logout -->
+    <!-- Logout -->
+    @if(Auth::guard('pengguna')->check())
     <li class="nav-item mx-2 d-flex align-items-center">
       <form action="{{ route('logout.pengguna') }}" method="POST" class="mx-2">
         @csrf
@@ -22,6 +23,19 @@
         </button>
       </form>
     </li>
-    @endauth
+    @endif
+
+    <!-- Logout -->
+    @if(Auth::guard('daftar')->check())
+    <li class="nav-item mx-2 d-flex align-items-center">
+      <form action="{{ route('logout.domisili') }}" method="POST" class="mx-2">
+        @csrf
+        <button type="submit" class="btn btn-sm btn-outline-danger">
+            <i class="fe fe-log-out"></i> Logout
+        </button>
+      </form>
+    </li>
+    @endif
+    
   </ul>
 </nav>

@@ -89,6 +89,12 @@ class AuthController extends Controller
         return redirect()->route('login.pengguna');
     }
 
+    public function logoutDaftar(Request $request)
+    {
+        Auth::guard('daftar')->logout();
+        return redirect()->route('login.pengguna');
+    }
+
     public function register(Request $request) {
         $request->validate([
             'nik' => 'required|unique:daftar,nik',

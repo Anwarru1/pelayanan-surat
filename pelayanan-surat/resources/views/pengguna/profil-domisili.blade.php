@@ -28,7 +28,6 @@
             <div class="card-body">
               <form action="{{ route('profil.update') }}" method="POST">
                 @csrf
-                @method('PUT')
 
                 <div class="form-group">
                   <label for="nama">Nama Lengkap</label>

@@ -27,6 +27,8 @@ Route::controller(AuthController::class)->group(function () {
     // Logout Pengguna
     Route::post('/logout/pengguna', [AuthController::class, 'logoutPengguna'])->name('logout.pengguna');
 
+    Route::post('/logout/domisili', [AuthController::class, 'logoutDaftar'])->name('logout.domisili');
+
 });
 
 Route::get('/login', fn() => redirect()->route('login.admin'))->name('login');
@@ -110,8 +112,10 @@ Route::middleware('auth:admin')->group(function () {
         });
 
         //Verifikasi Warga Domisili
-        Route::get('admin/warga-domisili',[AdminController::class,'pendingUsers'])->name('admin.warga-domisili');
-        Route::get('admin/verify/{id}',[AdminController::class,'verify'])->name('admin.verify');
+
+        Route::get('verifikasi-domisili', [ProfilDomisiliController::class, 'VerifikasiIndex'])->name('verifikasi.index');
+        Route::put('verifikasi-domisili/{id}/verifikasi', [ProfilDomisiliController::class, 'verifikasi'])->name('verifikasi.verifikasi');
+        Route::delete('verifikasi-domisili/{id}/tolak', [ProfilDomisiliController::class, 'tolak'])->name('verifikasi.tolak');
     });
 });
 
@@ -158,7 +162,7 @@ Route::middleware('auth:pengguna')->group(function () {
 
 
 Route::middleware('auth:daftar')->group(function(){
-    Route::get('profile/index',[ProfilDomisiliController::class,'index'])->name('profil.index');
-    Route::post('profile/update',[ProfilDomisiliController::class,'update'])->name('profil.update');
-    Route::get('dashboard', function(){ return view('pengguna.index'); })->name('dashboard');
+    Route::get('/domisili/profile',[ProfilDomisiliController::class,'index'])->name('profil.index');
+    Route::post('/domisili/profile/update',[ProfilDomisiliController::class,'update'])->name('profil.update');
+    Route::get('/domisili/dashboard', [ProfilDomisiliController::class, 'dashboard'])->name('domisili.dashboard');
 });
