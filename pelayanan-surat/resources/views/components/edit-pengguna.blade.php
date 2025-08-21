@@ -28,19 +28,31 @@
                         <input type="text" class="form-control" id="nama" name="nama" oninput="this.value = this.value.toUpperCase();"
                             value="{{ old('nama', $pengguna->nama ?? '') }}" required>
                     </div>
-                    <div class="form-group mb-3">
-                        <label>Jenis Kelamin</label><br>
-                        <div class="form-check form-check-inline mb-3">   
-                            <input class="form-check-input" type="radio" name="j_kel" id="laki-laki{{ $pengguna->id }}"
-                                value="Laki-laki" {{ $pengguna->j_kel === 'Laki-laki' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="laki-laki{{ $pengguna->id }}">Laki-laki</label>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Jenis Kelamin</label><br>
+                            <div class="form-check form-check-inline mb-3">   
+                                <input class="form-check-input" type="radio" name="j_kel" id="laki-laki{{ $pengguna->id }}"
+                                    value="Laki-laki" {{ $pengguna->j_kel === 'Laki-laki' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="laki-laki{{ $pengguna->id }}">Laki-laki</label>
+                            </div>
+                            <div class="form-check form-check-inline mb-3">
+                                <input class="form-check-input" type="radio" name="j_kel" id="perempuan{{ $pengguna->id }}"
+                                    value="Perempuan" {{ $pengguna->j_kel === 'Perempuan' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="perempuan{{ $pengguna->id }}">Perempuan</label>
+                            </div>
                         </div>
-                        <div class="form-check form-check-inline mb-3">
-                            <input class="form-check-input" type="radio" name="j_kel" id="perempuan{{ $pengguna->id }}"
-                                value="Perempuan" {{ $pengguna->j_kel === 'Perempuan' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="perempuan{{ $pengguna->id }}">Perempuan</label>
+                        <div class="form-group col-md-6">
+                            <label for="role">Role</label>
+                            <select name="role" id="role" class="custom-select" required>
+                                <option value="" disabled {{ $pengguna->role ? '' : 'selected' }}>Pilih role</option>
+                                <option value="warga_tetap" {{ $pengguna->role == 'warga_tetap' ? 'selected' : '' }}>Warga Tetap</option>
+                                <option value="warga_domisili" {{ $pengguna->role == 'warga_domilisi' ? 'selected' : '' }}>Warga Domisili</option>
+                            </select>
                         </div>
                     </div>
+                    
                     
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -88,17 +100,18 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
                         <label for="pekerjaan">Pekerjaan</label>
                         <input type="text" class="form-control" id="pekerjaan" name="pekerjaan" placeholder="Masukkan pekerjaan"
                             value="{{ old('pekerjaan', $pengguna->pekerjaan) }}">
-                    </div>
+                        </div>
 
-
-                    <div class="form-group">
+                        <div class="form-group">
                         <label for="nomor_hp">Nomor HP</label>
                         <input type="text" class="form-control" id="nomor_hp" name="nomor_hp" placeholder="Masukkan nomor HP"
                             value="{{ old('nomor_hp', $pengguna->nomor_hp) }}">
+                        </div>
                     </div>
 
                     <div class="form-group">

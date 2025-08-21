@@ -34,20 +34,36 @@
                         @enderror
                     </div>
 
-                    <div class="form-group">
-                        <label>Jenis Kelamin</label><br>
-                        <div class="form-check form-check-inline mb-3">
-                            <input class="form-check-input @error('j_kel') is-invalid @enderror" type="radio" name="j_kel" id="Laki-laki" value="Laki-laki"  >
-                            <label class="form-check-label" for="Laki-laki">Laki-laki</label>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Jenis Kelamin</label><br>
+                            <div class="form-check form-check-inline mb-3">
+                                <input class="form-check-input @error('j_kel') is-invalid @enderror" type="radio" name="j_kel" id="Laki-laki" value="Laki-laki"  >
+                                <label class="form-check-label" for="Laki-laki">Laki-laki</label>
+                            </div>
+                            <div class="form-check form-check-inline mb-3">
+                                <input class="form-check-input @error('j_kel') is-invalid @enderror" type="radio" name="j_kel" id="Perempuan" value="Perempuan"  >
+                                <label class="form-check-label" for="Perempuan">Perempuan</label>
+                            </div>
+                            @error('j_kel')
+                                <div class="invalid-feedback d-block"><strong>{{ $message }}</strong></div>
+                            @enderror
                         </div>
-                        <div class="form-check form-check-inline mb-3">
-                            <input class="form-check-input @error('j_kel') is-invalid @enderror" type="radio" name="j_kel" id="Perempuan" value="Perempuan"  >
-                            <label class="form-check-label" for="Perempuan">Perempuan</label>
+
+                        <div class="form-group col-md-6">
+                            <label for="role">Role</label>
+                            <select name="role" id="role" class="custom-select @error('role') is-invalid @enderror"  >
+                                <option value="" selected disabled>Pilih role</option>
+                                <option value="warga_tetap">Warga Tetap</option>
+                                <option value="warga_domisili">Warga Domisili</option>
+                            </select>
+                            @error('role')
+                                <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                            @enderror
                         </div>
-                        @error('j_kel')
-                            <div class="invalid-feedback d-block"><strong>{{ $message }}</strong></div>
-                        @enderror
                     </div>
+
+                    
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -102,21 +118,26 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="pekerjaan">Pekerjaan</label>
-                        <input type="text" class="form-control @error('pekerjaan') is-invalid @enderror" id="pekerjaan" name="pekerjaan" placeholder="Masukkan pekerjaan"  >
-                        @error('pekerjaan')
-                            <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
-                        @enderror
-                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="pekerjaan">Pekerjaan</label>
+                            <input type="text" class="form-control @error('pekerjaan') is-invalid @enderror" id="pekerjaan" name="pekerjaan" placeholder="Masukkan pekerjaan"  >
+                            @error('pekerjaan')
+                                <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                            @enderror
+                        </div>
 
-                    <div class="form-group">
-                        <label for="nomor_hp">Nomor HP</label>
-                        <input type="text" class="form-control @error('nomor_hp') is-invalid @enderror" id="nomor_hp" name="nomor_hp" placeholder="Masukkan nomor HP"  >
-                        @error('nomor_hp')
-                            <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
-                        @enderror
+                        <div class="form-group col-md-6">
+                            <label for="nomor_hp">Nomor HP</label>
+                            <input type="text" class="form-control @error('nomor_hp') is-invalid @enderror" id="nomor_hp" name="nomor_hp" placeholder="Masukkan nomor HP"  >
+                            @error('nomor_hp')
+                                <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                            @enderror
+                        </div>
                     </div>
+                    
+
+                    
 
                     <div class="form-group">
                         <label for="alamat">Alamat</label>

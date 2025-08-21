@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use App\Models\ResetPassword;
+use App\Models\Daftar; // huruf besar
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,16 +32,18 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('components.edit-admin', 'editAdmin');
         Blade::component('components.edit-pengguna', 'editPengguna');
 
-        Paginator::useBootstrap(); // atau useTailwind()
+        Paginator::useBootstrap();
 
-        // ✅ Bikin data resetBaru tersedia di SEMUA view
+        // ✅ Share data ke semua view
         View::composer('*', function ($view) {
             if (auth('admin')->check()) {
                 $resetBaru = ResetPassword::where('status', 'menunggu')
                     ->latest()
                     ->get();
 
-                $view->with(compact('resetBaru'));
+                $wargaBaru = Daftar::where('is_verified', 0)->get();
+
+                $view->with(compact('resetBaru', 'wargaBaru'));
             }
         });
     }

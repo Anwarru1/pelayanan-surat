@@ -93,20 +93,17 @@
                         @endif
                         </div>
 
-                        <div class="modal-footer d-flex justify-content-between">
-                        {{-- Form Tolak --}}
-                        <form action="{{ route('verifikasi.tolak', $warga->id) }}" method="POST" class="d-inline w-50">
+                        <div class="modal-footer d-flex justify-content-start">
+                        {{-- Tombol Tolak --}}
+                        <form action="{{ route('verifikasi.tolak', $warga->id) }}" method="POST" class="d-inline mr-2">
                             @csrf
                             @method('DELETE')
-                            <div class="input-group">
-                            <input type="text" name="alasan" class="form-control" placeholder="Alasan penolakan..." required>
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-danger">Tolak</button>
-                            </div>
-                            </div>
+                            <button type="submit" class="btn btn-danger">
+                            <i class="fe fe-x"></i> Tolak
+                            </button>
                         </form>
 
-                        {{-- Form Verifikasi --}}
+                        {{-- Tombol Verifikasi --}}
                         <form action="{{ route('verifikasi.verifikasi', $warga->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('PUT')
@@ -115,8 +112,10 @@
                             </button>
                         </form>
 
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        {{-- Tombol Tutup tetap di kanan --}}
+                        <button type="button" class="btn btn-secondary ml-auto" data-dismiss="modal">Tutup</button>
                         </div>
+
                     </div>
                     </div>
                 </div>
