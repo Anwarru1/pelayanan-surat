@@ -44,6 +44,8 @@
                     <a class="dropdown-item text-center text-primary" href="{{ route('verifikasi.index') }}">
                         Lihat Semua Permintaan Verifikasi
                     </a>
+
+                    <div class="dropdown-divider"></div>
                     
                     <!-- Bagian Reset Password -->
                     <h6 class="dropdown-header">Permintaan Reset Password</h6>
