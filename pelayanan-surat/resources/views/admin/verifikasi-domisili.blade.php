@@ -68,27 +68,27 @@
                           </table>
 
                           <h6>Data Tambahan</h6>
-                          @php
-                            use Illuminate\Support\Str;
+                            @php
                             $dataTambahan = json_decode($warga->data_tambahan, true);
-                          @endphp
+                            @endphp
 
-                          @if($dataTambahan)
+                            @if($dataTambahan)
                             <ul class="list-group">
-                              @foreach($dataTambahan as $key => $value)
+                                @foreach($dataTambahan as $key => $value)
                                 <li class="list-group-item">
-                                  <strong>{{ ucfirst($key) }}:</strong>
-                                  @if(Str::endsWith($value, ['.jpg','.jpeg','.png','.pdf','.doc','.docx']))
+                                    <strong>{{ ucfirst($key) }}:</strong>
+                                    @if(\Illuminate\Support\Str::endsWith($value, ['.jpg','.jpeg','.png','.pdf','.doc','.docx']))
                                     <a href="{{ asset('uploads/data_tambahan/'.$value) }}" target="_blank">Lihat File</a>
-                                  @else
+                                    @else
                                     {{ $value }}
-                                  @endif
+                                    @endif
                                 </li>
-                              @endforeach
+                                @endforeach
                             </ul>
-                          @else
+                            @else
                             <p class="text-muted">Tidak ada data tambahan.</p>
-                          @endif
+                            @endif
+
                         </div>
 
                         <div class="modal-footer d-flex justify-content-between">
@@ -97,7 +97,6 @@
                             @csrf
                             @method('DELETE')
                             <div class="input-group">
-                              <input type="text" name="alasan" class="form-control" placeholder="Alasan penolakan..." required>
                               <div class="input-group-append">
                                 <button type="submit" class="btn btn-danger">Tolak</button>
                               </div>
