@@ -54,16 +54,16 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     <h6 class="dropdown-header">Warga Baru Mendaftar</h6>
                     @forelse($wargaBaru as $warga)
-                        <a class="dropdown-item" href="{{ route('admin.verifikasi.index') }}">
+                        <a class="dropdown-item" href="{{ route('verifikasi.index') }}">
                             <strong>{{ $warga->nama }}</strong> ({{ $warga->nik }})
                         </a>
                     @empty
-                        <a class="dropdown-item text-muted" href="{{ route('admin.verifikasi.index') }}">
+                        <a class="dropdown-item text-muted" href="{{ route('verifikasi.index') }}">
                             Tidak ada warga baru
                         </a>
                     @endforelse
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-center text-primary" href="{{ route('admin.verifikasi.index') }}">
+                    <a class="dropdown-item text-center text-primary" href="{{ route('verifikasi.index') }}">
                         Lihat Semua Pendaftar
                     </a>
                 </div>
