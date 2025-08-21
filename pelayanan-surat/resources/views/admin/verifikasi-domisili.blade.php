@@ -5,7 +5,7 @@
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-12">
-        <h2 class="page-title mb-3">Verifikasi Warga Baru</h2>
+        <h2 class="page-title mb-3">Verifikasi Warga Domisili</h2>
 
         @if(session('success'))
           <div class="alert alert-success">{{ session('success') }}</div>
@@ -71,26 +71,29 @@
                         </table>
 
                         <h6>Data Tambahan</h6>
-                        @php
-                            $dataTambahan = json_decode($warga->data_tambahan, true);
-                        @endphp
+                            @php
+                                $dataTambahan = json_decode($warga->data_tambahan, true);
+                            @endphp
 
-                        @if($dataTambahan)
-                            <ul class="list-group">
-                            @foreach($dataTambahan as $key => $value)
-                                <li class="list-group-item">
-                                <strong>{{ ucfirst($key) }}:</strong>
-                                @if(\Illuminate\Support\Str::endsWith($value, ['.jpg','.jpeg','.png','.pdf','.doc','.docx']))
-                                    <a href="{{ asset('uploads/data_tambahan/'.$value) }}" target="_blank">Lihat File</a>
-                                @else
-                                    {{ $value }}
-                                @endif
-                                </li>
-                            @endforeach
-                            </ul>
-                        @else
-                            <p class="text-muted">Tidak ada data tambahan.</p>
-                        @endif
+                            @if($dataTambahan)
+                                <ul class="list-group">
+                                    @foreach($dataTambahan as $key => $value)
+                                        <li class="list-group-item">
+                                            <strong>{{ ucfirst($key) }}:</strong>
+                                            @if(\Illuminate\Support\Str::endsWith($value, ['.jpg','.jpeg','.png','.pdf','.doc','.docx']))
+                                                <a href="{{ asset('storage/domisili/syarat-verifikasi/'.$value) }}" target="_blank">
+                                                    Lihat File
+                                                </a>
+                                            @else
+                                                {{ $value }}
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p class="text-muted">Tidak ada data tambahan.</p>
+                            @endif
+
                         </div>
 
                         <div class="modal-footer d-flex justify-content-start">

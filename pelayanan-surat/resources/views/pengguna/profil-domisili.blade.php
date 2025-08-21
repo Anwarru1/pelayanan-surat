@@ -5,6 +5,7 @@
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-12 col-lg-8">
+          <h2 class="page-title mb-3">Profil Warga Domisili</h2>
 
           {{-- Alert --}}
           @if (session('success'))
@@ -138,10 +139,11 @@
                 <div class="form-group">
                   <label for="ktp">KTP</label>
                   <input type="file" name="data_tambahan[ktp]" class="form-control">
+                  {{-- KTP --}}
                   @if(isset($dataTambahan['ktp']))
                     <p class="mt-2">File saat ini: 
-                      <a href="{{ asset('uploads/data_tambahan/'.$dataTambahan['ktp']) }}" target="_blank">
-                        {{ $dataTambahan['ktp'] }}
+                      <a href="{{ asset($dataTambahan['ktp']) }}" target="_blank">
+                        {{ basename($dataTambahan['ktp']) }}
                       </a>
                     </p>
                   @endif
@@ -150,10 +152,11 @@
                 <div class="form-group">
                   <label for="kk">Kartu Keluarga</label>
                   <input type="file" name="data_tambahan[kk]" class="form-control">
+                  {{-- KK --}}
                   @if(isset($dataTambahan['kk']))
                     <p class="mt-2">File saat ini: 
-                      <a href="{{ asset('uploads/data_tambahan/'.$dataTambahan['kk']) }}" target="_blank">
-                        {{ $dataTambahan['kk'] }}
+                      <a href="{{ asset($dataTambahan['kk']) }}" target="_blank">
+                        {{ basename($dataTambahan['kk']) }}
                       </a>
                     </p>
                   @endif
@@ -162,10 +165,11 @@
                 <div class="form-group">
                   <label for="akta">Akta Kelahiran</label>
                   <input type="file" name="data_tambahan[akta]" class="form-control">
+                  {{-- Akta --}}
                   @if(isset($dataTambahan['akta']))
                     <p class="mt-2">File saat ini: 
-                      <a href="{{ asset('uploads/data_tambahan/'.$dataTambahan['akta']) }}" target="_blank">
-                        {{ $dataTambahan['akta'] }}
+                      <a href="{{ asset($dataTambahan['akta']) }}" target="_blank">
+                        {{ basename($dataTambahan['akta']) }}
                       </a>
                     </p>
                   @endif

@@ -203,7 +203,7 @@ class PengajuanSuratController extends Controller
     
         // Copy ke public
         if (!copy($docxPathStorage, $docxPathPublic)) {
-            \Log::error("Gagal menyalin file ke public: {$docxPathPublic}");
+            Log::error("Gagal menyalin file ke public: {$docxPathPublic}");
         }
     
         // Simpan path relatif di DB
@@ -311,7 +311,7 @@ class PengajuanSuratController extends Controller
     
             return back()->with('success', 'Pengajuan surat terpilih berhasil dihapus.');
         } catch (\Exception $e) {
-            \Log::error('Bulk delete error: ' . $e->getMessage());
+            Log::error('Bulk delete error: ' . $e->getMessage());
             return back()->with('error', 'Terjadi kesalahan saat menghapus data.');
         }
     }

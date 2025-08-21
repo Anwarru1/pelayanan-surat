@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\daftar;
 use App\Models\Pengguna;
+use Illuminate\Support\Str;
 
 class ProfilDomisiliController extends Controller
 {
@@ -38,18 +39,30 @@ class ProfilDomisiliController extends Controller
             'data_tambahan.akta'=> 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        $user = Auth::guard('daftar')->user();
+         $user = Auth::guard('daftar')->user();
         $dataTambahan = $user->data_tambahan ? json_decode($user->data_tambahan, true) : [];
 
-        // upload masing-masing file
-        foreach (['ktp','kk','akta'] as $field) {
+        foreach (['ktp', 'kk', 'akta'] as $field) {
             if ($request->hasFile("data_tambahan.$field")) {
                 $file = $request->file("data_tambahan.$field");
-                $filename = time().'_'.$field.'_'.$file->getClientOriginalName();
-                $file->move(public_path('uploads/data_tambahan'), $filename);
-                $dataTambahan[$field] = $filename;
+
+                // nama file unik → namaField-randomString.ext
+                $filename = $field . '-' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+
+                // tujuan penyimpanan
+                $destinationPath = base_path('../storage/domisili/syarat-verifikasi/');
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0755, true);
+                }
+
+                // pindahkan file
+                $file->move($destinationPath, $filename);
+
+                // simpan path relatif di database
+                $dataTambahan[$field] = 'storage/domisili/syarat-verifikasi/' . $filename;
             }
         }
+
 
         $user->nama = $request->nama;
         $user->alamat = $request->alamat;
