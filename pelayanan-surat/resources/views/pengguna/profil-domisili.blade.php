@@ -56,26 +56,56 @@
 
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <label for="jenis_kelamin">Jenis Kelamin</label>
-                    <select id="jenis_kelamin" name="jenis_kelamin" class="custom-select">
-                      <option value="L" {{ old('jenis_kelamin', Auth::user()->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
-                      <option value="P" {{ old('jenis_kelamin', Auth::user()->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
-                    </select>
+                    <label>Jenis Kelamin</label><br>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="j_kel" id="laki" value="Laki-laki" {{ old('j_kel', Auth::user()->j_kel) === 'Laki-laki' ? 'checked' : '' }}>
+                      <label class="form-check-label" for="laki">Laki-laki</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="j_kel" id="perempuan" value="Perempuan" {{ old('j_kel', Auth::user()->j_kel) === 'Perempuan' ? 'checked' : '' }}>
+                      <label class="form-check-label" for="perempuan">Perempuan</label>
+                    </div>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="status">Status Pernikahan</label>
                     <select id="status" name="status" class="custom-select">
                       <option value="Kawin" {{ old('status', Auth::user()->status) == 'Kawin' ? 'selected' : '' }}>Kawin</option>
                       <option value="Belum Kawin" {{ old('status', Auth::user()->status) == 'Belum Kawin' ? 'selected' : '' }}>Belum Kawin</option>
+                      <option value="Cerai Mati" {{ old('status', Auth::user()->status) == 'Cerai Mati' ? 'selected' : '' }}>Cerai Mati</option>
+                      <option value="Cerai Hidup" {{ old('status', Auth::user()->status) == 'Cerai Hidup' ? 'selected' : '' }}>Cerai Hidup</option>
                     </select>
                   </div>
                 </div>
-
-                <div class="form-group">
+              
+              <div class="form-row">
+                <div class="form-group col-md-6">
                   <label for="pekerjaan">Pekerjaan</label>
-                  <input type="text" id="pekerjaan" name="pekerjaan" class="form-control"
-                        value="{{ old('pekerjaan', Auth::user()->pekerjaan) }}">
+                  <select id="pekerjaan" name="pekerjaan" class="custom-select">
+                    <option value="" disabled selected>Pilih Pekerjaan</option>
+                    <option value="PNS" {{ old('pekerjaan', Auth::user()->pekerjaan) == 'PNS' ? 'selected' : '' }}>PNS</option>
+                    <option value="Wiraswasta" {{ old('pekerjaan', Auth::user()->pekerjaan) == 'Wiraswasta' ? 'selected' : '' }}>Wiraswasta</option>
+                    <option value="Petani" {{ old('pekerjaan', Auth::user()->pekerjaan) == 'Petani' ? 'selected' : '' }}>Petani</option>
+                    <option value="Buruh" {{ old('pekerjaan', Auth::user()->pekerjaan) == 'Buruh' ? 'selected' : '' }}>Buruh</option>
+                    <option value="Karyawan" {{ old('pekerjaan', Auth::user()->pekerjaan) == 'Karyawan' ? 'selected' : '' }}>Karyawan</option>
+                    <option value="Pensiun" {{ old('pekerjaan', Auth::user()->pekerjaan) == 'Pensiun' ? 'selected' : '' }}>Pensiun</option>
+                    <option value="IRT" {{ old('pekerjaan', Auth::user()->pekerjaan) == 'IRT' ? 'selected' : '' }}>IRT (Ibu Rumah Tangga)</option>
+                    <option value="Pelajar/Mahasiswa" {{ old('pekerjaan', Auth::user()->pekerjaan) == 'Pelajar/Mahasiswa' ? 'selected' : '' }}>Pelajar/Mahasiswa</option>
+                  </select>
                 </div>
+
+                <div class="form-group col-md-6">
+                  <label>Agama</label>
+                  <select name="agama" class="custom-select" >
+                    <option value="" disabled selected>Pilih Agama</option>
+                    <option value="Islam" {{ old('agama', Auth::user()->agama) == 'Islam' ? 'selected' : '' }}>Islam</option>
+                    <option value="Kristen" {{ old('agama', Auth::user()->agama) == 'Kristen' ? 'selected' : '' }}>Kristen</option>
+                    <option value="Katolik" {{ old('agama', Auth::user()->agama) == 'Katolik' ? 'selected' : '' }}>Katolik</option>
+                    <option value="Hindu" {{ old('agama', Auth::user()->agama) == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+                    <option value="Buddha" {{ old('agama', Auth::user()->agama) == 'Buddha' ? 'selected' : '' }}>Buddha</option>
+                    <option value="Konghucu" {{ old('agama', Auth::user()->agama) == 'Konghucu' ? 'selected' : '' }}>Konghucu</option>
+                  </select>
+                </div>
+              </div>
 
                 <div class="form-group">
                   <label for="nomor_hp">Nomor HP</label>
