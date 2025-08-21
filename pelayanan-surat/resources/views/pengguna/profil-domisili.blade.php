@@ -1,304 +1,159 @@
-<!doctype html>
-<html lang="en">
+@extends('layouts.p-app') 
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="icon" href="{{ asset('assets/images/logo.png') }}">
-  <title>Form Pendaftaran Pengguna</title>
-  <link rel="stylesheet" href="css/simplebar.css">
-  <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/feather.css">
-  <link rel="stylesheet" href="css/daterangepicker.css">
-  <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
-  <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
-</head>
+@section('content')
+  <main role="main" class="main-content">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
 
-<body class="light">
-  <div class="wrapper vh-100">
-    <div class="row align-items-center h-100">
-      <div class="col-lg-8 col-md-10 col-12 mx-auto">
-        <div class="card shadow">
-          <div class="card-body p-4">
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                    </ul>
-                </div>
-            @endif
-            <div class="text-center mb-4">
-              <h3>Form Pendaftaran Pengguna</h3>
+          {{-- Alert --}}
+          @if (session('success'))
+              <div class="alert alert-success">{{ session('success') }}</div>
+          @endif
+          @if ($errors->any())
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+          @endif
+
+          {{-- Card 1: Data Diri --}}
+          <div class="card shadow mb-4">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Data Diri</h5>
             </div>
-            <form action="{{ route('pengguna.register.store') }}" method="POST" id="formDaftarPengguna">
-              @csrf
+            <div class="card-body">
+              <form action="{{ route('profil.update') }}" method="POST">
+                @csrf
+                @method('PUT')
 
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Nama</label>
-                  <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" >
-                  @error('nama')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
+                <div class="form-group">
+                  <label for="nama">Nama Lengkap</label>
+                  <input type="text" id="nama" name="nama" class="form-control"
+                        value="{{ old('nama', Auth::user()->nama) }}" required>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>NIK</label>
-                  <input type="text" name="nik" class="form-control @error('nik') is-invalid @enderror"   >
-                  @error('nik')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
-              </div>
 
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Password</label>
-                  <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"   >
-                  @error('password')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Konfirmasi Password</label>
-                  <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror"   >
-                  @error('password_confirmation')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label>Jenis Kelamin</label><br>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input @error('j_kel') is-invalid @enderror" type="radio" name="j_kel" id="laki" value="Laki-laki"   >
-                  <label class="form-check-label" for="laki">Laki-laki</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input @error('j_kel') is-invalid @enderror" type="radio" name="j_kel" id="perempuan" value="Perempuan"   >
-                  <label class="form-check-label" for="perempuan">Perempuan</label>
-                </div>
-                @error('j_kel')
-                  <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                @enderror
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Status</label>
-                  <select name="status" class="custom-select @error('status') is-invalid @enderror"   >
-                    <option value="" disabled selected>Pilih Status</option>
-                    <option value="Kawin">Kawin</option>
-                    <option value="Belum Kawin">Belum Kawin</option>
-                    <option value="Cerai Mati">Cerai Mati</option>
-                    <option value="Cerai Hidup">Cerai Hidup</option>
-                  </select>
-                  @error('status')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Nomor HP</label>
-                  <input type="text" name="nomor_hp" class="form-control @error('nomor_hp') is-invalid @enderror"   >
-                </div>
-                @error('nomor_hp')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                @enderror
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Tempat Lahir</label>
-                  <input type="text" name="tmp_lahir" class="form-control @error('tmp_lahir') is-invalid @enderror"   >
-                  @error('tmp_lahir')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
-                <div class="form-group col-md-6">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="tmp_lahir">Tempat Lahir</label>
+                    <input type="text" id="tmp_lahir" name="tmp_lahir" class="form-control"
+                          value="{{ old('tmp_lahir', Auth::user()->tmp_lahir) }}">
+                  </div>
+                  <div class="form-group col-md-6">
                     <label for="tgl_lahir">Tanggal Lahir</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control drgpicker @error('tgl_lahir') is-invalid @enderror" id="tgl_lahir" name="tgl_lahir" autocomplete="off" >
-                            <div class="input-group-append">
-                                <div class="input-group-text"><span class="fe fe-calendar fe-16"></span></div>
-                            </div>
-                            @error('tgl_lahir')
-                                <div class="invalid-feedback d-block"><strong>{{ $message }}</strong></div>
-                            @enderror
-                        </div>
-                    </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Pekerjaan</label>
-                  <input type="text" name="pekerjaan" class="form-control @error('pekerjaan') is-invalid @enderror"   >
-                  @error('pekerjaan')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
+                    <input type="date" id="tgl_lahir" name="tgl_lahir" class="form-control"
+                          value="{{ old('tgl_lahir', Auth::user()->tgl_lahir) }}">
+                  </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Agama</label>
-                  <select name="agama" class="custom-select @error('agama') is-invalid @enderror"   >
-                    <option value="" disabled selected>Pilih Agama</option>
-                    <option value="Islam">Islam</option>
-                    <option value="Kristen">Kristen</option>
-                    <option value="Katolik">Katolik</option>
-                    <option value="Hindu">Hindu</option>
-                    <option value="Buddha">Buddha</option>
-                    <option value="Konghucu">Konghucu</option>
-                  </select>
-                  @error('agama')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
+
+                <div class="form-group">
+                  <label for="alamat">Alamat</label>
+                  <textarea id="alamat" name="alamat" rows="3" class="form-control">{{ old('alamat', Auth::user()->alamat) }}</textarea>
                 </div>
-              </div>
 
-              <div class="form-group">
-                <label>Alamat</label>
-                <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror"   ></textarea>
-                @error('alamat')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                @enderror
-              </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="jenis_kelamin">Jenis Kelamin</label>
+                    <select id="jenis_kelamin" name="jenis_kelamin" class="custom-select">
+                      <option value="L" {{ old('jenis_kelamin', Auth::user()->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                      <option value="P" {{ old('jenis_kelamin', Auth::user()->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="status">Status Pernikahan</label>
+                    <select id="status" name="status" class="custom-select">
+                      <option value="Kawin" {{ old('status', Auth::user()->status) == 'Kawin' ? 'selected' : '' }}>Kawin</option>
+                      <option value="Belum Kawin" {{ old('status', Auth::user()->status) == 'Belum Kawin' ? 'selected' : '' }}>Belum Kawin</option>
+                    </select>
+                  </div>
+                </div>
 
-              <button type="submit" class="btn btn-primary btn-block">Daftar</button>
-            </form>
+                <div class="form-group">
+                  <label for="pekerjaan">Pekerjaan</label>
+                  <input type="text" id="pekerjaan" name="pekerjaan" class="form-control"
+                        value="{{ old('pekerjaan', Auth::user()->pekerjaan) }}">
+                </div>
+
+                <div class="form-group">
+                  <label for="nomor_hp">Nomor HP</label>
+                  <input type="text" id="nomor_hp" name="nomor_hp" class="form-control"
+                        value="{{ old('nomor_hp', Auth::user()->nomor_hp) }}">
+                </div>
+
+                <div class="form-group text-right">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fe fe-save"></i> Simpan Data
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
+
+          {{-- Card 2: Upload File Data Tambahan --}}
+          <div class="card shadow mb-4">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Upload Data Tambahan</h5>
+            </div>
+            <div class="card-body">
+              <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+
+                @php
+                  $dataTambahan = Auth::user()->data_tambahan ? json_decode(Auth::user()->data_tambahan, true) : [];
+                @endphp
+
+                <div class="form-group">
+                  <label for="ktp">KTP</label>
+                  <input type="file" name="data_tambahan[ktp]" class="form-control">
+                  @if(isset($dataTambahan['ktp']))
+                    <p class="mt-2">File saat ini: 
+                      <a href="{{ asset('uploads/data_tambahan/'.$dataTambahan['ktp']) }}" target="_blank">
+                        {{ $dataTambahan['ktp'] }}
+                      </a>
+                    </p>
+                  @endif
+                </div>
+
+                <div class="form-group">
+                  <label for="kk">Kartu Keluarga</label>
+                  <input type="file" name="data_tambahan[kk]" class="form-control">
+                  @if(isset($dataTambahan['kk']))
+                    <p class="mt-2">File saat ini: 
+                      <a href="{{ asset('uploads/data_tambahan/'.$dataTambahan['kk']) }}" target="_blank">
+                        {{ $dataTambahan['kk'] }}
+                      </a>
+                    </p>
+                  @endif
+                </div>
+
+                <div class="form-group">
+                  <label for="akta">Akta Kelahiran</label>
+                  <input type="file" name="data_tambahan[akta]" class="form-control">
+                  @if(isset($dataTambahan['akta']))
+                    <p class="mt-2">File saat ini: 
+                      <a href="{{ asset('uploads/data_tambahan/'.$dataTambahan['akta']) }}" target="_blank">
+                        {{ $dataTambahan['akta'] }}
+                      </a>
+                    </p>
+                  @endif
+                </div>
+
+                <div class="text-right">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fe fe-save"></i> Simpan Data Tambahan
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+
         </div>
-        <p class="mt-4 mb-3 text-muted text-center">© 2025</p>
       </div>
     </div>
-  </div>
-
-  <script src="js/jquery.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/moment.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/simplebar.min.js"></script>
-  <script src="js/daterangepicker.js"></script>
-  <script src="js/jquery.stickOnScroll.js"></script>
-  <script src="js/tinycolor-min.js"></script>
-  <script src="js/config.js"></script>
-  <script src="js/apps.js"></script>
-</body>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('formDaftarPengguna');
-    if (!form) return;
-
-    const fieldLabels = {
-        nik: 'NIK',
-        password: 'Password',
-        nama: 'Nama',
-        alamat: 'Alamat',
-        j_kel: 'Jenis Kelamin',
-        agama: 'Agama',
-        status: 'Status',
-        pekerjaan: 'Pekerjaan',
-        nomor_hp: 'Nomor HP',
-        tmp_lahir: 'Tempat Lahir',
-        tgl_lahir: 'Tanggal Lahir'
-    };
-
-    form.addEventListener('submit', function (e) {
-        let valid = true;
-
-        // Bersihkan error lama
-        form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-        form.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
-
-        Object.keys(fieldLabels).forEach(field => {
-            const el = form.querySelector(`[name="${field}"]`);
-            let isInvalid = false;
-
-            if (!el) return;
-
-            if (el.type === 'radio') {
-                const checked = form.querySelector(`[name="${field}"]:checked`);
-                if (!checked) isInvalid = true;
-            } else if (!el.value.trim()) {
-                isInvalid = true;
-            }
-
-            if (isInvalid) {
-                valid = false;
-
-                const label = fieldLabels[field];
-                const errorText = `${label} wajib diisi`;
-
-                if (el.type === 'radio') {
-                    const radios = form.querySelectorAll(`[name="${field}"]`);
-                    radios.forEach(radio => radio.classList.add('is-invalid'));
-
-                    const group = el.closest('.form-group');
-                    if (group && !group.querySelector('.invalid-feedback')) {
-                        const feedback = document.createElement('div');
-                        feedback.className = 'invalid-feedback d-block';
-                        feedback.innerText = errorText;
-                        group.appendChild(feedback);
-                    }
-                } else {
-                    el.classList.add('is-invalid');
-                    const feedback = document.createElement('div');
-                    feedback.className = 'invalid-feedback';
-                    feedback.innerText = errorText;
-                    el.parentNode.appendChild(feedback);
-                }
-            }
-        });
-
-        if (!valid) {
-            e.preventDefault(); // Hentikan submit jika tidak valid
-        }
-    });
-});
-
-$(function() {
-    $('#tgl_lahir').daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-        autoUpdateInput: false,   // otomatis update input
-        timePicker: false,
-        autoApply: true,
-        locale: {
-        format: 'DD-MM-YYYY', // contoh: 19 Agustus 2025
-        daysOfWeek: [
-          "Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"
-        ],
-        monthNames: [
-          "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-          "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-        ],
-        firstDay: 1
-      }
-    });
-    
-    // placeholder default
-    $('#tgl_lahir').attr("placeholder", "dd-mm-yy");
-
-    // Isi input hanya saat pengguna memilih tanggal
-    $('#tgl_lahir').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('DD-MM-YYYY'));
-    });
-
-    // Bersihkan input jika dibatalkan
-    $('#tgl_lahir').on('cancel.daterangepicker', function(ev, picker) {
-        $(this).val('');
-    });
-});
-</script>
-
-
-
-
-
-</html>
+  </main>
+@endsection
