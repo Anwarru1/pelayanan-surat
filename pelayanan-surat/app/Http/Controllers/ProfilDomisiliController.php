@@ -11,7 +11,7 @@ class ProfilDomisiliController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user = Auth::guard('daftar');
         return view('pengguna.profil-domisili', compact('user'));
     }
 
@@ -32,7 +32,7 @@ class ProfilDomisiliController extends Controller
             'data_tambahan.akta'=> 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        $user = Auth::user();
+        $user = Auth::guard('daftar');
         $dataTambahan = $user->data_tambahan ? json_decode($user->data_tambahan, true) : [];
 
         // upload masing-masing file
@@ -103,13 +103,13 @@ class ProfilDomisiliController extends Controller
 
     public function show($id)
     {
-        $warga = DaftarPengguna::findOrFail($id);
+        $warga = daftar::findOrFail($id);
 
         // cek apakah semua field sudah lengkap
         $isLengkap = $warga->nik && $warga->nama && $warga->alamat && 
-                    $warga->ttl && $warga->jenis_kelamin && 
+                    $warga->tmp_lahir && $warga->tgl_lahir && $warga->j_kel && 
                     $warga->nomor_hp && $warga->pekerjaan && 
-                    $warga->agama && $warga->status_pernikahan && 
+                    $warga->agama && $warga->status && 
                     $warga->data_tambahan;
 
         if (!$isLengkap) {
