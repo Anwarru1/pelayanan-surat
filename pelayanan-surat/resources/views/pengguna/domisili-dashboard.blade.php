@@ -6,69 +6,6 @@
       <div class="row justify-content-center">
         <div class="col-12">
 
-          {{-- Statistik Surat --}}
-          <div class="row">
-            <div class="col-md-6 col-xl-3 mb-4">
-              <div class="card shadow bg-primary text-white border-0">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col-3 text-center">
-                      <i class="fe fe-mail fe-24 text-white"></i>
-                    </div>
-                    <div class="col">
-                      <p class="small text-light mb-0">Total Surat</p>
-                      <span class="h4 mb-0 text-white">{{ $totalSurat }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-xl-3 mb-4">
-              <div class="card shadow border-0">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col-3 text-center">
-                      <i class="fe fe-check-circle fe-24 text-success"></i>
-                    </div>
-                    <div class="col">
-                      <p class="small text-muted mb-0">Disetujui</p>
-                      <span class="h4 mb-0">{{ $suratSelesai }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-xl-3 mb-4">
-              <div class="card shadow border-0">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col-3 text-center">
-                      <i class="fe fe-x-circle fe-24 text-danger"></i>
-                    </div>
-                    <div class="col">
-                      <p class="small text-muted mb-0">Ditolak</p>
-                      <span class="h4 mb-0">{{ $suratDitolak }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-xl-3 mb-4">
-              <div class="card shadow border-0">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col-3 text-center">
-                      <i class="fe fe-loader fe-24 text-warning"></i>
-                    </div>
-                    <div class="col">
-                      <p class="small text-muted mb-0">Diproses</p>
-                      <span class="h4 mb-0">{{ $suratDiproses }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
           {{-- Selamat Datang + Tombol Ajukan --}}
           <div class="card shadow mb-4">
