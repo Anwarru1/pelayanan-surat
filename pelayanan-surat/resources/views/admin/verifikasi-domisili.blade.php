@@ -45,7 +45,7 @@
                     <div class="modal-dialog modal-lg" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="modalKelolaLabel-{{ $warga->id }}">Detail Warga Domisili</h5>
+                          <h5 class="modal-title">Detail Warga Domisili</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
                             <span aria-hidden="true">&times;</span>
                           </button>
@@ -56,7 +56,10 @@
                             <tr><th>NIK</th><td>{{ $warga->nik }}</td></tr>
                             <tr><th>Nama</th><td>{{ $warga->nama }}</td></tr>
                             <tr><th>Alamat</th><td>{{ $warga->alamat }}</td></tr>
-                            <tr><th>TTL</th><td>{{ $warga->tmp_lahir, $warga->tgl_lahir }}</td></tr>
+                            <tr>
+                              <th>TTL</th>
+                              <td>{{ $warga->tmp_lahir }}, {{ \Carbon\Carbon::parse($warga->tgl_lahir)->format('d-m-Y') }}</td>
+                            </tr>
                             <tr><th>Jenis Kelamin</th><td>{{ $warga->j_kel }}</td></tr>
                             <tr><th>No. HP</th><td>{{ $warga->nomor_hp }}</td></tr>
                             <tr><th>Pekerjaan</th><td>{{ $warga->pekerjaan }}</td></tr>
@@ -66,6 +69,7 @@
 
                           <h6>Data Tambahan</h6>
                           @php
+                            use Illuminate\Support\Str;
                             $dataTambahan = json_decode($warga->data_tambahan, true);
                           @endphp
 
@@ -74,8 +78,8 @@
                               @foreach($dataTambahan as $key => $value)
                                 <li class="list-group-item">
                                   <strong>{{ ucfirst($key) }}:</strong>
-                                  @if(filter_var($value, FILTER_VALIDATE_URL) || Str::endsWith($value, ['.jpg','.jpeg','.png','.pdf','.doc','.docx']))
-                                    <a href="{{ asset('storage/'.$value) }}" target="_blank">Lihat File</a>
+                                  @if(Str::endsWith($value, ['.jpg','.jpeg','.png','.pdf','.doc','.docx']))
+                                    <a href="{{ asset('uploads/data_tambahan/'.$value) }}" target="_blank">Lihat File</a>
                                   @else
                                     {{ $value }}
                                   @endif
