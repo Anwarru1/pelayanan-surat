@@ -158,7 +158,7 @@ Route::middleware('auth:pengguna')->group(function () {
 
 
 Route::middleware('auth')->group(function(){
-    Route::get('profile/index',[ProfilDomisiliController::class,'index'])->name('profile.index');
-    Route::post('profile/update',[ProfilDomisiliController::class,'update'])->name('profile.update');
+    Route::get('profile/index',[ProfilDomisiliController::class,'index'])->name('profil.index');
+    Route::post('profile/update',[ProfilDomisiliController::class,'update'])->name('profil.update');
     Route::get('dashboard', function(){ return view('pengguna.index'); })->name('dashboard');
 });
