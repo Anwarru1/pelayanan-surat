@@ -1,5 +1,5 @@
 <x-layout-login>
-    <form method="POST" action="{{ route('login.pengguna') }}" id="formLoginPengguna">
+    <form method="POST" action="{{ route('pengguna.register.store') }}" id="formDaftarPengguna">
         @csrf
 
         <h1 class="h6 text-center mb-3">Daftar Akun</h1>

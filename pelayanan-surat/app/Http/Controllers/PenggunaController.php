@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\daftar;
 use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -151,45 +152,18 @@ class PenggunaController extends Controller
     {
         \Carbon\Carbon::setLocale('id');
         $request->validate([
-            'nama'      => 'required|string|max:100',
             'nik'       => 'required|numeric|digits:16|unique:pengguna',
             'password'  => 'required|min:6|confirmed',
-            'alamat'    => 'required|string|max:255',
-            'tgl_lahir' => 'required|date',
-            'tmp_lahir' => 'required|string|max:100',
-            'agama'     => 'required|in:Islam,Kristen,Katolik,Hindu,Buddha,Konghucu',
-            'status'    => 'required|in:Kawin,Belum Kawin,Cerai Mati,Cerai Hidup',
-            'nomor_hp'  => 'required|numeric',
-            'j_kel'     => 'required|in:Laki-laki,Perempuan',
-            'pekerjaan' => 'required|string|max:100',
         ], [
             'nik.required'       => 'NIK wajib diisi.',
             'nik.digits'         => 'NIK harus terdiri dari 16 digit.',
             'password.required'  => 'Password wajib diisi.',
             'password.min'       => 'Password minimal 6 karakter.',
-            'nama.required'      => 'Nama wajib diisi',
-            'alamat.required'    => 'Alamat wajib disi',
-            'j_kel.required'     => 'Jenis Kelamin wajib disi',
-            'agama.required'     => 'Agama wajib disi',
-            'status.required'    => 'Status wajib disi',
-            'pekerjaan.required' => 'Pekerjaan wajib disi',
-            'nomor_hp.required'  => 'Nomor HP wajib disi',
-            'tmp_lahir.required' => 'Tempat Lahir wajib disi',
-            'tgl_lahir.required' => 'Tanggal Lahir wajib disi',
         ]);
 
-        Pengguna::create([
-            'nama'      => $request->nama,
+        daftar::create([
             'nik'       => $request->nik,
             'password'  => Hash::make($request->password),
-            'alamat'    => $request->alamat,
-            'tgl_lahir' => Carbon::createFromFormat('d-m-Y', $request->tgl_lahir)->format('Y-m-d'),
-            'tmp_lahir' => $request->tmp_lahir,
-            'agama'     => $request->agama,
-            'status'    => $request->status,
-            'nomor_hp'  => $this->normalizePhoneNumber($request->nomor_hp),
-            'j_kel'     => $request->j_kel,
-            'pekerjaan' => $request->pekerjaan,
         ]);
 
         return redirect()->route('login.pengguna')->with('success', 'Akun berhasil dibuat. Silakan login.');
