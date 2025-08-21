@@ -55,6 +55,10 @@ class ProfilDomisiliController extends Controller
         $user->alamat = $request->alamat;
         $user->pekerjaan = $request->pekerjaan;
         $user->status = $request->status;
+        $user->j_kel = $request->j_kel;
+        $user->agama = $request->agama;
+        $user->tgl_lahir = $request->tgl_lahir;
+        $user->tmp_lahir = $request->tmp_lahir;
         $user->nomor_hp = $request->nomor_hp;
         $user->data_tambahan = json_encode($dataTambahan);
 
