@@ -17,44 +17,22 @@
         @php $admin = Auth::guard('admin')->user(); @endphp
 
         @if($admin->role === 'admin')
-            <!-- Notifikasi Reset Password -->
+            <!-- 🔔 Notifikasi Gabungan -->
             <li class="nav-item dropdown mx-2">
                 <a class="nav-link dropdown-toggle text-muted" href="#" role="button" data-toggle="dropdown">
                     <i class="fe fe-bell"></i>
-                    @if($resetBaru->count() > 0)
+                    @if($wargaBaru->count() > 0 || $resetBaru->count() > 0)
                       <span class="dot dot-md bg-danger"></span>
                     @endif
                 </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <h6 class="dropdown-header">Permintaan Reset Password</h6>
-                    @forelse($resetBaru as $reset)
-                        <a class="dropdown-item" href="{{ route('admin.password.reset.index') }}">
-                            <strong>{{ $reset->nama }}</strong> ({{ $reset->nik }})
-                        </a>
-                    @empty
-                        <a class="dropdown-item text-muted" href="{{ route('admin.password.reset.index') }}">
-                            Tidak ada permintaan reset
-                        </a>
-                    @endforelse
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-center text-primary" href="{{ route('admin.password.reset.index') }}">
-                        Lihat Semua Reset
-                    </a>
-                </div>
-            </li>
 
-            <!-- Notifikasi Warga Baru -->
-            <li class="nav-item dropdown mx-2">
-                <a class="nav-link dropdown-toggle text-muted" href="#" role="button" data-toggle="dropdown">
-                    <i class="fe fe-users"></i>
-                    @if($wargaBaru->count() > 0)
-                      <span class="dot dot-md bg-warning"></span>
-                    @endif
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-menu dropdown-menu-right" style="width: 300px;">
+                    
+                    <!-- Bagian Warga Baru -->
                     <h6 class="dropdown-header">Warga Baru Mendaftar</h6>
                     @forelse($wargaBaru as $warga)
                         <a class="dropdown-item" href="{{ route('verifikasi.index') }}">
+                            <i class="fe fe-user text-primary"></i>
                             <strong>{{ $warga->nama }}</strong> ({{ $warga->nik }})
                         </a>
                     @empty
@@ -63,8 +41,23 @@
                         </a>
                     @endforelse
                     <div class="dropdown-divider"></div>
+                    
+                    <!-- Bagian Reset Password -->
+                    <h6 class="dropdown-header">Permintaan Reset Password</h6>
+                    @forelse($resetBaru as $reset)
+                        <a class="dropdown-item" href="{{ route('admin.password.reset.index') }}">
+                            <i class="fe fe-lock text-warning"></i>
+                            <strong>{{ $reset->nama }}</strong> ({{ $reset->nik }})
+                        </a>
+                    @empty
+                        <a class="dropdown-item text-muted" href="{{ route('admin.password.reset.index') }}">
+                            Tidak ada permintaan reset
+                        </a>
+                    @endforelse
+
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-center text-primary" href="{{ route('verifikasi.index') }}">
-                        Lihat Semua Pendaftar
+                        Lihat Semua
                     </a>
                 </div>
             </li>
