@@ -1,162 +1,92 @@
-<!doctype html>
-<html lang="en">
+<x-layout-login>
+    <form method="POST" action="{{ route('login.pengguna') }}" id="formLoginPengguna">
+        @csrf
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="icon" href="{{ asset('assets/images/logo.png') }}">
-  <title>Form Pendaftaran Pengguna</title>
-  <link rel="stylesheet" href="css/simplebar.css">
-  <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/feather.css">
-  <link rel="stylesheet" href="css/daterangepicker.css">
-  <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
-  <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
-</head>
+        <h1 class="h6 text-center mb-3">Login</h1>
 
-<body class="light">
-  <div class="wrapper vh-100">
-    <div class="row align-items-center h-100">
-      <div class="col-lg-8 col-md-10 col-12 mx-auto">
-        <div class="card shadow">
-          <div class="card-body p-4">
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                    </ul>
-                </div>
-            @endif
-            <div class="text-center mb-4">
-              <h3>Form Pendaftaran Warga Domisili</h3>
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
             </div>
-            <form action="{{ route('pengguna.register.store') }}" method="POST" id="formDaftarPengguna">
-              @csrf
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $e)
+                        <li>{{ $e }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>NIK</label>
-                  <input type="text" name="nik" class="form-control @error('nik') is-invalid @enderror"   >
-                  @error('nik')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Password</label>
-                  <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"   >
-                  @error('password')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Konfirmasi Password</label>
-                  <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror"   >
-                  @error('password_confirmation')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
-              </div>
-
-              <button type="submit" class="btn btn-primary btn-block">Daftar</button>
-            </form>
-          </div>
+        <div class="form-group">
+          <label>NIK</label>
+          <input type="text" name="nik" class="form-control @error('nik') is-invalid @enderror"   >
+          @error('nik')
+            <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+          @enderror
         </div>
-        <p class="mt-4 mb-3 text-muted text-center">© 2025</p>
-      </div>
-    </div>
-  </div>
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/moment.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/simplebar.min.js"></script>
-  <script src="js/daterangepicker.js"></script>
-  <script src="js/jquery.stickOnScroll.js"></script>
-  <script src="js/tinycolor-min.js"></script>
-  <script src="js/config.js"></script>
-  <script src="js/apps.js"></script>
-</body>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"   >
+          @error('password')
+            <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+          @enderror
+        </div>
 
+        <div class="form-group">
+          <label>Konfirmasi Password</label>
+          <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror"   >
+          @error('password_confirmation')
+            <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+          @enderror
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+
+        <p class="mt-4 mb-0 text-muted text-center">© 2025</p>
+    </form>
+</x-layout-login>
+
+
+@push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('formDaftarPengguna');
-    if (!form) return;
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('formLoginPengguna');
+        if (!form) return;
 
-    const fieldLabels = {
-        nik: 'NIK',
-        password: 'Password',
-    };
+        const fields = {
+            nik: 'NIK',
+            password: 'Password'
+        };
 
-    form.addEventListener('submit', function (e) {
-        let valid = true;
+        form.addEventListener('submit', function (e) {
+            let isValid = true;
 
-        // Bersihkan error lama
-        form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-        form.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
+            // Bersihkan error sebelumnya
+            form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+            form.querySelectorAll('.invalid-feedback.client-side').forEach(el => el.remove());
 
-        Object.keys(fieldLabels).forEach(field => {
-            const el = form.querySelector(`[name="${field}"]`);
-            let isInvalid = false;
+            Object.keys(fields).forEach(field => {
+                const input = form.querySelector(`[name="${field}"]`);
+                if (!input) return;
 
-            if (!el) return;
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.classList.add('is-invalid');
 
-            if (el.type === 'radio') {
-                const checked = form.querySelector(`[name="${field}"]:checked`);
-                if (!checked) isInvalid = true;
-            } else if (!el.value.trim()) {
-                isInvalid = true;
-            }
-
-            if (isInvalid) {
-                valid = false;
-
-                const label = fieldLabels[field];
-                const errorText = `${label} wajib diisi`;
-
-                if (el.type === 'radio') {
-                    const radios = form.querySelectorAll(`[name="${field}"]`);
-                    radios.forEach(radio => radio.classList.add('is-invalid'));
-
-                    const group = el.closest('.form-group');
-                    if (group && !group.querySelector('.invalid-feedback')) {
-                        const feedback = document.createElement('div');
-                        feedback.className = 'invalid-feedback d-block';
-                        feedback.innerText = errorText;
-                        group.appendChild(feedback);
-                    }
-                } else {
-                    el.classList.add('is-invalid');
-                    const feedback = document.createElement('div');
-                    feedback.className = 'invalid-feedback';
-                    feedback.innerText = errorText;
-                    el.parentNode.appendChild(feedback);
+                    const error = document.createElement('div');
+                    error.className = 'invalid-feedback client-side';
+                    error.textContent = fields[field] + ' wajib diisi';
+                    input.parentNode.appendChild(error);
                 }
+            });
+
+            if (!isValid) {
+                e.preventDefault(); // Hentikan submit jika ada error
             }
         });
-
-        if (!valid) {
-            e.preventDefault(); // Hentikan submit jika tidak valid
-        }
     });
-});
-
 </script>
-
-
-
-
-
-</html>
+@endpush
