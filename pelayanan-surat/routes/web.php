@@ -53,7 +53,10 @@ Route::middleware('auth:admin')->group(function () {
 
 
 // Pengguna Dashboard
-Route::middleware('auth:pengguna')->get('/index', [HomeController::class, 'index'])->name('pengguna.index');
+Route::middleware('auth:pengguna')->get('/pengguna/dashboard', [HomeController::class, 'index'])->name('pengguna.index');
+
+// Domisili Dashboard
+Route::middleware('auth:daftar')->get('/domisili/dashboard'. [AuthController::class, 'penggunaLogin'])->name('domisili.dashboard');
 
 
 // Routes for Admin & Kepala Desa
@@ -162,7 +165,8 @@ Route::middleware('auth:pengguna')->group(function () {
 
 
 Route::middleware('auth:daftar')->group(function(){
+    Route::get('/domisili/dashboard', [ProfilDomisiliController::class, 'dashboard'])->name('domisili.dashboard');
     Route::get('/domisili/profile',[ProfilDomisiliController::class,'index'])->name('profil.index');
     Route::post('/domisili/profile/update',[ProfilDomisiliController::class,'update'])->name('profil.update');
-    Route::get('/domisili/dashboard', [ProfilDomisiliController::class, 'dashboard'])->name('domisili.dashboard');
+    
 });
