@@ -55,9 +55,6 @@ Route::middleware('auth:admin')->group(function () {
 // Pengguna Dashboard
 Route::middleware('auth:pengguna')->get('/pengguna/dashboard', [HomeController::class, 'index'])->name('pengguna.index');
 
-// Domisili Dashboard
-Route::middleware('auth:daftar')->get('/domisili/dashboard'. [AuthController::class, 'penggunaLogin'])->name('domisili.dashboard');
-
 
 // Routes for Admin & Kepala Desa
 Route::middleware('auth:admin')->group(function () {
