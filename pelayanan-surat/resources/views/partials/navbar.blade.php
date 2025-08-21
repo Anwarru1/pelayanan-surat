@@ -41,23 +41,26 @@
                         </a>
                     @endforelse
                     <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-center text-primary" href="{{ route('verifikasi.index') }}">
+                        Lihat Semua Permintaan Verifikasi
+                    </a>
                     
                     <!-- Bagian Reset Password -->
                     <h6 class="dropdown-header">Permintaan Reset Password</h6>
                     @forelse($resetBaru as $reset)
-                        <a class="dropdown-item" href="{{ route('admin.password.reset.index') }}">
+                        <a class="dropdown-item" href="{{ route('admin.pesan') }}">
                             <i class="fe fe-lock text-warning"></i>
                             <strong>{{ $reset->nama }}</strong> ({{ $reset->nik }})
                         </a>
                     @empty
-                        <a class="dropdown-item text-muted" href="{{ route('admin.password.reset.index') }}">
+                        <a class="dropdown-item text-muted" href="{{ route('admin.pesan') }}">
                             Tidak ada permintaan reset
                         </a>
                     @endforelse
 
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-center text-primary" href="{{ route('verifikasi.index') }}">
-                        Lihat Semua
+                    <a class="dropdown-item text-center text-primary" href="{{ route('admin.pesan') }}">
+                        Lihat Semua Permintaan Reset
                     </a>
                 </div>
             </li>
