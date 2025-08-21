@@ -67,7 +67,7 @@ class AuthController extends Controller
         if (Auth::guard('pengguna')->attempt($credentials)) {
             return redirect()->route('pengguna.index');
         }elseif(Auth::guard('daftar')->attempt($credentials)) {
-            return redirect()->route('profil.index')->with('info','Lengkapi profil Anda, menunggu verifikasi admin.');
+            return redirect()->route('domisili.dashboard')->with('info','Lengkapi profil Anda, menunggu verifikasi admin.');
         }
 
         return back()->withErrors([

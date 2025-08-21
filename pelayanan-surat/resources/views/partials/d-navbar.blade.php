@@ -14,9 +14,9 @@
     </li>
 
     <!-- Logout -->
-    @if(Auth::guard('pengguna')->check())
+    @if(Auth::guard('daftar')->check())
     <li class="nav-item mx-2 d-flex align-items-center">
-      <form action="{{ route('logout.pengguna') }}" method="POST" class="mx-2">
+      <form action="{{ route('logout.domisili') }}" method="POST" class="mx-2">
         @csrf
         <button type="submit" class="btn btn-sm btn-outline-danger">
             <i class="fe fe-log-out"></i> Logout

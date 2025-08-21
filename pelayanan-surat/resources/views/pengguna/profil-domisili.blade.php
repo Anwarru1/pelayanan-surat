@@ -68,6 +68,7 @@
                   <div class="form-group col-md-6">
                     <label for="status">Status Pernikahan</label>
                     <select id="status" name="status" class="custom-select">
+                      <option value="" disabled selected>Pilih Status Pernikahan</option>
                       <option value="Kawin" {{ old('status', Auth::user()->status) == 'Kawin' ? 'selected' : '' }}>Kawin</option>
                       <option value="Belum Kawin" {{ old('status', Auth::user()->status) == 'Belum Kawin' ? 'selected' : '' }}>Belum Kawin</option>
                       <option value="Cerai Mati" {{ old('status', Auth::user()->status) == 'Cerai Mati' ? 'selected' : '' }}>Cerai Mati</option>
