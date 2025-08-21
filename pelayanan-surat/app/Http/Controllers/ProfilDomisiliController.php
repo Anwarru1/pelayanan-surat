@@ -11,13 +11,13 @@ class ProfilDomisiliController extends Controller
 {
     public function index()
     {
-        $user = Auth::guard('daftar');
+        $user = Auth::guard('daftar')->user();
         return view('pengguna.profil-domisili', compact('user'));
     }
 
     public function dashboard()
     {
-        $user = Auth::guard('daftar');
+        $user = Auth::guard('daftar')->user();
         return view('pengguna.domisili.dashboard', compact('user'));
     }
 
@@ -38,7 +38,7 @@ class ProfilDomisiliController extends Controller
             'data_tambahan.akta'=> 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        $user = Auth::guard('daftar');
+        $user = Auth::guard('daftar')->user();
         $dataTambahan = $user->data_tambahan ? json_decode($user->data_tambahan, true) : [];
 
         // upload masing-masing file
