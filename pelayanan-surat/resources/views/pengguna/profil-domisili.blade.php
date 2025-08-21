@@ -57,12 +57,12 @@
                   <div class="form-group col-md-6">
                     <label>Jenis Kelamin</label><br>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="j_kel" id="laki" value="Laki-laki" {{ old('j_kel', Auth::user()->j_kel) === 'Laki-laki' ? 'checked' : '' }}>
-                      <label class="form-check-label" for="laki">Laki-laki</label>
+                      <input class="form-check-input" type="radio" name="j_kel" id="Laki-laki" value="Laki-laki" {{ old('j_kel', Auth::user()->j_kel) === 'Laki-laki' ? 'checked' : '' }}>
+                      <label class="form-check-label" for="Laki-laki">Laki-laki</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="j_kel" id="perempuan" value="Perempuan" {{ old('j_kel', Auth::user()->j_kel) === 'Perempuan' ? 'checked' : '' }}>
-                      <label class="form-check-label" for="perempuan">Perempuan</label>
+                      <input class="form-check-input" type="radio" name="j_kel" id="Perempuan" value="Perempuan" {{ old('j_kel', Auth::user()->j_kel) === 'Perempuan' ? 'checked' : '' }}>
+                      <label class="form-check-label" for="Perempuan">Perempuan</label>
                     </div>
                   </div>
                   <div class="form-group col-md-6">
@@ -95,7 +95,7 @@
 
                 <div class="form-group col-md-6">
                   <label>Agama</label>
-                  <select name="agama" class="custom-select" >
+                  <select id="agama" name="agama" class="custom-select" >
                     <option value="" disabled selected>Pilih Agama</option>
                     <option value="Islam" {{ old('agama', Auth::user()->agama) == 'Islam' ? 'selected' : '' }}>Islam</option>
                     <option value="Kristen" {{ old('agama', Auth::user()->agama) == 'Kristen' ? 'selected' : '' }}>Kristen</option>
@@ -130,7 +130,6 @@
             <div class="card-body">
               <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
 
                 @php
                   $dataTambahan = Auth::user()->data_tambahan ? json_decode(Auth::user()->data_tambahan, true) : [];
