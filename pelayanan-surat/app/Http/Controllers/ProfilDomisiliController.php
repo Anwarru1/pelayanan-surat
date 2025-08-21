@@ -18,7 +18,7 @@ class ProfilDomisiliController extends Controller
     public function dashboard()
     {
         $user = Auth::guard('daftar')->user();
-        return view('pengguna.domisili.dashboard', compact('user'));
+        return view('pengguna.domisili-dashboard', compact('user'));
     }
 
     public function update(Request $request)
