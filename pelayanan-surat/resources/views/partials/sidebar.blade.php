@@ -50,7 +50,7 @@
                     </li>
                     <li class="nav-item w-100">
                         <a class="nav-link" href="{{ route('verifikasi.index') }}">
-                            <i class="fe fe-users fe-16"></i>
+                            <i class="fe fe-user-check fe-16"></i>
                             <span class="ml-3 item-text">Verifikasi Domisili</span>
                         </a>
                     </li>
