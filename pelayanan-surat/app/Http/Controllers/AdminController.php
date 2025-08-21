@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Log;
+use App\Models\daftar;
 
 class AdminController extends Controller
 {
@@ -100,6 +101,35 @@ class AdminController extends Controller
         Admin::whereIn('id', $ids)->delete();
 
         return back()->with('success', 'Data admin berhasil dihapus.');
+    }
+
+    public function pendingUsers() {
+        $users = daftar::where('is_verified', false)->get();
+        return view('admin.domisili', compact('users'));
+    }
+
+    public function verify($id) {
+        $daftar = daftar::findOrFail($id);
+
+        // Pindahkan ke pengguna
+        Pengguna::create([
+            'nik' => $daftar->nik,
+            'password' => $daftar->password,
+            'nama' => $daftar->nama,
+            'alamat' => $daftar->alamat,
+            'tmp_lahir' => $daftar->tmp_lahir,
+            'tgl_lahir' => $daftar->tgl_lahir,
+            'j_kel' => $daftar->j_kel,
+            'nomor_hp' => $daftar->nomor_hp,
+            'pekerjaan' => $daftar->pekerjaan,
+            'agama' => $daftar->agama,
+            'status' => $daftar->status,
+            'role' => 'warga_domisili'
+        ]);
+
+        $daftar->delete();
+
+        return back()->with('success','Warga domisili berhasil diverifikasi.');
     }
 
 

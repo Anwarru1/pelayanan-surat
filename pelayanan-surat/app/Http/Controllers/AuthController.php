@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\daftar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pengguna;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -64,6 +66,8 @@ class AuthController extends Controller
 
         if (Auth::guard('pengguna')->attempt($credentials)) {
             return redirect()->route('pengguna.index');
+        }elseif(Auth::guard('daftar')->attempt($credentials)) {
+            return redirect()->view('pengguna.profil-domisili')->with('info','Lengkapi profil Anda, menunggu verifikasi admin.');
         }
 
         return back()->withErrors([
@@ -83,5 +87,19 @@ class AuthController extends Controller
     {
         Auth::guard('pengguna')->logout();
         return redirect()->route('login.pengguna');
+    }
+
+    public function register(Request $request) {
+        $request->validate([
+            'nik' => 'required|unique:daftar,nik',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        daftar::create([
+            'nik' => $request->nik,
+            'password' => Hash::make($request->password)
+        ]);
+
+        return redirect()->route('login')->with('success','Akun berhasil dibuat, lengkapi profil setelah login.');
     }
 }

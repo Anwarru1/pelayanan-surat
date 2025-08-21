@@ -37,19 +37,12 @@
                 </div>
             @endif
             <div class="text-center mb-4">
-              <h3>Form Pendaftaran Pengguna</h3>
+              <h3>Form Pendaftaran Warga Domisili</h3>
             </div>
             <form action="{{ route('pengguna.register.store') }}" method="POST" id="formDaftarPengguna">
               @csrf
 
               <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Nama</label>
-                  <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" >
-                  @error('nama')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
                 <div class="form-group col-md-6">
                   <label>NIK</label>
                   <input type="text" name="nik" class="form-control @error('nik') is-invalid @enderror"   >
@@ -74,99 +67,6 @@
                     <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                   @enderror
                 </div>
-              </div>
-
-              <div class="form-group">
-                <label>Jenis Kelamin</label><br>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input @error('j_kel') is-invalid @enderror" type="radio" name="j_kel" id="laki" value="Laki-laki"   >
-                  <label class="form-check-label" for="laki">Laki-laki</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input @error('j_kel') is-invalid @enderror" type="radio" name="j_kel" id="perempuan" value="Perempuan"   >
-                  <label class="form-check-label" for="perempuan">Perempuan</label>
-                </div>
-                @error('j_kel')
-                  <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                @enderror
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Status</label>
-                  <select name="status" class="custom-select @error('status') is-invalid @enderror"   >
-                    <option value="" disabled selected>Pilih Status</option>
-                    <option value="Kawin">Kawin</option>
-                    <option value="Belum Kawin">Belum Kawin</option>
-                    <option value="Cerai Mati">Cerai Mati</option>
-                    <option value="Cerai Hidup">Cerai Hidup</option>
-                  </select>
-                  @error('status')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Nomor HP</label>
-                  <input type="text" name="nomor_hp" class="form-control @error('nomor_hp') is-invalid @enderror"   >
-                </div>
-                @error('nomor_hp')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                @enderror
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Tempat Lahir</label>
-                  <input type="text" name="tmp_lahir" class="form-control @error('tmp_lahir') is-invalid @enderror"   >
-                  @error('tmp_lahir')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="tgl_lahir">Tanggal Lahir</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control drgpicker @error('tgl_lahir') is-invalid @enderror" id="tgl_lahir" name="tgl_lahir" autocomplete="off" >
-                            <div class="input-group-append">
-                                <div class="input-group-text"><span class="fe fe-calendar fe-16"></span></div>
-                            </div>
-                            @error('tgl_lahir')
-                                <div class="invalid-feedback d-block"><strong>{{ $message }}</strong></div>
-                            @enderror
-                        </div>
-                    </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Pekerjaan</label>
-                  <input type="text" name="pekerjaan" class="form-control @error('pekerjaan') is-invalid @enderror"   >
-                  @error('pekerjaan')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
-                <div class="form-group col-md-6">
-                  <label>Agama</label>
-                  <select name="agama" class="custom-select @error('agama') is-invalid @enderror"   >
-                    <option value="" disabled selected>Pilih Agama</option>
-                    <option value="Islam">Islam</option>
-                    <option value="Kristen">Kristen</option>
-                    <option value="Katolik">Katolik</option>
-                    <option value="Hindu">Hindu</option>
-                    <option value="Buddha">Buddha</option>
-                    <option value="Konghucu">Konghucu</option>
-                  </select>
-                  @error('agama')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                  @enderror
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label>Alamat</label>
-                <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror"   ></textarea>
-                @error('alamat')
-                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
-                @enderror
               </div>
 
               <button type="submit" class="btn btn-primary btn-block">Daftar</button>
@@ -198,15 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const fieldLabels = {
         nik: 'NIK',
         password: 'Password',
-        nama: 'Nama',
-        alamat: 'Alamat',
-        j_kel: 'Jenis Kelamin',
-        agama: 'Agama',
-        status: 'Status',
-        pekerjaan: 'Pekerjaan',
-        nomor_hp: 'Nomor HP',
-        tmp_lahir: 'Tempat Lahir',
-        tgl_lahir: 'Tanggal Lahir'
     };
 
     form.addEventListener('submit', function (e) {
@@ -262,39 +153,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-$(function() {
-    $('#tgl_lahir').daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-        autoUpdateInput: false,   // otomatis update input
-        timePicker: false,
-        autoApply: true,
-        locale: {
-        format: 'DD-MM-YYYY', // contoh: 19 Agustus 2025
-        daysOfWeek: [
-          "Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"
-        ],
-        monthNames: [
-          "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-          "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-        ],
-        firstDay: 1
-      }
-    });
-    
-    // placeholder default
-    $('#tgl_lahir').attr("placeholder", "dd-mm-yy");
-
-    // Isi input hanya saat pengguna memilih tanggal
-    $('#tgl_lahir').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('DD-MM-YYYY'));
-    });
-
-    // Bersihkan input jika dibatalkan
-    $('#tgl_lahir').on('cancel.daterangepicker', function(ev, picker) {
-        $(this).val('');
-    });
-});
 </script>
 
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AuthController, PengajuanSuratController, JenisSuratController, BerkasSuratController,
     LaporanController, PenggunaController, AdminController, ProfilController,
-    DashboardController, HomeController, ResetPasswordController
+    DashboardController, HomeController, ResetPasswordController, ProfilDomisiliController
 };
 use App\Models\JenisSurat;
 use Illuminate\Support\Facades\Artisan;
@@ -115,6 +115,10 @@ Route::middleware('auth:admin')->group(function () {
             Route::get('/pesan-reset', 'pesanMasuk')->name('admin.pesan');
             Route::post('/pesan-reset/{id}/baca', 'tandaiBaca')->name('admin.pesan.baca');
         });
+
+        //Verifikasi Warga Domisili
+        Route::get('admin/warga-domisili',[AdminController::class,'pendingUsers'])->name('admin.warga-domisili');
+        Route::get('admin/verify/{id}',[AdminController::class,'verify'])->name('admin.verify');
     });
 });
 
@@ -157,4 +161,11 @@ Route::middleware('auth:pengguna')->group(function () {
     Route::post('/kirim-pesan', [PenggunaController::class, 'kirimPesan'])
     ->name('pengguna.kirimPesan');
 
+});
+
+
+Route::middleware('auth')->group(function(){
+    Route::get('profile/index',[ProfilDomisiliController::class,'index'])->name('profile.index');
+    Route::post('profile/update',[ProfilDomisiliController::class,'update'])->name('profile.update');
+    Route::get('dashboard', function(){ return view('pengguna.index'); })->name('dashboard');
 });
