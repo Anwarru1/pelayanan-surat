@@ -2,7 +2,7 @@
     <form method="POST" action="{{ route('login.pengguna') }}" id="formLoginPengguna">
         @csrf
 
-        <h1 class="h6 text-center mb-3">Login</h1>
+        <h1 class="h6 text-center mb-3">Daftar Akun</h1>
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -43,7 +43,7 @@
           @enderror
         </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Daftar</button>
 
         <p class="mt-4 mb-0 text-muted text-center">© 2025</p>
     </form>

@@ -57,6 +57,12 @@ return [
             'driver' => 'session',
             'provider' => 'penggunas',
         ],
+
+        // ➕ Tambahkan ini untuk pengguna
+        'daftar' => [
+            'driver' => 'session',
+            'provider' => 'daftars',
+        ],
     ],
 
     /*
@@ -93,6 +99,12 @@ return [
         'penggunas' => [
             'driver' => 'eloquent',
             'model' => App\Models\Pengguna::class,
+        ],
+
+        // ➕ Tambahkan ini untuk Domisili
+        'daftars' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\daftar::class,
         ],
 
         // 'users' => [
