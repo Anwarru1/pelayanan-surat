@@ -54,45 +54,46 @@ class BerkasSuratController extends Controller
             return back()->with('error', 'Nomor surat belum tersedia.');
         }
 
-        // Update status diterima
-        $berkas->pengajuanSurat->update(['status' => 'diterima']);
-
         $docxPath = storage_path('app/public/' . $berkas->file_surat);
         if (!file_exists($docxPath)) {
-            return back()->with('error', 'File surat tidak ditemukan.');
+            return back()->with('error', 'File surat tidak ditemukan di: ' . $docxPath);
         }
 
         $template = new TemplateProcessor($docxPath);
 
         // ------------------------------
-        // TTD
+        // Cek & sisipkan TTD
         // ------------------------------
-        if (!empty($berkas->tanda_tangan)) {
-            $ttdFullPath = storage_path('app/public/' . $berkas->tanda_tangan);
-            if (file_exists($ttdFullPath)) {
-                $template->setImageValue('tanda_tangan', [
-                    'path' => $ttdFullPath,
-                    'width' => 150,  // sedikit lebih besar untuk jelas
-                    'height' => 100,
-                    'ratio' => false,
-                ]);
-            }
+        if (empty($berkas->tanda_tangan)) {
+            return back()->with('error', 'Tanda tangan belum diupload.');
         }
+        $ttdFullPath = storage_path('app/public/' . $berkas->tanda_tangan);
+        if (!file_exists($ttdFullPath)) {
+            return back()->with('error', 'File tanda tangan tidak ditemukan: ' . $ttdFullPath);
+        }
+        $template->setImageValue('tanda_tangan', [
+            'path' => $ttdFullPath,
+            'width' => 150,
+            'height' => 100,
+            'ratio' => false,
+        ]);
 
         // ------------------------------
-        // Stempel
+        // Cek & sisipkan Stempel
         // ------------------------------
-        if (!empty($berkas->stempel)) {
-            $stempelFullPath = storage_path('app/public/' . $berkas->stempel);
-            if (file_exists($stempelFullPath)) {
-                $template->setImageValue('stempel', [
-                    'path' => $stempelFullPath,
-                    'width' => 120,
-                    'height' => 120,
-                    'ratio' => false,
-                ]);
-            }
+        if (empty($berkas->stempel)) {
+            return back()->with('error', 'Stempel belum diupload.');
         }
+        $stempelFullPath = storage_path('app/public/' . $berkas->stempel);
+        if (!file_exists($stempelFullPath)) {
+            return back()->with('error', 'File stempel tidak ditemukan: ' . $stempelFullPath);
+        }
+        $template->setImageValue('stempel', [
+            'path' => $stempelFullPath,
+            'width' => 120,
+            'height' => 120,
+            'ratio' => false,
+        ]);
 
         // ------------------------------
         // Diverifikasi oleh
@@ -110,34 +111,37 @@ class BerkasSuratController extends Controller
         $qrContent .= "Diverifikasi oleh: Kepala Desa " . $namaKepalaDesa;
 
         $qrPath = storage_path('app/public/qrcode_' . $berkas->id . '.png');
-
-        // Generate QR Code resolusi lebih tinggi agar mudah discan
         QrCode::format('png')->size(400)->generate($qrContent, $qrPath);
 
-        if (file_exists($qrPath)) {
-            $template->setImageValue('qrcode', [
-                'path' => $qrPath,
-                'width' => 200, // gunakan ukuran lebih besar
-                'height' => 200,
-                'ratio' => false,
-            ]);
+        if (!file_exists($qrPath)) {
+            return back()->with('error', 'Gagal generate QR Code di: ' . $qrPath);
         }
+
+        $template->setImageValue('qrcode', [
+            'path' => $qrPath,
+            'width' => 200,
+            'height' => 200,
+            'ratio' => false,
+        ]);
 
         // ------------------------------
         // Simpan DOCX
         // ------------------------------
         $template->saveAs($docxPath);
 
-        // Salin ke folder public untuk download/view
-        $folderPublic = $_SERVER['DOCUMENT_ROOT'] . '/storage/generated/';
+        $folderPublic = public_path('storage/generated/');
         if (!file_exists($folderPublic)) mkdir($folderPublic, 0775, true);
 
         copy($docxPath, $folderPublic . basename($docxPath));
 
         $berkas->update(['file_surat' => 'generated/' . basename($docxPath)]);
 
+        // Update status diterima
+        $berkas->pengajuanSurat->update(['status' => 'diterima']);
+
         return redirect()->back()->with('success', 'Surat berhasil dikonfirmasi, TTD, Stempel, & QR Code berhasil disisipkan.');
     }
+
 
 
     public function downloadSurat(BerkasSurat $berkas)
