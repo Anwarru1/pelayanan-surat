@@ -26,7 +26,7 @@ class BerkasSuratController extends Controller
     }
 
     // Upload TTD & Stempel
-    public function uploadTtdStempelAll(Request $request)
+    public function uploadTtdStempel(Request $request)
     {
         $request->validate([
             'tanda_tangan' => 'required|image|mimes:png,jpg,jpeg|max:2048',
