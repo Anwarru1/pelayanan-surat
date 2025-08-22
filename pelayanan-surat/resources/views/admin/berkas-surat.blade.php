@@ -97,7 +97,7 @@
                                   @csrf
                                   <div class="modal-content">
                                       <div class="modal-header">
-                                          <h5 class="modal-title">Upload TTD & Stempel untuk Semua Berkas</h5>
+                                          <h5 class="modal-title">Upload TTD & Stempel</h5>
                                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                                       </div>
                                       <div class="modal-body">
