@@ -74,55 +74,49 @@
 
         {{-- Tombol aksi --}}
         <div class="mt-3">
-          @php $nomorFilled = !empty($p->nomor_urutan); @endphp
-          
-          <a href="{{ route('pengajuan-surat.preview', $p->id) }}" 
-             class="btn btn-secondary {{ !$nomorFilled ? 'disabled' : '' }}" 
-             {{ !$nomorFilled ? 'aria-disabled=true' : '' }}>
-             <i class="fe fe-eye"></i> Lihat Surat
-          </a>
+            @php $nomorFilled = !empty($p->nomor_urutan); @endphp
+            
+            <a href="{{ route('pengajuan-surat.preview', $p->id) }}" 
+              class="btn btn-secondary {{ !$nomorFilled ? 'disabled' : '' }}" 
+              {{ !$nomorFilled ? 'aria-disabled=true' : '' }}>
+              <i class="fe fe-eye"></i> Lihat Surat
+            </a>
 
-          @if($p->status === 'menunggu')
-            <button type="button" class="btn btn-danger" onclick="showForm('tolakForm{{ $p->id }}', event)">Tolak</button>
-            <button type="button" class="btn btn-success" onclick="showForm('terimaForm{{ $p->id }}', event)">Terima</button>
-          @endif
+            @if($p->status === 'menunggu')
+                <button type="button" class="btn btn-danger" onclick="showForm('tolakForm{{ $p->id }}')">Tolak</button>
+                <button type="button" class="btn btn-success" onclick="showForm('terimaForm{{ $p->id }}')">Terima</button>
+            @endif
         </div>
 
         {{-- Form Tolak --}}
         <form action="{{ route('pengajuan-surat.tolak', $p->id) }}" method="POST" id="tolakForm{{ $p->id }}" class="mt-3 d-none">
-          @csrf
-          @method('PUT')
-          <div class="form-group">
-            <label>Alasan Penolakan</label>
-            <textarea name="keterangan" class="form-control" required></textarea>
-          </div>
-          <button type="submit" class="btn btn-danger">Kirim Penolakan</button>
+            @csrf
+            @method('PUT')
+            <div class="form-group">
+                <label>Alasan Penolakan</label>
+                <textarea name="keterangan" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-danger">Kirim Penolakan</button>
         </form>
 
         {{-- Form Terima --}}
         <form action="{{ route('pengajuan-surat.terima', $p->id) }}" method="POST" id="terimaForm{{ $p->id }}" class="mt-3 d-none">
-          @csrf
-          <input type="hidden" name="status" value="diproses">
-          <button type="submit" class="btn btn-success">Konfirmasi & Proses</button>
+            @csrf
+            <input type="hidden" name="status" value="diproses">
+            <button type="submit" class="btn btn-success">Konfirmasi & Proses</button>
         </form>
-
-      </div>
-    </div>
-  </div>
-</div>
 
 @push('scripts')
 <script>
-function showForm(formId, event) {
-    if(event) event.preventDefault(); // cegah submit parent form
+function showForm(formId) {
     const form = document.getElementById(formId);
     if(!form) return;
 
-    // sembunyikan semua form
+    // sembunyikan semua form di modal ini
     const modal = form.closest('.modal-body');
     modal.querySelectorAll('form').forEach(f => f.classList.add('d-none'));
 
-    // tampilkan form yang dimaksud
+    // tampilkan form yang dipilih
     form.classList.remove('d-none');
 }
 
