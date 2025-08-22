@@ -76,11 +76,13 @@
                           </div>
                         </div>
                       </div>
+
+                    @foreach ($berkasSurat as $berkas)  
                       
                       <div class="d-flex justify-content-between align-items-center mb-3">
                         <div id="datatable-search"></div>
                         <div>
-                          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#uploadModal-{{ $berkasSurat->id }}">
+                          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#uploadModal-{{ $berkas->id }}">
                               <i class="fe fe-upload"></i> Upload TTD & Stempel
                           </button>
                         </div>
@@ -89,13 +91,13 @@
                       
 
                       <!-- Modal Upload -->
-                      <div class="modal fade" id="uploadModal-{{ $berkasSurat->id }}" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel-{{ $berkasSurat->id }}" aria-hidden="true">
+                      <div class="modal fade" id="uploadModal-{{ $berkas->id }}" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel-{{ $berkas->id }}" aria-hidden="true">
                         <div class="modal-dialog" role="document">
-                          <form action="{{ route('berkas-surat.upload-ttd-stempel', $berkasSurat->id) }}" method="POST" enctype="multipart/form-data">
+                          <form action="{{ route('berkas-surat.upload-ttd-stempel', $berkas->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="uploadModalLabel-{{ $berkasSurat->id }}">Upload TTD & Stempel</h5>
+                                <h5 class="modal-title" id="uploadModalLabel-{{ $berkas->id }}">Upload TTD & Stempel</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
@@ -118,6 +120,7 @@
                           </form>
                         </div>
                       </div>
+                    @endforeach
 
 
                       
