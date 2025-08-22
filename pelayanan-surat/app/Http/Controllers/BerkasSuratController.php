@@ -61,6 +61,7 @@ class BerkasSuratController extends Controller
 
         $template = new TemplateProcessor($docxPath);
 
+        /*
         // ------------------------------
         // Cek & sisipkan TTD
         // ------------------------------
@@ -98,6 +99,7 @@ class BerkasSuratController extends Controller
             'marginLeft' => 0,
         ]);
 
+        */
         // ------------------------------
         // Diverifikasi oleh
         // ------------------------------
