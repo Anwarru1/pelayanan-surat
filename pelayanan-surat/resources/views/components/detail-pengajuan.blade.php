@@ -140,13 +140,16 @@
   }
 
   function validateTerima(id) {
-    const nomorInput = document.getElementById('nomorUrut' + id);
-    if (!nomorInput.value.trim()) {
-      alert('Silakan isi nomor urutan surat terlebih dahulu sebelum menerima.');
-    } else {
-      showForm('terimaForm' + id);
-    }
+      const nomorInput = document.getElementById('nomorUrut' + id);
+      if (!nomorInput.value.trim()) {
+          alert('Silakan isi nomor urutan surat terlebih dahulu sebelum menerima.');
+      } else {
+          const form = document.getElementById('terimaForm' + id);
+          form.classList.remove('d-none');
+          form.submit(); // langsung submit setelah form muncul
+      }
   }
+
 
   @if (session('modal_id'))
     $(document).ready(function () {
