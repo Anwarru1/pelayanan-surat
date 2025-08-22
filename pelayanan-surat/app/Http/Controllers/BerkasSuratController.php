@@ -54,11 +54,6 @@ class BerkasSuratController extends Controller
             return back()->with('error', 'Nomor surat belum tersedia.');
         }
 
-        // Generate unique ID jika belum ada
-        if (!$berkas->unique_id) {
-            $berkas->unique_id = Str::uuid()->toString();
-            $berkas->save();
-        }
 
         // Update status diterima
         $berkas->pengajuanSurat->update(['status' => 'diterima']);
@@ -95,8 +90,8 @@ class BerkasSuratController extends Controller
         $template->setValue('diverifikasi', 'Diverifikasi oleh: Kepala Desa Wiramastra' . $namaKepalaDesa);
 
         // Generate QR Code dari detail + unique ID
-        $qrContent = "ID Berkas: {$berkas->unique_id}\n";
-        $qrContent .= "Nomor Surat: {$berkas->no_surat}\n";
+
+        $qrContent = "Nomor Surat: {$berkas->no_surat}\n";
         $qrContent .= "Nama Pemohon: " . ($berkas->pengajuanSurat->nama ?? '-') . "\n";
         $qrContent .= "Jenis Surat: " . ($berkas->pengajuanSurat->jenis_surat ?? '-') . "\n";
         $qrContent .= "Tanggal: " . now()->format('d-m-Y') . "\n";
