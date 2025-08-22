@@ -26,10 +26,8 @@ class BerkasSuratController extends Controller
     }
 
     // Upload TTD & Stempel
-    public function uploadTtdStempel(Request $request, $berkasId)
+    public function uploadTtdStempelAll(Request $request)
     {
-        $berkas = BerkasSurat::findOrFail($berkasId);
-
         $request->validate([
             'tanda_tangan' => 'required|image|mimes:png,jpg,jpeg|max:2048',
             'stempel' => 'required|image|mimes:png,jpg,jpeg|max:2048',
@@ -38,13 +36,15 @@ class BerkasSuratController extends Controller
         $ttdPath = $request->file('tanda_tangan')->store('public/tanda_tangan');
         $stempelPath = $request->file('stempel')->store('public/stempel');
 
-        $berkas->update([
+        // Update semua berkas di tabel
+        BerkasSurat::query()->update([
             'tanda_tangan' => $ttdPath,
             'stempel' => $stempelPath,
         ]);
 
-        return redirect()->back()->with('success', 'TTD & Stempel berhasil diupload.');
-    }
+        return redirect()->back()->with('success', 'TTD & Stempel berhasil diupload untuk semua berkas.');
+}
+
 
     public function konfirmasi($id)
     {
