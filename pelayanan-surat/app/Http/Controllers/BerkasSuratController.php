@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\BerkasSurat;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use App\Models\PengajuanSurat;
 use PhpOffice\PhpWord\TemplateProcessor;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class BerkasSuratController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         \Carbon\Carbon::setLocale('id');
@@ -20,149 +19,144 @@ class BerkasSuratController extends Controller
         return view('admin.berkas-surat', compact('berkasSurat'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
-    $berkas = BerkasSurat::findOrFail($id);
-    return view('admin.detail-berkas', compact('berkas'));
+        $berkas = BerkasSurat::findOrFail($id);
+        return view('admin.detail-berkas', compact('berkas'));
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(BerkasSurat $berkasSurat)
+    // Upload TTD & Stempel
+    public function uploadTtdStempel(Request $request, $berkasId)
     {
-        //
-    }
+        $berkas = BerkasSurat::findOrFail($berkasId);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, BerkasSurat $berkasSurat)
-    {
         $request->validate([
-            'tanda_tangan' => 'nullable|image|mimes:png|max:2048',
-            'stempel' => 'nullable|image|mimes:png|max:2048'
+            'tanda_tangan' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            'stempel' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ]);
 
-        if ($request->hasFile('tanda_tangan')) {
-            // Hapus yang lama
-            if ($berkasSurat->tanda_tangan) {
-                Storage::delete('public/' . $berkasSurat->tanda_tangan);
-            }
-            
-            // Simpan yang baru
-            $path = $request->file('tanda_tangan')
-                    ->store('tanda-tangan', 'public');
-            $berkasSurat->tanda_tangan = $path;
-        }
+        $ttdPath = $request->file('tanda_tangan')->store('public/tanda_tangan');
+        $stempelPath = $request->file('stempel')->store('public/stempel');
 
-        if ($request->hasFile('stempel')) {
-            if ($berkasSurat->stempel) {
-                Storage::delete('public/' . $berkasSurat->stempel);
-            }
-            
-            $path = $request->file('stempel')
-                    ->store('stempel', 'public');
-            $berkasSurat->stempel = $path;
-        }
+        $berkas->update([
+            'tanda_tangan' => $ttdPath,
+            'stempel' => $stempelPath,
+        ]);
 
-        $berkasSurat->save();
-
-        return back()->with('success', 'Berkas surat berhasil diperbarui');
+        return redirect()->back()->with('success', 'TTD & Stempel berhasil diupload.');
     }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(BerkasSurat $berkasSurat)
-    {
-        //
-    }
-
-    public function downloadSurat(BerkasSurat $berkas)
-    {
-        $path = storage_path('app/public/' . $berkas->file_surat);
-    
-        if (!file_exists($path)) {
-            abort(404, 'File surat tidak ditemukan.');
-        }
-    
-        return response()->download($path, 'Surat_' . $berkas->pengajuan_surat_id . '.docx');
-    }
-    
-    public function previewDocx(BerkasSurat $berkas)
-    {
-        $fileUrl = asset('storage/' . $berkas->file_surat);
-    
-        // cek apakah URL dapat diakses (optional)
-        if (!file_exists(storage_path('app/public/' . $berkas->file_surat))) {
-            return back()->with('error', 'File tidak ditemukan.');
-        }
-    
-        // Gunakan Google Docs Viewer
-        $googleViewer = "https://docs.google.com/viewer?url={$fileUrl}&embedded=true";
-    
-        return redirect()->away($googleViewer);
-    }
-
-
-
-    
 
     public function konfirmasi($id)
     {
         $berkas = BerkasSurat::with('pengajuanSurat')->findOrFail($id);
 
-        // Update status pengajuan menjadi selesai
-        $berkas->pengajuanSurat->update([
-            'status' => 'diterima',
-        ]);
+        if (!$berkas->no_surat) {
+            return back()->with('error', 'Nomor surat belum tersedia.');
+        }
 
-        return redirect()->back()->with('success', 'Surat berhasil dikonfirmasi.');
+        // Generate unique ID jika belum ada
+        if (!$berkas->unique_id) {
+            $berkas->unique_id = Str::uuid()->toString();
+            $berkas->save();
+        }
+
+        // Update status diterima
+        $berkas->pengajuanSurat->update(['status' => 'diterima']);
+
+        $docxPath = storage_path('app/public/' . $berkas->file_surat);
+        if (!file_exists($docxPath)) {
+            return back()->with('error', 'File surat tidak ditemukan.');
+        }
+
+        $template = new TemplateProcessor($docxPath);
+
+        // Sisipkan TTD
+        if ($berkas->tanda_tangan && file_exists(storage_path('app/public/' . $berkas->tanda_tangan))) {
+            $template->setImageValue('tanda_tangan', [
+                'path' => storage_path('app/public/' . $berkas->tanda_tangan),
+                'width' => 120,
+                'height' => 80,
+                'ratio' => false,
+            ]);
+        }
+
+        // Sisipkan Stempel
+        if ($berkas->stempel && file_exists(storage_path('app/public/' . $berkas->stempel))) {
+            $template->setImageValue('stempel', [
+                'path' => storage_path('app/public/' . $berkas->stempel),
+                'width' => 100,
+                'height' => 100,
+                'ratio' => false,
+            ]);
+        }
+
+        // Diverifikasi oleh
+        $namaKepalaDesa = Auth::user()->username ?? '';
+        $template->setValue('diverifikasi', 'Diverifikasi oleh: Kepala Desa Wiramastra' . $namaKepalaDesa);
+
+        // Generate QR Code dari detail + unique ID
+        $qrContent = "ID Berkas: {$berkas->unique_id}\n";
+        $qrContent .= "Nomor Surat: {$berkas->no_surat}\n";
+        $qrContent .= "Nama Pemohon: " . ($berkas->pengajuanSurat->nama ?? '-') . "\n";
+        $qrContent .= "Jenis Surat: " . ($berkas->pengajuanSurat->jenis_surat ?? '-') . "\n";
+        $qrContent .= "Tanggal: " . now()->format('d-m-Y') . "\n";
+        $qrContent .= "Diverifikasi oleh: Kepala Desa " . $namaKepalaDesa;
+
+        $qrPath = storage_path('app/public/qrcode_' . $berkas->id . '.png');
+        QrCode::format('png')->size(200)->generate($qrContent, $qrPath);
+
+        if (file_exists($qrPath)) {
+            $template->setImageValue('qrcode', [
+                'path' => $qrPath,
+                'width' => 120,
+                'height' => 120,
+                'ratio' => false,
+            ]);
+        }
+
+        // Simpan ulang DOCX
+        $template->saveAs($docxPath);
+
+        // Salin ke folder public untuk download
+        $folderPublic = $_SERVER['DOCUMENT_ROOT'] . '/storage/generated/';
+        if (!file_exists($folderPublic)) mkdir($folderPublic, 0775, true);
+        copy($docxPath, $folderPublic . basename($docxPath));
+
+        $berkas->update(['file_surat' => 'generated/' . basename($docxPath)]);
+
+        return redirect()->back()->with('success', 'Surat berhasil dikonfirmasi, QR Code & TTD/Stempel disisipkan.');
+    }
+
+    public function downloadSurat(BerkasSurat $berkas)
+    {
+        $path = storage_path('app/public/' . $berkas->file_surat);
+        if (!file_exists($path)) abort(404, 'File surat tidak ditemukan.');
+        return response()->download($path, 'Surat_' . $berkas->pengajuan_surat_id . '.docx');
+    }
+
+    public function previewDocx(BerkasSurat $berkas)
+    {
+        $fileUrl = asset('storage/' . $berkas->file_surat);
+        if (!file_exists(storage_path('app/public/' . $berkas->file_surat))) {
+            return back()->with('error', 'File tidak ditemukan.');
+        }
+        $googleViewer = "https://docs.google.com/viewer?url={$fileUrl}&embedded=true";
+        return redirect()->away($googleViewer);
     }
 
     public function tolak(Request $request, BerkasSurat $berkas)
     {
-        $request->validate([
-            'keterangan' => 'required|string|max:255'
-        ], [
+        $request->validate(['keterangan' => 'required|string|max:255'], [
             'keterangan.required' => 'Alasan Penolakan wajib diisi'
         ]);
 
-        // Update status pengajuan menjadi ditolak dan simpan alasan
-        $pengajuan = $berkas->pengajuanSurat;
-        $pengajuan->update([
+        $berkas->pengajuanSurat->update([
             'status' => 'ditolak',
             'keterangan' => $request->keterangan,
         ]);
 
-        // Hapus berkas jika diperlukan (opsional)
-        // Storage::delete('public/' . $berkas->file_surat);
-        $berkas->delete(); // Hapus berkas surat dari tabel
+        $berkas->delete();
 
         return back()->with('success', 'Pengajuan surat berhasil ditolak');
     }
-
-
 }

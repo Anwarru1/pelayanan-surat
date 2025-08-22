@@ -61,6 +61,7 @@ Route::middleware('auth:admin')->group(function () {
 
     // Berkas Surat
     Route::resource('berkas-surat', BerkasSuratController::class)->names('berkas');
+    Route::post('/berkas-surat/upload-ttd-stempel', [BerkasSuratController::class, 'uploadTtdStempel'])->name('berkas-surat.upload-ttd-stempel');
     Route::controller(BerkasSuratController::class)->prefix('berkas-surat/{berkas}')->group(function () {
         Route::get('/preview', 'previewDocx')->name('berkas.preview');
         Route::put('/konfirmasi', 'konfirmasi')->name('berkas-surat.konfirmasi');

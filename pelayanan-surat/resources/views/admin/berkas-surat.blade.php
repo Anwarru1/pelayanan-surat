@@ -78,10 +78,48 @@
                       </div>
                       
                       <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div id="datatable-search"></div>
                         <div>
-                          <div id="datatable-search"></div>
+                          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#uploadModal-{{ $berkas->id }}">
+                              <i class="fe fe-upload"></i> Upload TTD & Stempel
+                          </button>
                         </div>
                       </div>
+
+                      
+
+                      <!-- Modal Upload -->
+                      <div class="modal fade" id="uploadModal-{{ $berkas->id }}" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel-{{ $berkas->id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <form action="{{ route('berkas-surat.upload-ttd-stempel', $berkas->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="uploadModalLabel-{{ $berkas->id }}">Upload TTD & Stempel</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="form-group">
+                                  <label for="tanda_tangan">TTD Kepala Desa (PNG/JPG)</label>
+                                  <input type="file" name="tanda_tangan" class="form-control" accept="image/png, image/jpeg" required>
+                                </div>
+                                <div class="form-group">
+                                  <label for="stempel">Stempel Desa (PNG/JPG)</label>
+                                  <input type="file" name="stempel" class="form-control" accept="image/png, image/jpeg" required>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-primary">Upload</button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+
+
                       
                       <!-- table -->
                       <table class="table datatables table-bordered" id="dataTable-1">
