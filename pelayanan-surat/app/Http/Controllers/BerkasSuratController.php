@@ -67,7 +67,7 @@ class BerkasSuratController extends Controller
         if (empty($berkas->tanda_tangan)) {
             return back()->with('error', 'Tanda tangan belum diupload.');
         }
-        $ttdFullPath = storage_path('app/public/' . $berkas->tanda_tangan);
+        $ttdFullPath = storage_path('app/' . $berkas->tanda_tangan);
         if (!file_exists($ttdFullPath)) {
             return back()->with('error', 'File tanda tangan tidak ditemukan: ' . $ttdFullPath);
         }
@@ -84,7 +84,7 @@ class BerkasSuratController extends Controller
         if (empty($berkas->stempel)) {
             return back()->with('error', 'Stempel belum diupload.');
         }
-        $stempelFullPath = storage_path('app/public/' . $berkas->stempel);
+        $stempelFullPath = storage_path('app/' . $berkas->stempel);
         if (!file_exists($stempelFullPath)) {
             return back()->with('error', 'File stempel tidak ditemukan: ' . $stempelFullPath);
         }
@@ -129,11 +129,13 @@ class BerkasSuratController extends Controller
         // ------------------------------
         $template->saveAs($docxPath);
 
-        $folderPublic = public_path('storage/generated/');
-        if (!file_exists($folderPublic)) mkdir($folderPublic, 0775, true);
+        $publicFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage/generated/';
+        if (!file_exists($publicFolder)) mkdir($publicFolder, 0775, true);
 
-        copy($docxPath, $folderPublic . basename($docxPath));
+        $publicFilePath = $publicFolder . basename($docxPath);
+        copy($docxPath, $publicFilePath);
 
+        // Update path file di database relatif ke folder storage
         $berkas->update(['file_surat' => 'generated/' . basename($docxPath)]);
 
         // Update status diterima
