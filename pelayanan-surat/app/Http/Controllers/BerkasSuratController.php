@@ -75,8 +75,10 @@ class BerkasSuratController extends Controller
             'path' => $ttdFullPath,
             'width' => 150,
             'height' => 100,
-            'ratio' => false,
+            'ratio' => false, 
+            'marginLeft' => -50,
         ]);
+
 
         // ------------------------------
         // Cek & sisipkan Stempel
@@ -90,9 +92,10 @@ class BerkasSuratController extends Controller
         }
         $template->setImageValue('stempel', [
             'path' => $stempelFullPath,
-            'width' => 120,
-            'height' => 120,
+            'width' => 100,
+            'height' => 100,
             'ratio' => false,
+            'marginLeft' => 0,
         ]);
 
         // ------------------------------
