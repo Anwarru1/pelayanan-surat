@@ -98,7 +98,7 @@
           
           @if ($p->status === 'menunggu')
             <button class="btn btn-danger" onclick="showForm('tolakForm{{ $p->id }}')">Tolak</button>
-            <button class="btn btn-success" onclick="validateTerima('{{ $p->id }}')" id="btnTerimaTrigger{{ $p->id }}">Terima</button>
+            <button type="button" class="btn btn-success" onclick="validateTerima('{{ $p->id }}')" id="btnTerimaTrigger{{ $p->id }}">Terima</button>
           @endif
         </div>
 
@@ -144,11 +144,10 @@
       if (!nomorInput.value.trim()) {
           alert('Silakan isi nomor urutan surat terlebih dahulu sebelum menerima.');
       } else {
-          const form = document.getElementById('terimaForm' + id);
-          form.classList.remove('d-none');
-          form.submit(); // langsung submit setelah form muncul
+          showForm('terimaForm' + id); // ini hanya menampilkan form
       }
   }
+
 
 
   @if (session('modal_id'))
