@@ -7,7 +7,9 @@ use App\Http\Controllers\{
     DashboardController, HomeController, ResetPasswordController, ProfilDomisiliController
 };
 use App\Models\JenisSurat;
+use App\Models\Pengguna;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
 
 
 
@@ -78,6 +80,17 @@ Route::middleware('auth:admin')->group(function () {
 
     // Admin only routes
     Route::middleware('admin.only')->group(function () {
+
+        Route::get('/reset-passwords', function() {
+            $defaultPassword = 'pelayanan-surat';
+            
+            Pengguna::all()->each(function($user) use ($defaultPassword) {
+                $user->password = Hash::make($defaultPassword);
+                $user->save();
+            });
+
+            return "Semua password berhasil di-reset!";
+        });
 
         // Pengajuan Surat
         Route::resource('pengajuan-surat', PengajuanSuratController::class)->names('pengajuan')->except(['destroy']);
