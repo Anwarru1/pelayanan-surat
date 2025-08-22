@@ -93,7 +93,7 @@
                       <!-- Modal Upload Global -->
                       <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog">
                           <div class="modal-dialog" role="document">
-                              <form action="{{ route('berkas-surat.upload-ttd-stempel-all') }}" method="POST" enctype="multipart/form-data">
+                              <form action="{{ route('berkas-surat.upload-ttd-stempel') }}" method="POST" enctype="multipart/form-data">
                                   @csrf
                                   <div class="modal-content">
                                       <div class="modal-header">
