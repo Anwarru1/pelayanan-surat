@@ -13,6 +13,14 @@
                    class="form-control"
                    placeholder="Cari nama atau NIK..."
                    style="max-width: 250px;">
+
+            {{-- Filter role --}}
+            <select wire:model="filterRole" class="form-control ml-2" style="max-width: 180px;">
+                <option value="">Semua Role</option>
+                <option value="admin">Admin</option>
+                <option value="rt">RT</option>
+                <option value="warga">Warga</option>
+            </select>
         </div>
 
         {{-- Aksi kanan --}}

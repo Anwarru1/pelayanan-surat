@@ -13,6 +13,7 @@ class PenggunaSearch extends Component
     public $searchPengguna = '';  // ✅ pakai nama unik
     public $selectedPenggunas = [];
     public $selectAllCheckbox = false;
+    public $filterRole = '';
 
     protected $paginationTheme = 'bootstrap';
 
@@ -27,7 +28,6 @@ class PenggunaSearch extends Component
         if ($value) {
             $this->selectedPenggunas = Pengguna::where(function ($q) {
                 $q->where('nama', 'like', '%' . $this->searchPengguna . '%')
-                  ->where('role', 'like', '%' . $this->searchPengguna . '&')
                   ->orWhere('nik', 'like', '%' . $this->searchPengguna . '%');
             })->pluck('id')->toArray();
         } else {
@@ -46,6 +46,11 @@ class PenggunaSearch extends Component
     public function render()
     {
         $query = Pengguna::query();
+
+        // filter by role kalau dipilih
+        if ($this->filterRole) {
+            $query->where('role', $this->filterRole);
+        }
 
         if (!empty($this->searchPengguna)) {
             $query->where(function ($q) {
