@@ -15,7 +15,8 @@ class BerkasSuratController extends Controller
     public function index()
     {
         \Carbon\Carbon::setLocale('id');
-        $berkasSurat = BerkasSurat::with('pengajuanSurat')->latest()->get();
+        $berkasSurat = BerkasSurat::with('pengajuanSurat') ->orderBy('created_at', 'desc') // terbaru di atas
+                    ->get();
         return view('admin.berkas-surat', compact('berkasSurat'));
     }
 

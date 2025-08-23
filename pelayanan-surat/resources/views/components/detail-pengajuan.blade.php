@@ -97,7 +97,7 @@
           @method('PUT')
           <div class="form-group">
             <label>Alasan Penolakan</label>
-            <textarea name="alasan" class="form-control" required></textarea>
+            <textarea name="keterangan" class="form-control" required></textarea>
           </div>
           <button type="submit" class="btn btn-danger">Kirim Penolakan</button>
         </form>
