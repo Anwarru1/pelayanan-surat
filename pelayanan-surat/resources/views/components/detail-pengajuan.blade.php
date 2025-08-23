@@ -83,36 +83,61 @@
              <i class="fe fe-eye"></i> Lihat Surat
           </a>
 
-          @if($p->status === 'menunggu')
-            {{-- Form Terima --}}
-            <form action="{{ route('pengajuan-surat.terima', $p->id) }}" method="POST" class="d-inline-block">
-              @csrf
-              <input type="hidden" name="status" value="diproses">
-              <button type="submit" class="btn btn-success">Terima & Proses</button>
-            </form>
-
-            {{-- Form Tolak --}}
-            <form action="{{ route('pengajuan-surat.tolak', $p->id) }}" method="POST" class="d-inline-block">
-              @csrf
-              @method('PUT')
-              <input type="text" name="alasan" class="form-control d-inline-block" placeholder="Alasan Penolakan" required style="width:auto; display:inline-block;">
-              <button type="submit" class="btn btn-danger">Tolak</button>
-            </form>
+          @if ($p->status === 'menunggu')
+            <button class="btn btn-danger" onclick="showForm('tolakForm{{ $p->id }}')">Tolak</button>
+            <button class="btn btn-success" onclick="validateTerima('{{ $p->id }}')">Terima</button>
           @endif
         </div>
+
+        {{-- FORM TOLAK --}}
+        <form action="{{ route('pengajuan-surat.tolak', $p->id) }}" method="POST" id="tolakForm{{ $p->id }}" class="mt-3" style="display:none">
+          @csrf
+          @method('PUT')
+          <div class="form-group">
+            <label>Alasan Penolakan</label>
+            <textarea name="alasan" class="form-control" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-danger">Kirim Penolakan</button>
+        </form>
+
+        {{-- FORM TERIMA --}}
+        <form action="{{ route('pengajuan-surat.terima', $p->id) }}" method="POST" id="terimaForm{{ $p->id }}" class="mt-3" style="display:none">
+          @csrf
+          <input type="hidden" name="status" value="diproses">
+          <button type="submit" class="btn btn-success">Konfirmasi & Proses</button>
+        </form>
 
       </div>
     </div>
   </div>
 </div>
 
-{{-- Script untuk buka modal otomatis jika ada session --}}
+{{-- Script untuk show/hide form dengan animasi --}}
 @push('scripts')
-@if(session('modal_id'))
 <script>
-  $(document).ready(function () {
+  function showForm(formId) {
+    const form = $('#' + formId);
+
+    // sembunyikan semua form dalam modal dengan animasi
+    form.closest('.modal-body').find('form').not(form).slideUp(200);
+
+    // tampilkan form yang dimaksud
+    form.slideDown(200);
+  }
+
+  function validateTerima(id) {
+    const nomorInput = document.getElementById('nomorUrut' + id);
+    if (!nomorInput.value.trim()) {
+      alert('Silakan isi nomor urutan surat terlebih dahulu sebelum menerima.');
+    } else {
+      showForm('terimaForm' + id);
+    }
+  }
+
+  @if (session('modal_id'))
+    $(document).ready(function () {
       $('#{{ session('modal_id') }}').modal('show');
-  });
+    });
+  @endif
 </script>
-@endif
 @endpush
