@@ -47,7 +47,7 @@
                     <label for="tgl_lahir">Tanggal Lahir</label>
                     <div class="input-group">
                       <input type="text" class="form-control drgpicker" id="tgl_lahir" name="tgl_lahir" autocomplete="off"
-                          value="{{ old('tgl_lahir', $user->tgl_lahir ? \Carbon\Carbon::parse($user->tgl_lahir)->format('Y-m-d') : '') }}">
+                          value="{{ old('tgl_lahir', Auth::user()->tgl_lahir ? \Carbon\Carbon::parse(Auth::user()->tgl_lahir)->format('Y-m-d') : '') }}">
                       <div class="input-group-append">
                         <div class="input-group-text"><span class="fe fe-calendar fe-16"></span></div>
                       </div>
@@ -206,15 +206,21 @@
       autoUpdateInput: true,
       locale: {
         format: 'YYYY-MM-DD',
-        daysOfWeek: [
-          "Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"
-        ],
+        daysOfWeek: ["Min","Sen","Sel","Rab","Kam","Jum","Sab"],
         monthNames: [
-          "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-          "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+          "Januari","Februari","Maret","April","Mei","Juni",
+          "Juli","Agustus","September","Oktober","November","Desember"
         ],
         firstDay: 1
       }
   });
+
+  // refresh value kalau sudah ada
+  let tgl = $('#tgl_lahir').val();
+  if (tgl) {
+    $('#tgl_lahir').data('daterangepicker').setStartDate(tgl);
+    $('#tgl_lahir').data('daterangepicker').setEndDate(tgl);
+  }
+
 </script>
 @endpush
