@@ -15,7 +15,7 @@
                    style="max-width: 250px;">
 
             {{-- Filter role --}}
-            <select wire:model.live.debounce.500ms="filterRole" class="form-control ml-2" style="max-width: 180px;">
+            <select wire:model.live="filterRole" class="form-control ml-2" style="max-width: 180px;">
                 <option value="">Semua Role</option>
                 <option value="warga_tetap">Warga Tetap</option>
                 <option value="warga_domisili">Warga Domisili</option>

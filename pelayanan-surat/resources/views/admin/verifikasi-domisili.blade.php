@@ -16,6 +16,13 @@
 
         <div class="card shadow">
           <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div id="datatable-search"></div>
+                <div>
+                </div>
+            </div>
+
             <table class="table datatables table-bordered" id="dataTable-1">
                 <thead class="thead-dark">
                     <tr>
