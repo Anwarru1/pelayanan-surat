@@ -214,12 +214,6 @@ $(function() {
     autoUpdateInput: true,
     locale: {
       format: 'YYYY-MM-DD',
-      daysOfWeek: ["Min","Sen","Sel","Rab","Kam","Jum","Sab"],
-      monthNames: [
-        "Januari","Februari","Maret","April","Mei","Juni",
-        "Juli","Agustus","September","Oktober","November","Desember"
-      ],
-      firstDay: 1
     }
   });
 
