@@ -66,7 +66,8 @@
             <td>
               <form action="{{ route('pengajuan-surat.nomor-urut', $p->id) }}" method="POST">
                 @csrf
-                <input type="number" name="nomor_urutan" class="form-control" value="{{ $p->nomor_urutan }}" id="nomorUrut{{ $p->id }}">
+                <input type="number" name="nomor_urutan" class="form-control" 
+                      value="{{ $p->nomor_urutan }}" id="nomorUrut{{ $p->id }}">
                 <button type="submit" class="btn btn-sm btn-primary mt-2">Simpan</button>
               </form>
             </td>
@@ -90,7 +91,8 @@
         </div>
 
         {{-- FORM TOLAK --}}
-        <form action="{{ route('pengajuan-surat.tolak', $p->id) }}" method="POST" id="tolakForm{{ $p->id }}" class="mt-3" style="display:none">
+        <form action="{{ route('pengajuan-surat.tolak', $p->id) }}" method="POST" 
+              id="tolakForm{{ $p->id }}" class="form-aksi mt-3" style="display:none">
           @csrf
           @method('PUT')
           <div class="form-group">
@@ -101,7 +103,8 @@
         </form>
 
         {{-- FORM TERIMA --}}
-        <form action="{{ route('pengajuan-surat.terima', $p->id) }}" method="POST" id="terimaForm{{ $p->id }}" class="mt-3" style="display:none">
+        <form action="{{ route('pengajuan-surat.terima', $p->id) }}" method="POST" 
+              id="terimaForm{{ $p->id }}" class="form-aksi mt-3" style="display:none">
           @csrf
           <input type="hidden" name="status" value="diproses">
           <button type="submit" class="btn btn-success">Konfirmasi & Proses</button>
@@ -119,15 +122,14 @@
     const form = $('#' + formId);
 
     if (form.is(':visible')) {
-      // kalau form sudah terbuka → tutup
       form.slideUp(200);
     } else {
-      // tutup semua form lain dalam modal
-      form.closest('.modal-body').find('form').not(form).slideUp(200);
-      // buka form yg dipilih
+      // hanya sembunyikan form yg punya class "form-aksi"
+      form.closest('.modal-body').find('form.form-aksi').not(form).slideUp(200);
       form.slideDown(200);
     }
   }
+
 
   function validateTerima(id) {
     const nomorInput = document.getElementById('nomorUrut' + id);
