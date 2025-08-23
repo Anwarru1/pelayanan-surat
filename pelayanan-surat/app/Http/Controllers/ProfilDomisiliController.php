@@ -71,7 +71,7 @@ class ProfilDomisiliController extends Controller
         $user->status = $request->status;
         $user->j_kel = $request->j_kel;
         $user->agama = $request->agama;
-        $user->tgl_lahir = Carbon::createFromFormat('d-m-Y', $request->tgl_lahir)->format('Y-m-d');
+        $user->tgl_lahir = Carbon::parse($request->tgl_lahir)->format('Y-m-d');
         $user->tmp_lahir = $request->tmp_lahir;
         $user->nomor_hp = $request->nomor_hp;
         $user->data_tambahan = json_encode($dataTambahan);
