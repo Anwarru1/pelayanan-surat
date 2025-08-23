@@ -197,13 +197,3 @@
   </main>
 @endsection
 
-@push('scripts')
-<script>
-  flatpickr(".drgpicker", {
-    dateFormat: "Y-m-d",   // simpan & tampil yyyy-mm-dd
-    locale: "id",          // bahasa Indonesia (Senin, Selasa, dst.)
-    altInput: true,
-    altFormat: "d F Y",    // tampilan user: 23 Agustus 2025
-  });
-</script>
-@endpush
