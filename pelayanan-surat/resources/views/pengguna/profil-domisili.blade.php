@@ -47,13 +47,13 @@
                     <label for="tgl_lahir">Tanggal Lahir</label>
                     <div class="input-group">
                       @php
-                        $tgl_lahir_value = old('tgl_lahir', Auth::user()->tgl_lahir ? \Carbon\Carbon::parse(Auth::user()->tgl_lahir)->format('YYYY-MM-DD') : '');
+                          $tgl_lahir_value = old('tgl_lahir', Auth::user()->tgl_lahir ? \Carbon\Carbon::parse(Auth::user()->tgl_lahir)->format('YYYY-MM-DD') : '');
                       @endphp
 
-                      <input type="text" 
-                            class="form-control drgpicker" 
-                            id="tgl_lahir" 
-                            name="tgl_lahir" 
+                      <input type="text"
+                            class="form-control drgpicker"
+                            id="tgl_lahir"
+                            name="tgl_lahir"
                             autocomplete="off"
                             value="{{ $tgl_lahir_value }}">
                       <div class="input-group-append">
@@ -210,20 +210,22 @@
 @push('scripts')
 <script>
 $(function() {
-  $('.drgpicker').daterangepicker({
-    singleDatePicker: true,
-    autoApply: true,
-    showDropdowns: true,
-    locale: { format: 'YYYY-MM-DD' }
-  });
+    let tglInput = $('#tgl_lahir');
+    tglInput.daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        showDropdowns: true,
+        locale: { format: 'YYYY-MM-DD' }
+    });
 
-  let tgl = $('#tgl_lahir').val();
-  if (tgl && moment(tgl, 'YYYY-MM-DD', true).isValid()) {
-    let drp = $('#tgl_lahir').data('daterangepicker');
-    drp.setStartDate(tgl);
-    drp.setEndDate(tgl);
-  }
+    let tgl = tglInput.val();
+    if (tgl && moment(tgl, 'YYYY-MM-DD', true).isValid()) {
+        let drp = tglInput.data('daterangepicker');
+        drp.setStartDate(tgl);
+        drp.setEndDate(tgl);
+    }
 });
+
 
 </script>
 @endpush
