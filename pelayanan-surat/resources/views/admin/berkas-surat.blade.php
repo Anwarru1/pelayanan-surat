@@ -191,9 +191,8 @@
   }
 
   $(document).ready(function () {
-    $('#dataTable-1').DataTable({
-      "order": [[3, "desc"]] // Kolom ke-4 (Tanggal Diajukan) urut DESC
-    });
+    var table = $('#dataTable-1').DataTable();
+    table.order([3, 'desc']).draw(); // atur ulang sorting ke Tanggal Diajukan desc
   });
 </script>
 @endpush
