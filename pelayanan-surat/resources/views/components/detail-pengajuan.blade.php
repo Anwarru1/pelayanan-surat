@@ -78,28 +78,39 @@
           @php $nomorFilled = !empty($p->nomor_urutan); @endphp
           
           <a href="{{ route('pengajuan-surat.preview', $p->id) }}" 
-             class="btn btn-secondary {{ !$nomorFilled ? 'disabled' : '' }}" 
-             {{ !$nomorFilled ? 'aria-disabled=true' : '' }}>
-             <i class="fe fe-eye"></i> Lihat Surat
+            class="btn btn-secondary {{ !$nomorFilled ? 'disabled' : '' }}" 
+            {{ !$nomorFilled ? 'aria-disabled=true' : '' }}>
+            <i class="fe fe-eye"></i> Lihat Surat
           </a>
 
           @if($p->status === 'menunggu')
-            {{-- Form Terima --}}
-            <form action="{{ route('pengajuan-surat.terima', $p->id) }}" method="POST" class="d-inline-block">
+            {{-- Tombol Terima (trigger) --}}
+            <button type="button" class="btn btn-success btn-show-terima" data-id="{{ $p->id }}">
+              Terima
+            </button>
+
+            {{-- Form Terima (hidden awal) --}}
+            <form action="{{ route('pengajuan-surat.terima', $p->id) }}" method="POST" class="d-inline-block mt-2 d-none form-terima-{{ $p->id }}">
               @csrf
               <input type="hidden" name="status" value="diproses">
-              <button type="submit" class="btn btn-success">Terima & Proses</button>
+              <button type="submit" class="btn btn-success">Konfirmasi & Proses</button>
             </form>
 
-            {{-- Form Tolak --}}
-            <form action="{{ route('pengajuan-surat.tolak', $p->id) }}" method="POST" class="d-inline-block">
+            {{-- Tombol Tolak (trigger) --}}
+            <button type="button" class="btn btn-danger btn-show-tolak" data-id="{{ $p->id }}">
+              Tolak
+            </button>
+
+            {{-- Form Tolak (hidden awal) --}}
+            <form action="{{ route('pengajuan-surat.tolak', $p->id) }}" method="POST" class="d-inline-block mt-2 d-none form-tolak-{{ $p->id }}">
               @csrf
               @method('PUT')
-              <input type="text" name="keterangan" class="form-control d-inline-block" placeholder="Alasan Penolakan" required style="width:auto; display:inline-block;">
+              <input type="text" name="alasan" class="form-control mb-2" placeholder="Alasan Penolakan" required>
               <button type="submit" class="btn btn-danger">Tolak</button>
             </form>
           @endif
         </div>
+
 
       </div>
     </div>
@@ -113,6 +124,18 @@
   $(document).ready(function () {
       $('#{{ session('modal_id') }}').modal('show');
   });
-</script>
 @endif
+
+  // tombol TERIMA
+  $(document).on('click', '.btn-show-terima', function() {
+    let id = $(this).data('id');
+    $('.form-terima-' + id).toggleClass('d-none');
+  });
+
+  // tombol TOLAK
+  $(document).on('click', '.btn-show-tolak', function() {
+    let id = $(this).data('id');
+    $('.form-tolak-' + id).toggleClass('d-none');
+  });
+</script>
 @endpush

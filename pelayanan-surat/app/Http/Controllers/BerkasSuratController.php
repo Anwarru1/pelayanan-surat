@@ -111,9 +111,9 @@ class BerkasSuratController extends Controller
         // ------------------------------
         $qrContent = "Nomor Surat: {$berkas->no_surat}\n";
         $qrContent .= "Nama Pemohon: " . ($berkas->pengajuanSurat->nama ?? '-') . "\n";
-        $qrContent .= "Jenis Surat: " . ($berkas->pengajuanSurat->jenis_surat ?? '-') . "\n";
+        $qrContent .= "Jenis Surat: " . ($berkas->pengajuanSurat->nama_jenis_surat ?? '-') . "\n";
         $qrContent .= "Tanggal: " . now()->format('d-m-Y') . "\n";
-        $qrContent .= "Diverifikasi oleh: Kepala Desa " . $namaKepalaDesa;
+        $qrContent .= "Diverifikasi oleh: " . $namaKepalaDesa;
 
         $qrPath = storage_path('app/public/qrcode_' . $berkas->id . '.png');
         QrCode::format('png')->size(120)->generate($qrContent, $qrPath);
