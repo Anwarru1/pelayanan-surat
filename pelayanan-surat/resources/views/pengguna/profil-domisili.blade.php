@@ -32,7 +32,7 @@
 
                 <div class="form-group">
                   <label for="nama">Nama Lengkap</label>
-                  <input type="text" id="nama" name="nama" class="form-control" oninput="this.value = this.value.toUpperCase();"
+                  <input type="text" id="nama" name="nama" class="form-control"
                         value="{{ old('nama', Auth::user()->nama) }}" required>
                 </div>
 
@@ -46,8 +46,8 @@
                   <div class="form-group col-md-6">
                     <label for="tgl_lahir">Tanggal Lahir</label>
                     <div class="input-group">
-                      <input type="text" class="form-control drgpicker" id="tgl_lahir" name="tgl_lahir" autocomplete="off"
-                          value="{{ old('tgl_lahir', Auth::user()->tgl_lahir ? \Carbon\Carbon::parse(Auth::user()->tgl_lahir)->format('Y-m-d') : '') }}">
+                      <input type="text" class="form-control drgpicker" id="tgl_lahir" name="tgl_lahir" autocomplete="off" 
+                          value="{{ old('tgl_lahir', Auth::user()->tgl_lahir) }}">
                       <div class="input-group-append">
                         <div class="input-group-text"><span class="fe fe-calendar fe-16"></span></div>
                       </div>
@@ -199,28 +199,11 @@
 
 @push('scripts')
 <script>
-  $('.drgpicker').daterangepicker({
-      singleDatePicker: true,
-      autoApply: true,
-      showDropdowns: true,
-      autoUpdateInput: true,
-      locale: {
-        format: 'YYYY-MM-DD',
-        daysOfWeek: ["Min","Sen","Sel","Rab","Kam","Jum","Sab"],
-        monthNames: [
-          "Januari","Februari","Maret","April","Mei","Juni",
-          "Juli","Agustus","September","Oktober","November","Desember"
-        ],
-        firstDay: 1
-      }
+  flatpickr(".drgpicker", {
+    dateFormat: "Y-m-d",   // simpan & tampil yyyy-mm-dd
+    locale: "id",          // bahasa Indonesia (Senin, Selasa, dst.)
+    altInput: true,
+    altFormat: "d F Y",    // tampilan user: 23 Agustus 2025
   });
-
-  // refresh value kalau sudah ada
-  let tgl = $('#tgl_lahir').val();
-  if (tgl) {
-    $('#tgl_lahir').data('daterangepicker').setStartDate(tgl);
-    $('#tgl_lahir').data('daterangepicker').setEndDate(tgl);
-  }
-
 </script>
 @endpush
