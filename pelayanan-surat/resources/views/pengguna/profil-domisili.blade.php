@@ -199,13 +199,23 @@
 
 @push('scripts')
 <script>
-  flatpickr(".drgpicker", {
-    dateFormat: "Y-m-d",   // simpan & tampil yyyy-mm-dd
-    locale: "id",          // bahasa Indonesia (Senin, Selasa, dst.)
-    altInput: true,
-    autoApply: true,
-    autoUpdateInput: false, 
-    altFormat: "d F Y",    // tampilan user: 23 Agustus 2025
-  });
+  $('.drgpicker').daterangepicker(
+    {
+      singleDatePicker: true,
+      autoUpdateInput: false,   // langsung update input
+      autoApply: true,         // langsung pilih tanpa klik apply
+      timePicker: false,
+      showDropdowns: true,
+      locale: {
+        daysOfWeek: [
+          "Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"
+        ],
+        monthNames: [
+          "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+          "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        ],
+        firstDay: 1
+        }
+    });
 </script>
 @endpush
