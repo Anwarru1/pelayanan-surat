@@ -46,8 +46,8 @@
                   <div class="form-group col-md-6">
                     <label for="tgl_lahir">Tanggal Lahir</label>
                     <div class="input-group">
-                      <input type="text" class="form-control drgpicker" id="tgl_lahir" name="tgl_lahir" autocomplete="off" placeholder="yyyy-mm-dd"
-                          value="{{ old('tgl_lahir', Auth::user()->tgl_lahir ? \Carbon\Carbon::parse(Auth::user()->tgl_lahir)->format('Y-m-d') : '') }}">
+                      <input type="text" class="form-control drgpicker" id="tgl_lahir" name="tgl_lahir" autocomplete="off"
+                          value="{{ old('tgl_lahir', Auth::user()->tgl_lahir) }}">
                       <div class="input-group-append">
                         <div class="input-group-text"><span class="fe fe-calendar fe-16"></span></div>
                       </div>
@@ -204,7 +204,6 @@
       autoApply: true,
       showDropdowns: true,
       locale: {
-        format: 'YYYY-MM-DD', // tampilan di input
         daysOfWeek: [
           "Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"
         ],
@@ -214,9 +213,6 @@
         ],
         firstDay: 1
       }
-  }, function(start, end, label) {
-      // set ke input dengan format
-      $('.drgpicker').val(start.format('YYYY-MM-DD'));
   });
 </script>
 @endpush
