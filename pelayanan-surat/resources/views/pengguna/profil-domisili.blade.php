@@ -203,6 +203,7 @@
       singleDatePicker: true,
       autoApply: true,
       showDropdowns: true,
+      autoUpdateInput: true,
       locale: {
         format: 'YYYY-MM-DD',
         daysOfWeek: [
