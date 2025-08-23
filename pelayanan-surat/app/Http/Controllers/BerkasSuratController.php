@@ -113,7 +113,7 @@ class BerkasSuratController extends Controller
         $qrContent .= "Nama Pemohon: " . ($berkas->pengajuanSurat->nama ?? '-') . "\n";
         $qrContent .= "Jenis Surat: " . ($berkas->pengajuanSurat->nama_jenis_surat ?? '-') . "\n";
         $qrContent .= "Tanggal: " . now()->format('d-m-Y') . "\n";
-        $qrContent .= "Diverifikasi oleh: " . $namaKepalaDesa;
+        $qrContent .= "Diverifikasi oleh: Kepala Desa Wiramastra " . $namaKepalaDesa;
 
         $qrPath = storage_path('app/public/qrcode_' . $berkas->id . '.png');
         QrCode::format('png')->size(100)->generate($qrContent, $qrPath);
@@ -146,7 +146,7 @@ class BerkasSuratController extends Controller
         // Update status diterima
         $berkas->pengajuanSurat->update(['status' => 'diterima']);
 
-        return redirect()->back()->with('success', 'Surat berhasil dikonfirmasi, TTD, Stempel, & QR Code berhasil disisipkan.');
+        return redirect()->back()->with('success', 'Surat berhasil dikonfirmasi, QR Code berhasil disisipkan.');
     }
 
 
