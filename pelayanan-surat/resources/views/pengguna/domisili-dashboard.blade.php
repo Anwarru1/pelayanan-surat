@@ -10,21 +10,30 @@
           {{-- Selamat Datang + Tombol Ajukan --}}
           <div class="card shadow mb-4">
             <div class="card-body">
-              <div class="alert alert-info mt-4 mb-0">
-                <i class="fe fe-danger mr-1"></i>
-                Segera lengkapi data dan dokumen yang diperlukan agar proses verifikasi tidak tertunda agar kamu bisa mengajukan surat secara online.
+
+              {{-- Info Merah di atas --}}
+              <div class="alert alert-danger mb-4">
+                <i class="fe fe-info mr-1"></i>
+                Segera lengkapi data dan dokumen yang diperlukan agar proses verifikasi tidak tertunda 
+                agar kamu bisa mengajukan surat secara online.
               </div>
-              <div>
-                <h5 class="mb-0">Selamat datang, Warga Baru{{ Auth::user()->nama }}!</h5>
-                <p class="text-muted mb-0">NIK: {{ Auth::user()->nik }}</p>
+
+              {{-- Row Selamat Datang + Tombol --}}
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h5 class="mb-1">Selamat datang, Warga Baru {{ Auth::user()->nama }}!</h5>
+                  <p class="text-muted mb-0">NIK: {{ Auth::user()->nik }}</p>
+                </div>
+                <div>
+                  <a href="{{ route('profil.index') }}" class="btn btn-primary">
+                    <i class="fe fe-plus"></i> Lengkapi Profil Saya
+                  </a>
+                </div>
               </div>
-              <div class="mt-3 mt-md-0">
-                <a href="{{ route('profil.index') }}" class="btn btn-primary">
-                  <i class="fe fe-plus"></i> Lengkapi Profil Saya
-                </a>
-              </div>
+
             </div>
           </div>
+
 
           {{-- Alur Verifikasi Domisili --}}
           <div class="card shadow mb-4 border-0">
