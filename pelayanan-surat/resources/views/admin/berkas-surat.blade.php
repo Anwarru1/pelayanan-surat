@@ -126,7 +126,7 @@
                               @if ($berkas->pengajuanSurat->status === 'diproses')
                               <!-- Tombol untuk membuka modal -->
                               <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalTolak-{{ $berkas->id }}">
-                                <i class="fe fe-x-circle"></i> Tolak
+                                Tolak
                               </button>
                               @endif
 
@@ -164,7 +164,7 @@
                                   @csrf
                                   @method('PUT')
                                   <button type="submit" class="btn btn-success btn-sm">
-                                    <i class="fe fe-check"></i> Konfirmasi
+                                    Konfirmasi
                                   </button>
                                 </form>
                               @else

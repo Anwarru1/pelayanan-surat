@@ -13,7 +13,7 @@
         </div>
 
         <!-- Modal Panduan -->
-        <div class="modal fade" id="panduanModal" tabindex="-1" role="dialog" aria-labelledby="panduanModalLabel" aria-hidden="true">
+        < class="modal fade" id="panduanModal" tabindex="-1" role="dialog" aria-labelledby="panduanModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -36,8 +36,8 @@
                 <li>Cek apakah syarat pengajuan surat yang dikirim warga sudah benar.</li>
                 <li>Jika syarat valid, <strong>Isi Nomor Urutan</strong> untuk pembuatan Nomor Surat.</li>
                 <li>Masukkan nomor urutan surat lalu tekan <strong>Simpan</strong>.</li>
-                <li>Tekan <strong>Terima</strong> dan tekan lagi <strong>Konfirmasi & Proses</strong> agar sistem melakukukan pembuatan surat otomatis dan merubah status pengajuan dari <li><span class="badge badge-info">Menunggu</span>menjadi <li><span class="badge badge-info">Diproses</span>yang berarti surat menunggu konfirmasi kepala desa.</li></li>
-                <li>Jika syarat tidak valid, tekan <strong>Tolak</strong> dan isikan alasan penolakan, lalu tekan <strong>Kirim Penolakan</strong>. Status pengajuan berubah menjadi <span class="badge badge-danger">Ditolak</span>.</li> </li>                
+                <li>Tekan <strong>Terima</strong> dan tekan lagi <strong>Konfirmasi & Proses</strong> agar sistem melakukukan pembuatan surat otomatis dan merubah status pengajuan dari <li><span class="badge badge-info">Menunggu</span>menjadi <><span class="badge badge-info">Diproses</span>yang berarti surat menunggu konfirmasi kepala desa.</li>
+                <li>Jika syarat tidak valid, tekan <strong>Tolak</strong> dan isikan alasan penolakan, lalu tekan <strong>Kirim Penolakan</strong>. Status pengajuan berubah menjadi <span class="badge badge-danger">Ditolak</span>. </li>                
                 <li>Tekan <strong>Lihat Surat</strong> untuk melihat surat yang dibuat. Surat baru bisa dilihat jika status <strong>Diproses dan Selesai</strong>.</li>
                 <li>Gunakan kolom pencarian untuk memfilter berdasarkan jenis surat, pemohon, atau tanggal.</li>
               </ol>
@@ -47,7 +47,6 @@
             </div>
           </div>
         </div>
-        </div>              
 
         <div class="row my-4">
           <div class="col-md-12">
