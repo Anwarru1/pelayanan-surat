@@ -16,7 +16,7 @@
 
         <div class="card shadow">
           <div class="card-body">
-            <table class="table datatables table-bordered table-striped" id="dataTable-1">
+            <table class="table datatables table-bordered" id="dataTable-1">
                 <thead class="thead-dark">
                     <tr>
                     <th>NIK</th>
