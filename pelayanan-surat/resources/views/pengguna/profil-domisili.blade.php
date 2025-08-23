@@ -196,3 +196,29 @@
     </div>
   </main>
 @endsection
+
+@push('scripts')
+<script>
+  $(function() {
+    $('.drgpicker').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        autoApply: true, // ✅ langsung masuk tanpa klik Apply
+        locale: {
+            format: 'DD-MM-YYYY',
+            separator: " - ",
+            applyLabel: "Pilih",
+            cancelLabel: "Batal",
+            daysOfWeek: [
+                "Min","Sen","Sel","Rab","Kam","Jum","Sab"
+            ],
+            monthNames: [
+                "Januari","Februari","Maret","April","Mei","Juni",
+                "Juli","Agustus","September","Oktober","November","Desember"
+            ],
+            firstDay: 1
+        }
+    });
+  });
+</script>
+@endpush
