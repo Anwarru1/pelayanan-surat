@@ -75,11 +75,11 @@
 
         {{-- Tombol aksi --}}
         <div class="mt-3">
-          @php $nomorFilled = !empty($p->nomor_urutan); @endphp
-          
+
+          {{-- Tombol Lihat Surat --}}
           <a href="{{ route('pengajuan-surat.preview', $p->id) }}" 
-            class="btn btn-secondary {{ !$nomorFilled ? 'disabled' : '' }}" 
-            {{ !$nomorFilled ? 'aria-disabled=true' : '' }}>
+            class="btn btn-secondary {{ empty($p->nomor_urutan) ? 'disabled' : '' }}" 
+            {{ empty($p->nomor_urutan) ? 'aria-disabled=true' : '' }}>
             <i class="fe fe-eye"></i> Lihat Surat
           </a>
 
@@ -90,7 +90,8 @@
             </button>
 
             {{-- Form Terima (hidden awal) --}}
-            <form action="{{ route('pengajuan-surat.terima', $p->id) }}" method="POST" class="d-inline-block mt-2 d-none form-terima-{{ $p->id }}">
+            <form action="{{ route('pengajuan-surat.terima', $p->id) }}" method="POST" 
+                  class="d-inline-block mt-2 d-none form-terima-{{ $p->id }}">
               @csrf
               <input type="hidden" name="status" value="diproses">
               <button type="submit" class="btn btn-success">Konfirmasi & Proses</button>
@@ -102,14 +103,16 @@
             </button>
 
             {{-- Form Tolak (hidden awal) --}}
-            <form action="{{ route('pengajuan-surat.tolak', $p->id) }}" method="POST" class="d-inline-block mt-2 d-none form-tolak-{{ $p->id }}">
+            <form action="{{ route('pengajuan-surat.tolak', $p->id) }}" method="POST" 
+                  class="d-inline-block mt-2 d-none form-tolak-{{ $p->id }}">
               @csrf
               @method('PUT')
-              <input type="text" name="alasan" class="form-control mb-2" placeholder="Alasan Penolakan" required>
+              <input type="text" name="keterangan" class="form-control mb-2" placeholder="Alasan Penolakan" required>
               <button type="submit" class="btn btn-danger">Tolak</button>
             </form>
           @endif
         </div>
+
 
 
       </div>
@@ -124,18 +127,23 @@
   $(document).ready(function () {
       $('#{{ session('modal_id') }}').modal('show');
   });
+</script>
 @endif
 
+<script>
   // tombol TERIMA
   $(document).on('click', '.btn-show-terima', function() {
     let id = $(this).data('id');
-    $('.form-terima-' + id).toggleClass('d-none');
+    $('.form-terima-' + id).removeClass('d-none');  // tampilkan form
+    $(this).hide();  // sembunyikan tombol trigger
   });
 
   // tombol TOLAK
   $(document).on('click', '.btn-show-tolak', function() {
     let id = $(this).data('id');
-    $('.form-tolak-' + id).toggleClass('d-none');
+    $('.form-tolak-' + id).removeClass('d-none');  // tampilkan form
+    $(this).hide();  // sembunyikan tombol trigger
   });
 </script>
+
 @endpush

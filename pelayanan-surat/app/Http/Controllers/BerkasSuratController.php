@@ -116,7 +116,7 @@ class BerkasSuratController extends Controller
         $qrContent .= "Diverifikasi oleh: " . $namaKepalaDesa;
 
         $qrPath = storage_path('app/public/qrcode_' . $berkas->id . '.png');
-        QrCode::format('png')->size(120)->generate($qrContent, $qrPath);
+        QrCode::format('png')->size(100)->generate($qrContent, $qrPath);
 
         if (!file_exists($qrPath)) {
             return back()->with('error', 'Gagal generate QR Code di: ' . $qrPath);
@@ -124,8 +124,8 @@ class BerkasSuratController extends Controller
 
         $template->setImageValue('qrcode', [
             'path' => $qrPath,
-            'width' => 120,
-            'height' => 120,
+            'width' => 100,
+            'height' => 100,
             'ratio' => false,
         ]);
 
