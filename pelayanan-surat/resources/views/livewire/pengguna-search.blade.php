@@ -17,9 +17,8 @@
             {{-- Filter role --}}
             <select wire:model="filterRole" class="form-control ml-2" style="max-width: 180px;">
                 <option value="">Semua Role</option>
-                <option value="admin">Admin</option>
-                <option value="rt">RT</option>
-                <option value="warga">Warga</option>
+                <option value="warga_tetap">Warga Tetap</option>
+                <option value="warga_domisili">Warga Domisili</option>
             </select>
         </div>
 
