@@ -102,7 +102,7 @@
                         <tbody>
                           @foreach ($berkasSurat as $berkas)
                           <tr>
-                            <td>{{ $berkas->count() - $loop->index }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $berkas->no_surat }}</td>
                             <td>{{ $berkas->pengajuanSurat->nama_jenis_surat }}</td>
                             <td>{{ $berkas->pengajuanSurat->nama }}</td>

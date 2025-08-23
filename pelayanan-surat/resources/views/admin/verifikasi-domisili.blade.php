@@ -5,13 +5,56 @@
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-12">
-        <h2 class="page-title mb-3">Verifikasi Warga Domisili</h2>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h2 class="page-title mb-0">Verifikasi Warga Domisili</h2>
+          <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#panduanModal">
+            <i class="fe fe-help-circle"></i> Panduan
+          </button>
+        </div>
+
+        <!-- Modal Panduan -->
+        <div class="modal fade" id="panduanModal" tabindex="-1" role="dialog" aria-labelledby="panduanModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="panduanModalLabel">Panduan Verifikasi Warga Domisili</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            <div class="modal-body">
+              <ol>
+                <li>Periksa daftar warga domisili yang mendaftar akun.</li>
+                <li>Tekan <strong>Kelola</strong> untuk menampilkan detail warga domisili yang mendaftar akun.</li>
+                <li>Cek apakah semua data yang dikirim warga sudah benar.</li>
+                <li>Jika syarat valid, Tekan <strong>Verifikasi</strong> agar data warga yang mendeftar disimpan ke database dan warga bisa mengajukan surat</li>
+                <li>Tombol <strong>Verifikasi</strong> hanya aktif jika warga domisili sudah melengkapi semua yang dibutuhkan di Profil</li>
+                <li>Jika syarat tidak valid, tekan <strong>Tolak</strong> untuk menghapus akun warga yang mendaftar.</li>                
+                <li>Gunakan kolom pencarian untuk memcari data yang diinginkan.</li>
+              </ol>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+          </div>
+        </div>
 
         @if(session('success'))
-          <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         @endif
+                
         @if(session('error'))
-          <div class="alert alert-danger">{{ session('error') }}</div>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         @endif
 
         <div class="card shadow">
