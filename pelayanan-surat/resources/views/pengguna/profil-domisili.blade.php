@@ -46,12 +46,16 @@
                   <div class="form-group col-md-6">
                     <label for="tgl_lahir">Tanggal Lahir</label>
                     <div class="input-group">
+                      @php
+                        $tgl_lahir_value = old('tgl_lahir', Auth::user()->tgl_lahir ? \Carbon\Carbon::parse(Auth::user()->tgl_lahir)->format('YYYY-MM-DD') : '');
+                      @endphp
+
                       <input type="text" 
                             class="form-control drgpicker" 
                             id="tgl_lahir" 
                             name="tgl_lahir" 
                             autocomplete="off"
-                            value="{{ old('tgl_lahir', $user->tgl_lahir ?? '') }}">
+                            value="{{ $tgl_lahir_value }}">
                       <div class="input-group-append">
                         <div class="input-group-text">
                           <span class="fe fe-calendar fe-16"></span>
@@ -214,16 +218,12 @@ $(function() {
   });
 
   let tgl = $('#tgl_lahir').val();
-  if (tgl) {
+  if (tgl && moment(tgl, 'YYYY-MM-DD', true).isValid()) {
     let drp = $('#tgl_lahir').data('daterangepicker');
-    // validasi dulu
-    if(moment(tgl, 'YYYY-MM-DD', true).isValid()){
-        drp.setStartDate(tgl);
-        drp.setEndDate(tgl);
-    }
+    drp.setStartDate(tgl);
+    drp.setEndDate(tgl);
   }
 });
-
 
 </script>
 @endpush

@@ -76,15 +76,11 @@ class ProfilDomisiliController extends Controller
         $user->data_tambahan = json_encode($dataTambahan);
 
         if ($request->tgl_lahir) {
-            // pastikan parse aman, default null kalau gagal
-            try {
-                $user->tgl_lahir = Carbon::createFromFormat('Y-m-d', $request->tgl_lahir)->format('Y-m-d');
-            } catch (\Exception $e) {
-                $user->tgl_lahir = null;
-            }
+            $user->tgl_lahir = Carbon::createFromFormat('Y-m-d', $request->tgl_lahir)->format('Y-m-d');
         } else {
             $user->tgl_lahir = null;
         }
+
 
 
         $user->save();
