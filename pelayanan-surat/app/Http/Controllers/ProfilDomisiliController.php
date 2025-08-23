@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\daftar;
 use App\Models\Pengguna;
 use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
 
 class ProfilDomisiliController extends Controller
 {
@@ -40,7 +39,7 @@ class ProfilDomisiliController extends Controller
             'data_tambahan.akta'=> 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        $user = Auth::guard('daftar')->user();
+         $user = Auth::guard('daftar')->user();
         $dataTambahan = $user->data_tambahan ? json_decode($user->data_tambahan, true) : [];
 
         foreach (['ktp', 'kk', 'akta'] as $field) {
@@ -72,7 +71,7 @@ class ProfilDomisiliController extends Controller
         $user->j_kel = $request->j_kel;
         $user->agama = $request->agama;
         $user->tgl_lahir = $request->tgl_lahir;
-        $user->tgl_lahir = Carbon::createFromFormat('d-m-Y', $request->tgl_lahir)->format('Y-m-d');
+        $user->tmp_lahir = $request->tmp_lahir;
         $user->nomor_hp = $request->nomor_hp;
         $user->data_tambahan = json_encode($dataTambahan);
 

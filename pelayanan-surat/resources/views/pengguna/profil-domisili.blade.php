@@ -46,7 +46,7 @@
                   <div class="form-group col-md-6">
                     <label for="tgl_lahir">Tanggal Lahir</label>
                     <div class="input-group">
-                      <input type="text" class="form-control drgpicker" id="tgl_lahir" name="tgl_lahir" autocomplete="off" placeholder="dd-mm-yyyy"
+                      <input type="text" class="form-control drgpicker" id="tgl_lahir" name="tgl_lahir" autocomplete="off" placeholder="yyyy-mm-dd"
                           value="{{ old('tgl_lahir', Auth::user()->tgl_lahir) }}">
                       <div class="input-group-append">
                         <div class="input-group-text"><span class="fe fe-calendar fe-16"></span></div>
@@ -204,7 +204,7 @@
       autoApply: true,
       showDropdowns: true,
       locale: {
-        format: 'DD-MM-YYYY', // tampilan di input
+        format: 'YYYY-MM-DD', // tampilan di input
         daysOfWeek: [
           "Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"
         ],
@@ -216,7 +216,7 @@
       }
   }, function(start, end, label) {
       // set ke input dengan format
-      $('.drgpicker').val(start.format('DD-MM-YYYY'));
+      $('.drgpicker').val(start.format('YYYY-MM-DD'));
   });
 </script>
 @endpush
