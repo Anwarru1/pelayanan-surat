@@ -76,13 +76,13 @@
 
         {{-- Tombol aksi --}}
         <div class="mt-3">
-          @php $nomorFilled = !empty($p->nomor_urutan); @endphp
-          
+          {{-- Tombol Lihat Surat --}}
           <a href="{{ route('pengajuan-surat.preview', $p->id) }}" 
-             class="btn btn-secondary {{ !$nomorFilled ? 'disabled' : '' }}" 
-             {{ !$nomorFilled ? 'aria-disabled=true' : '' }}>
-             <i class="fe fe-eye"></i> Lihat Surat
+            class="btn btn-secondary {{ !in_array($p->status, ['diproses','diterima']) ? 'disabled' : '' }}" 
+            {{ !in_array($p->status, ['diproses','diterima']) ? 'aria-disabled=true' : '' }}>
+            <i class="fe fe-eye"></i> Lihat Surat
           </a>
+
 
           @if ($p->status === 'menunggu')
             <button class="btn btn-danger" onclick="showForm('tolakForm{{ $p->id }}')">Tolak</button>

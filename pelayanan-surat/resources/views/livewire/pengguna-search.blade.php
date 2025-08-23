@@ -51,7 +51,7 @@
                 <th>Password</th>
                 <th>Jenis Kelamin</th>
                 <th>Alamat</th>
-                <th>TTL</th>
+                <th>Role</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -67,7 +67,7 @@
                     <td>••••••••</td>
                     <td>{{ $pengguna->j_kel }}</td>
                     <td>{{ Str::limit($pengguna->alamat, 10, '...') }}</td>
-                    <td>{{ $pengguna->tmp_lahir }}, {{ \Carbon\Carbon::parse($pengguna->tgl_lahir)->format('d-m-Y') }}</td>
+                    <td>{{ $pengguna->role }}</td>
                     <td>
                         <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editPengguna{{ $pengguna->id }}">
                             Edit
