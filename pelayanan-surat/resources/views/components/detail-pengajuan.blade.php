@@ -75,28 +75,29 @@
 
         {{-- Tombol aksi --}}
         <div class="mt-3">
-
-          {{-- Tombol Lihat Surat --}}
+          @php $nomorFilled = !empty($p->nomor_urutan); @endphp
+          
           <a href="{{ route('pengajuan-surat.preview', $p->id) }}" 
-            class="btn btn-secondary {{ empty($p->nomor_urutan) ? 'disabled' : '' }}" 
-            {{ empty($p->nomor_urutan) ? 'aria-disabled=true' : '' }}>
-            <i class="fe fe-eye"></i> Lihat Surat
+             class="btn btn-secondary {{ !$nomorFilled ? 'disabled' : '' }}" 
+             {{ !$nomorFilled ? 'aria-disabled=true' : '' }}>
+             <i class="fe fe-eye"></i> Lihat Surat
           </a>
 
           @if($p->status === 'menunggu')
-            {{-- Tombol Terima (trigger) --}}
-            <button type="button" class="btn btn-success btn-show-terima" data-id="{{ $p->id }}">
-              Terima
-            </button>
-            {{-- Container untuk form Terima --}}
-            <div class="form-container-terima-{{ $p->id }}"></div>
+            {{-- Form Terima --}}
+            <form action="{{ route('pengajuan-surat.terima', $p->id) }}" method="POST" class="d-inline-block">
+              @csrf
+              <input type="hidden" name="status" value="diproses">
+              <button type="submit" class="btn btn-success">Terima & Proses</button>
+            </form>
 
-            {{-- Tombol Tolak (trigger) --}}
-            <button type="button" class="btn btn-danger btn-show-tolak" data-id="{{ $p->id }}">
-              Tolak
-            </button>
-            {{-- Container untuk form Tolak --}}
-            <div class="form-container-tolak-{{ $p->id }}"></div>
+            {{-- Form Tolak --}}
+            <form action="{{ route('pengajuan-surat.tolak', $p->id) }}" method="POST" class="d-inline-block">
+              @csrf
+              @method('PUT')
+              <input type="text" name="alasan" class="form-control d-inline-block" placeholder="Alasan Penolakan" required style="width:auto; display:inline-block;">
+              <button type="submit" class="btn btn-danger">Tolak</button>
+            </form>
           @endif
         </div>
 
@@ -114,43 +115,4 @@
   });
 </script>
 @endif
-
-<script>
-  // tombol TERIMA
-  $(document).on('click', '.btn-show-terima', function() {
-    let id = $(this).data('id');
-    let container = $('.form-container-terima-' + id);
-
-    // kalau form belum ada → tambahkan
-    if(container.is(':empty')){
-      container.html(`
-        <form action="{{ url('pengajuan-surat/terima') }}/${id}" method="POST" class="mt-2">
-          @csrf
-          <input type="hidden" name="status" value="diproses">
-          <button type="submit" class="btn btn-success">Konfirmasi & Proses</button>
-        </form>
-      `);
-    }
-  });
-
-  // tombol TOLAK
-  $(document).on('click', '.btn-show-tolak', function() {
-    let id = $(this).data('id');
-    let container = $('.form-container-tolak-' + id);
-
-    // kalau form belum ada → tambahkan
-    if(container.is(':empty')){
-      container.html(`
-        <form action="{{ url('pengajuan-surat/tolak') }}/${id}" method="POST" class="mt-2">
-          @csrf
-          @method('PUT')
-          <input type="text" name="alasan" class="form-control mb-2" placeholder="Alasan Penolakan" required>
-          <button type="submit" class="btn btn-danger">Tolak</button>
-        </form>
-      `);
-    }
-  });
-</script>
-
-
 @endpush
