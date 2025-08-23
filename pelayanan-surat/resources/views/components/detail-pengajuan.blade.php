@@ -66,7 +66,7 @@
             <td>
               <form action="{{ route('pengajuan-surat.nomor-urut', $p->id) }}" method="POST">
                 @csrf
-                <input type="number" name="nomor_urutan" class="form-control" value="{{ $p->nomor_urutan }}">
+                <input type="number" name="nomor_urutan" class="form-control" value="{{ $p->nomor_urutan }}" id="nomorUrut{{ $p->id }}">
                 <button type="submit" class="btn btn-sm btn-primary mt-2">Simpan</button>
               </form>
             </td>
@@ -118,16 +118,20 @@
   function showForm(formId) {
     const form = $('#' + formId);
 
-    // sembunyikan semua form dalam modal dengan animasi
-    form.closest('.modal-body').find('form').not(form).slideUp(200);
-
-    // tampilkan form yang dimaksud
-    form.slideDown(200);
+    if (form.is(':visible')) {
+      // kalau form sudah terbuka → tutup
+      form.slideUp(200);
+    } else {
+      // tutup semua form lain dalam modal
+      form.closest('.modal-body').find('form').not(form).slideUp(200);
+      // buka form yg dipilih
+      form.slideDown(200);
+    }
   }
 
   function validateTerima(id) {
     const nomorInput = document.getElementById('nomorUrut' + id);
-    if (!nomorInput.value.trim()) {
+    if (!nomorInput || !nomorInput.value.trim()) {
       alert('Silakan isi nomor urutan surat terlebih dahulu sebelum menerima.');
     } else {
       showForm('terimaForm' + id);
@@ -141,3 +145,4 @@
   @endif
 </script>
 @endpush
+
