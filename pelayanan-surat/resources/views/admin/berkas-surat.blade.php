@@ -189,6 +189,13 @@
     const form = document.getElementById('form-tolak-' + id);
     form.classList.toggle('d-none');
   }
+
+  $(document).ready(function () {
+    $('#dataTable-1').DataTable({
+      "order": [[3, "desc"]] // Kolom ke-4 (Tanggal Diajukan) urut DESC
+    });
+  });
 </script>
 @endpush
+
 
