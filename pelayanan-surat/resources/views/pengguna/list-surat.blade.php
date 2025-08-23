@@ -71,7 +71,7 @@
                       </tr>
                     @empty
                       <tr>
-                        <td colspan="7" class="text-center">Belum ada pengajuan surat</td>
+                        <td colspan="6" class="text-center">Belum ada pengajuan surat</td>
                       </tr>
                     @endforelse
                   </tbody>
