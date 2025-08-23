@@ -191,11 +191,6 @@
     const form = document.getElementById('form-tolak-' + id);
     form.classList.toggle('d-none');
   }
-
-  $(document).ready(function () {
-    var table = $('#dataTable-1').DataTable();
-    table.order([3, 'desc']).draw(); // atur ulang sorting ke Tanggal Diajukan desc
-  });
 </script>
 @endpush
 
