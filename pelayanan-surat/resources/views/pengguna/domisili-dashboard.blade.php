@@ -10,14 +10,83 @@
           {{-- Selamat Datang + Tombol Ajukan --}}
           <div class="card shadow mb-4">
             <div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+              <div class="alert alert-info mt-4 mb-0">
+                <i class="fe fe-info mr-1"></i>
+                Segera lengkapi data dan dokumen yang diperlukan agar proses verifikasi tidak tertunda agar kamu bisa mengajukan surat secara online.
+              </div>
               <div>
-                <h5 class="mb-0">Selamat datang, {{ Auth::user()->nama }}!</h5>
+                <h5 class="mb-0">Selamat datang, Warga Baru{{ Auth::user()->nama }}!</h5>
                 <p class="text-muted mb-0">NIK: {{ Auth::user()->nik }}</p>
               </div>
               <div class="mt-3 mt-md-0">
-                <a href="{{ route('ajukan-surat.create') }}" class="btn btn-primary">
-                  <i class="fe fe-plus"></i> Ajukan Surat
+                <a href="{{ route('profil.index') }}" class="btn btn-primary">
+                  <i class="fe fe-plus"></i> Lengkapi Profil Saya
                 </a>
+              </div>
+            </div>
+          </div>
+
+          {{-- Alur Verifikasi Domisili --}}
+          <div class="card shadow mb-4 border-0">
+            <div class="card-body">
+              <h5 class="mb-4">Alur Pendaftaran Warga Domisili</h5>
+
+              <div class="row text-center">
+                <div class="col-md-2 col-6 mb-4">
+                  <div class="p-3 border rounded shadow-sm">
+                    <div class="mb-2 text-primary">
+                      <i class="fe fe-edit fe-24"></i>
+                    </div>
+                    <h6 class="mb-1">1. Lengkapi Profil</h6>
+                    <p class="small text-muted mb-0">Klik menu <strong>Profil</strong> pada dashboard.</p>
+                  </div>
+                </div>
+
+                <div class="col-md-2 col-6 mb-4">
+                  <div class="p-3 border rounded shadow-sm">
+                    <div class="mb-2 text-info">
+                      <i class="fe fe-user fe-24"></i>
+                    </div>
+                    <h6 class="mb-1">2. Isi Datamu</h6>
+                    <p class="small text-muted mb-0">Isi data yang diminta di form tersebut.</p>
+                  </div>
+                </div>
+
+                <div class="col-md-2 col-6 mb-4">
+                  <div class="p-3 border rounded shadow-sm">
+                    <div class="mb-2 text-warning">
+                      <i class="fe fe-upload fe-24"></i>
+                    </div>
+                    <h6 class="mb-1">3. Upload</h6>
+                    <p class="small text-muted mb-0">Unggah berkas untuk bukti verifikasi.</p>
+                  </div>
+                </div>
+
+                <div class="col-md-2 col-6 mb-4">
+                  <div class="p-3 border rounded shadow-sm">
+                    <div class="mb-2 text-secondary">
+                      <i class="fe fe-save fe-24"></i>
+                    </div>
+                    <h6 class="mb-1">4. Simpan</h6>
+                    <p class="small text-muted mb-0">Simpan data dan tunggu verifikasi admin.</p>
+                  </div>
+                </div>
+
+                <div class="col-md-2 col-6 mb-4">
+                  <div class="p-3 border rounded shadow-sm">
+                    <div class="mb-2 text-success">
+                      <i class="fe fe-check-circle fe-24"></i>
+                    </div>
+                    <h6 class="mb-1">5. Selesai</h6>
+                    <p class="small text-muted mb-0">Kamu menjadi warga domisili.</p>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="alert alert-info mt-4 mb-0">
+                <i class="fe fe-info mr-1"></i>
+                Pastikan data dan dokumen yang Anda upload sesuai agar proses verifikasi tidak tertunda.
               </div>
             </div>
           </div>
@@ -155,33 +224,6 @@
                 <i class="fe fe-info mr-2"></i>
                 <strong>Pelayanan surat desa kini lebih mudah!</strong> Warga dapat mengajukan surat secara online tanpa harus datang langsung ke kantor desa.
               </div>
-            </div>
-          </div>
-
-
-          {{-- Kontak Admin Jika Lupa Password --}}
-          <div class="card shadow mb-4">
-            <div class="card-body">
-              <h5 class="mb-3">Hubungi Admin (Bantuan)</h5>
-
-              @if(session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-              @endif
-
-              <form action="{{ route('pengguna.kirimPesan') }}" method="POST">
-                @csrf
-                <div class="form-group">
-                  <label for="subjek">Subjek</label>
-                  <input type="text" class="form-control" name="subjek" required>
-                </div>
-                <div class="form-group">
-                  <label for="isi">Pesan</label>
-                  <textarea class="form-control" name="isi" rows="4" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-success text-white">
-                  <i class="fe fe-message-circle"></i> Kirim via WhatsApp
-                </button>
-              </form>
             </div>
           </div>
 
