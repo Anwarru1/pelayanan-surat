@@ -46,7 +46,7 @@
                   <div class="form-group col-md-6">
                     <label for="tgl_lahir">Tanggal Lahir</label>
                     <div class="input-group">
-                      <input type="text" class="form-control drgpicker" id="tgl_lahir" name="tgl_lahir" autocomplete="off" 
+                      <input type="text" class="form-control drgpicker" id="tgl_lahir" name="tgl_lahir" autocomplete="off"  placeholder="yyyy-mm-dd"
                           value="{{ old('tgl_lahir', Auth::user()->tgl_lahir) }}">
                       <div class="input-group-append">
                         <div class="input-group-text"><span class="fe fe-calendar fe-16"></span></div>
@@ -205,7 +205,7 @@
         showDropdowns: true,
         autoApply: true, // ✅ langsung masuk tanpa klik Apply
         locale: {
-            format: 'DD-MM-YYYY',
+            format: 'YYYY-MM-DD',
             separator: " - ",
             applyLabel: "Pilih",
             cancelLabel: "Batal",
