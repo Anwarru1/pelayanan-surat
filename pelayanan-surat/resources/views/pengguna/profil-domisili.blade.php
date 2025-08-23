@@ -49,10 +49,11 @@
                       <input type="text" class="form-control drgpicker" id="tgl_lahir" name="tgl_lahir" autocomplete="off" 
                           value="{{ old('tgl_lahir', Auth::user()->tgl_lahir) }}">
                       <div class="input-group-append">
-                      <div class="input-group-text"><span class="fe fe-calendar fe-16"></span></div>
+                        <div class="input-group-text"><span class="fe fe-calendar fe-16"></span></div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </div>   
 
                 <div class="form-group">
                   <label for="alamat">Alamat</label>
