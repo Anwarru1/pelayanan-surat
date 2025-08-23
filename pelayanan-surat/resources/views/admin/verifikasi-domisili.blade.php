@@ -58,7 +58,7 @@
                         </div>
 
                         <div class="modal-body">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" id="dataTable-1">
                             <tr><th>NIK</th><td>{{ $warga->nik }}</td></tr>
                             <tr><th>Nama</th><td>{{ $warga->nama }}</td></tr>
                             <tr><th>Alamat</th><td>{{ $warga->alamat }}</td></tr>
@@ -107,13 +107,30 @@
                         </form>
 
                         {{-- Tombol Verifikasi --}}
+                        @php
+                            $isComplete = $warga->nik 
+                                && $warga->nama 
+                                && $warga->alamat 
+                                && $warga->nomor_hp 
+                                && $warga->tmp_lahir 
+                                && $warga->tgl_lahir 
+                                && $warga->j_kel 
+                                && $warga->pekerjaan 
+                                && $warga->agama 
+                                && $warga->status 
+                                && !empty($warga->data_tambahan); // pastikan ada data tambahan juga
+                        @endphp
+
                         <form action="{{ route('verifikasi.verifikasi', $warga->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('PUT')
-                            <button type="submit" class="btn btn-success">
-                            <i class="fe fe-check"></i> Verifikasi
+                            <button type="submit" 
+                                    class="btn btn-success {{ !$isComplete ? 'disabled' : '' }}" 
+                                    {{ !$isComplete ? 'disabled' : '' }}>
+                                <i class="fe fe-check"></i> Verifikasi
                             </button>
                         </form>
+
 
                         {{-- Tombol Tutup tetap di kanan --}}
                         <button type="button" class="btn btn-secondary ml-auto" data-dismiss="modal">Tutup</button>

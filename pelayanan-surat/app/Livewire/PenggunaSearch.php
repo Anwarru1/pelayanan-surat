@@ -27,6 +27,7 @@ class PenggunaSearch extends Component
         if ($value) {
             $this->selectedPenggunas = Pengguna::where(function ($q) {
                 $q->where('nama', 'like', '%' . $this->searchPengguna . '%')
+                  ->where('role', 'like', '%' . $this->searchPengguna . '&')
                   ->orWhere('nik', 'like', '%' . $this->searchPengguna . '%');
             })->pluck('id')->toArray();
         } else {
