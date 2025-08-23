@@ -42,28 +42,12 @@
                     <input type="text" id="tmp_lahir" name="tmp_lahir" class="form-control"
                           value="{{ old('tmp_lahir', Auth::user()->tmp_lahir) }}">
                   </div>
-
                   <div class="form-group col-md-6">
                     <label for="tgl_lahir">Tanggal Lahir</label>
-                    <div class="input-group">
-                      @php
-                          $tgl_lahir_value = old('tgl_lahir', Auth::user()->tgl_lahir ? \Carbon\Carbon::parse(Auth::user()->tgl_lahir)->format('YYYY-MM-DD') : '');
-                      @endphp
-
-                      <input type="text"
-                            class="form-control drgpicker"
-                            id="tgl_lahir"
-                            name="tgl_lahir"
-                            autocomplete="off"
-                            value="{{ $tgl_lahir_value }}">
-                      <div class="input-group-append">
-                        <div class="input-group-text">
-                          <span class="fe fe-calendar fe-16"></span>
-                        </div>
-                      </div>
-                    </div>
+                    <input type="date" id="tgl_lahir" name="tgl_lahir" class="form-control"
+                          value="{{ old('tgl_lahir', Auth::user()->tgl_lahir) }}">
                   </div>
-                </div>   
+                </div>
 
                 <div class="form-group">
                   <label for="alamat">Alamat</label>
@@ -206,26 +190,3 @@
     </div>
   </main>
 @endsection
-
-@push('scripts')
-<script>
-$(function() {
-    let tglInput = $('#tgl_lahir');
-    tglInput.daterangepicker({
-        singleDatePicker: true,
-        autoApply: true,
-        showDropdowns: true,
-        locale: { format: 'YYYY-MM-DD' }
-    });
-
-    let tgl = tglInput.val();
-    if (tgl && moment(tgl, 'YYYY-MM-DD', true).isValid()) {
-        let drp = tglInput.data('daterangepicker');
-        drp.setStartDate(tgl);
-        drp.setEndDate(tgl);
-    }
-});
-
-
-</script>
-@endpush
