@@ -83,6 +83,16 @@
 
                 <div class="col-md-2 col-6 mb-4">
                   <div class="p-3 border rounded shadow-sm">
+                    <div class="mb-2 text-secondary">
+                      <i class="fe fe-refresh-cw fe-24"></i>
+                    </div>
+                    <h6 class="mb-1">5. Diproses</h6>
+                    <p class="small text-muted mb-0">Datamu diproses verifikasi admin desa.</p>
+                  </div>
+                </div>
+
+                <div class="col-md-2 col-6 mb-4">
+                  <div class="p-3 border rounded shadow-sm">
                     <div class="mb-2 text-success">
                       <i class="fe fe-check-circle fe-24"></i>
                     </div>
