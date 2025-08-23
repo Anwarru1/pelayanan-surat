@@ -51,7 +51,7 @@
                             id="tgl_lahir" 
                             name="tgl_lahir" 
                             autocomplete="off"
-                            value="{{ old('tgl_lahir', Auth::user()->tgl_lahir ? \Carbon\Carbon::parse(Auth::user()->tgl_lahir)->format('Y-m-d') : '') }}">
+                            value="{{ old('tgl_lahir', $user->tgl_lahir ?? '') }}">
                       <div class="input-group-append">
                         <div class="input-group-text">
                           <span class="fe fe-calendar fe-16"></span>
@@ -206,24 +206,25 @@
 @push('scripts')
 <script>
 $(function() {
-  // Inisialisasi daterangepicker
   $('.drgpicker').daterangepicker({
     singleDatePicker: true,
     autoApply: true,
     showDropdowns: true,
     autoUpdateInput: true,
-    locale: {
-      format: 'YYYY-MM-DD',
-    }
+    locale: { format: 'YYYY-MM-DD' }
   });
 
-  // Set tanggal awal kalau sudah ada di value input
   let tgl = $('#tgl_lahir').val();
   if (tgl) {
-    $('#tgl_lahir').data('daterangepicker').setStartDate(tgl);
-    $('#tgl_lahir').data('daterangepicker').setEndDate(tgl);
+    let drp = $('#tgl_lahir').data('daterangepicker');
+    // validasi dulu
+    if(moment(tgl, 'YYYY-MM-DD', true).isValid()){
+        drp.setStartDate(tgl);
+        drp.setEndDate(tgl);
+    }
   }
 });
+
 
 </script>
 @endpush
