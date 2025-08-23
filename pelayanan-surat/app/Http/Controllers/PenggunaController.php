@@ -55,6 +55,7 @@ class PenggunaController extends Controller
             'nomor_hp'  => 'required|numeric|unique:pengguna',
             'tmp_lahir' => 'required|string',
             'tgl_lahir' => 'required|date',
+            'role'      => 'required|in:warga_tetap,warga_domisili',
         ]);
 
         //simpan data
@@ -72,6 +73,7 @@ class PenggunaController extends Controller
             'status'    => $request->status,
             'tmp_lahir' => $request->tmp_lahir,
             'tgl_lahir' => Carbon::createFromFormat('m/d/Y', $request->tgl_lahir)->format('Y-m-d'),
+            'role'      => $request->role,
         ]);
         return redirect()->route('data-user.index')->with('success', 'Pengguna ditambahkan.');
     }
@@ -112,6 +114,7 @@ class PenggunaController extends Controller
             'nomor_hp'  => 'required|numeric',
             'tmp_lahir' => 'required|string',
             'tgl_lahir' => 'required|date',
+            'role'      => 'required|in:warga_tetap,warga_domisili',
         ]);
         
         {
@@ -120,15 +123,16 @@ class PenggunaController extends Controller
         if ($request->password) {
             $pengguna->password = Hash::make($request->password);
         }
-        $pengguna->nama = $request->nama;
-        $pengguna->alamat = $request->alamat;
-        $pengguna->j_kel = $request->j_kel;
-        $pengguna->agama = $request->agama;
-        $pengguna->status = $request->status;
+        $pengguna->nama      = $request->nama;
+        $pengguna->alamat    = $request->alamat;
+        $pengguna->j_kel     = $request->j_kel;
+        $pengguna->agama     = $request->agama;
+        $pengguna->status    = $request->status;
         $pengguna->pekerjaan = $request->pekerjaan;
-        $pengguna->nomor_hp = $this->normalizePhoneNumber($request->nomor_hp);
+        $pengguna->nomor_hp  = $this->normalizePhoneNumber($request->nomor_hp);
         $pengguna->tmp_lahir = $request->tmp_lahir;
         $pengguna->tgl_lahir = Carbon::createFromFormat('m/d/Y', $request->tgl_lahir)->format('Y-m-d');
+        $pengguna->role      = $request->role;
         $pengguna->save();
         return redirect()->route('data-user.index')->with('success', 'Pengguna diperbarui.');
     }
