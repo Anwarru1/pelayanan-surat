@@ -89,6 +89,7 @@
                       <table class="table datatables table-bordered" id="dataTable-1">
                         <thead class="thead-dark">
                           <tr>
+                            <th class="text-center">No</th>
                             <th class="text-center">No. Surat</th>
                             <th class="text-center">Jenis Surat</th>
                             <th class="text-center">Nama Pemohon</th>
@@ -101,6 +102,7 @@
                         <tbody>
                           @foreach ($berkasSurat as $berkas)
                           <tr>
+                            <td>{{ $berkas->count() - $loop->index }}</td>
                             <td>{{ $berkas->no_surat }}</td>
                             <td>{{ $berkas->pengajuanSurat->nama_jenis_surat }}</td>
                             <td>{{ $berkas->pengajuanSurat->nama }}</td>
