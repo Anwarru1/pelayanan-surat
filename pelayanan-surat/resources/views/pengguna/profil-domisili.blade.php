@@ -204,6 +204,7 @@
       autoApply: true,
       showDropdowns: true,
       locale: {
+        format: 'YYYY-MM-DD',
         daysOfWeek: [
           "Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"
         ],
