@@ -5,18 +5,16 @@
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-12">
-
+          {{-- Info Merah di atas --}}
+          <div class="alert alert-danger mb-4">
+            <i class="fe fe-info mr-1"></i>
+            Segera lengkapi data dan dokumen yang diperlukan agar proses verifikasi tidak tertunda 
+            agar kamu bisa mengajukan surat secara online.
+          </div>
 
           {{-- Selamat Datang + Tombol Ajukan --}}
           <div class="card shadow mb-4">
             <div class="card-body">
-
-              {{-- Info Merah di atas --}}
-              <div class="alert alert-danger mb-4">
-                <i class="fe fe-info mr-1"></i>
-                Segera lengkapi data dan dokumen yang diperlukan agar proses verifikasi tidak tertunda 
-                agar kamu bisa mengajukan surat secara online.
-              </div>
 
               {{-- Row Selamat Datang + Tombol --}}
               <div class="d-flex justify-content-between align-items-center">
@@ -77,7 +75,7 @@
                       <i class="fe fe-save fe-24"></i>
                     </div>
                     <h6 class="mb-1">4. Simpan</h6>
-                    <p class="small text-muted mb-0">Simpan data dan tunggu verifikasi admin.</p>
+                    <p class="small text-muted mb-0">Simpan data dan tunggu verifikasi.</p>
                   </div>
                 </div>
 
