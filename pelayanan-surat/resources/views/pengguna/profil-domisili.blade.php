@@ -46,7 +46,7 @@
                   <div class="form-group col-md-6">
                     <label for="tgl_lahir">Tanggal Lahir</label>
                     <div class="input-group">
-                      <input type="text" class="form-control drgpicker" id="tgl_lahir" name="tgl_lahir" autocomplete="off"  placeholder="yyyy-mm-dd"
+                      <input type="text" class="form-control drgpicker" id="tgl_lahir" name="tgl_lahir" autocomplete="off" placeholder="yyyy-mm-dd"
                           value="{{ old('tgl_lahir', Auth::user()->tgl_lahir) }}">
                       <div class="input-group-append">
                         <div class="input-group-text"><span class="fe fe-calendar fe-16"></span></div>
@@ -199,26 +199,11 @@
 
 @push('scripts')
 <script>
-  $(function() {
-    $('.drgpicker').daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-        autoApply: true, // ✅ langsung masuk tanpa klik Apply
-        locale: {
-            format: 'YYYY-MM-DD',
-            separator: " - ",
-            applyLabel: "Pilih",
-            cancelLabel: "Batal",
-            daysOfWeek: [
-                "Min","Sen","Sel","Rab","Kam","Jum","Sab"
-            ],
-            monthNames: [
-                "Januari","Februari","Maret","April","Mei","Juni",
-                "Juli","Agustus","September","Oktober","November","Desember"
-            ],
-            firstDay: 1
-        }
-    });
+  flatpickr(".drgpicker", {
+    dateFormat: "Y-m-d",   // simpan & tampil yyyy-mm-dd
+    locale: "id",          // bahasa Indonesia (Senin, Selasa, dst.)
+    altInput: true,
+    altFormat: "d F Y",    // tampilan user: 23 Agustus 2025
   });
 </script>
 @endpush
