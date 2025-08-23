@@ -9,9 +9,9 @@
 
           {{-- Selamat Datang + Tombol Ajukan --}}
           <div class="card shadow mb-4">
-            <div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+            <div class="card-body">
               <div class="alert alert-info mt-4 mb-0">
-                <i class="fe fe-info mr-1"></i>
+                <i class="fe fe-danger mr-1"></i>
                 Segera lengkapi data dan dokumen yang diperlukan agar proses verifikasi tidak tertunda agar kamu bisa mengajukan surat secara online.
               </div>
               <div>
