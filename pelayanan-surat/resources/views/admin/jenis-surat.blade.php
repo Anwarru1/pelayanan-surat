@@ -94,7 +94,7 @@
                           <p>Berikut panduan membuat <strong>template surat</strong> (.docx):</p>
 
                           <div class="text-center">
-                            <img src="{{ asset('storage/panduan/panduan-template-surat.png') }}" class="img-fluid rounded shadow-sm my-3" alt="Panduan Template Surat">
+                            <img src="{{ asset('assets/images/panduan-template-surat.png') }}" class="img-fluid rounded shadow-sm my-3" alt="Panduan Template Surat">
                           </div>
 
                           <ol>
@@ -113,6 +113,7 @@
                                   <li><code>${pekerjaan}</code> (Pekerjaan)</li>
                                   <li><code>${alamat}</code> (Alamat)</li>
                                   <li><code>${no_hp}</code> (nomor Hp)</li>
+                                  <li><code>${qrcode}</code> {QR Code}</li>
                                 </ul>
                               </li>
                               <li>Untuk data tambahan (yang diinput pengguna), gunakan format: <code>${keperluan}</code>, <code>${keterangan}</code>, dsb.</li>
