@@ -22,9 +22,7 @@ class ProfilDomisiliController extends Controller
         return view('pengguna.domisili-dashboard', compact('user'));
     }
 
-    /**
-     * Update data diri (profil tanpa berkas)
-     */
+    
     public function updateProfil(Request $request)
     {
         $request->validate([
@@ -73,20 +71,23 @@ class ProfilDomisiliController extends Controller
         $user = Auth::guard('daftar')->user();
         $dataTambahan = $user->data_tambahan ? json_decode($user->data_tambahan, true) : [];
 
-        $fields = ['ktp', 'kk', 'surat_rt', 'surat_pindah', 'foto', 'pernyataan_domisili'];
+        foreach (['ktp', 'kk', 'surat_rt', 'surat_pindah', 'foto', 'pernyataan_domisili'] as $field) {
+            if ($request->hasFile("data_tambahan.$field")) {
+                $file = $request->file("data_tambahan.$field");
 
-        foreach ($fields as $field) {
-            if ($request->hasFile($field)) {
-                $file = $request->file($field);
+                // nama file unik → namaField-randomString.ext
                 $filename = $field . '-' . Str::random(10) . '.' . $file->getClientOriginalExtension();
 
-                $destinationPath = $destinationPath = $_SERVER['DOCUMENT_ROOT'] . '/domisili/syarat-verifikasi/';
+                // tujuan penyimpanan
+                $destinationPath = base_path('../storage/domisili/syarat-verifikasi/');
                 if (!file_exists($destinationPath)) {
                     mkdir($destinationPath, 0755, true);
                 }
 
+                // pindahkan file
                 $file->move($destinationPath, $filename);
 
+                // simpan path relatif di database
                 $dataTambahan[$field] = 'storage/domisili/syarat-verifikasi/' . $filename;
             }
         }
@@ -99,7 +100,9 @@ class ProfilDomisiliController extends Controller
 
     public function verifikasiIndex()
     {
+        // ambil semua warga domisili yang belum diverifikasi
         $wargaBaru = daftar::where('is_verified', 0)->get();
+
         return view('admin.verifikasi-domisili', compact('wargaBaru'));
     }
 
@@ -107,29 +110,33 @@ class ProfilDomisiliController extends Controller
     {
         $domisili = daftar::findOrFail($id);
 
-        Pengguna::create([
-            'nik'       => $domisili->nik,
-            'password'  => $domisili->password, // sudah di-hash
-            'nama'      => $domisili->nama,
-            'alamat'    => $domisili->alamat,
-            'tmp_lahir' => $domisili->tmp_lahir,
-            'tgl_lahir' => $domisili->tgl_lahir,
-            'j_kel'     => $domisili->j_kel,
-            'nomor_hp'  => $domisili->nomor_hp,
-            'pekerjaan' => $domisili->pekerjaan,
-            'agama'     => $domisili->agama,
-            'status'    => $domisili->status,
-            'role'      => 'warga_domisili'
+        // pindahkan data ke tabel pengguna
+        $pengguna = Pengguna::create([
+            'nik'            => $domisili->nik,
+            'password'       => $domisili->password, // sudah di-hash ketika daftar
+            'nama'           => $domisili->nama,
+            'alamat'         => $domisili->alamat,
+            'tmp_lahir'      => $domisili->tmp_lahir,
+            'tgl_lahir'      => $domisili->tgl_lahir,
+            'j_kel'          => $domisili->j_kel,
+            'nomor_hp'       => $domisili->nomor_hp,
+            'pekerjaan'      => $domisili->pekerjaan,
+            'agama'          => $domisili->agama,
+            'status'         => $domisili->status,
+            'role'           => 'warga_domisili'
         ]);
 
+        // update daftar_pengguna
         $domisili->update(['is_verified' => 1]);
 
         return redirect()->back()->with('success', 'Warga domisili berhasil diverifikasi!');
     }
 
-    public function tolak($id)
+    public function tolak(Request $request, $id)
     {
         $domisili = daftar::findOrFail($id);
+
+        // kalau mau hapus akun
         $domisili->delete();
 
         return redirect()->back()->with('error', 'Warga domisili ditolak dan datanya dihapus.');
@@ -139,19 +146,25 @@ class ProfilDomisiliController extends Controller
     {
         $warga = daftar::findOrFail($id);
 
+        // cek apakah semua field sudah lengkap
         $isLengkap = $warga->nik && $warga->nama && $warga->alamat && 
-                     $warga->tmp_lahir && $warga->tgl_lahir && $warga->j_kel && 
-                     $warga->nomor_hp && $warga->pekerjaan && 
-                     $warga->agama && $warga->status && 
-                     $warga->data_tambahan;
+                    $warga->tmp_lahir && $warga->tgl_lahir && $warga->j_kel && 
+                    $warga->nomor_hp && $warga->pekerjaan && 
+                    $warga->agama && $warga->status && 
+                    $warga->data_tambahan;
 
         if (!$isLengkap) {
             return redirect()->route('admin.verifikasi.index')
-                             ->with('error', 'Data belum lengkap, tidak bisa ditampilkan.');
+                            ->with('error', 'Data belum lengkap, tidak bisa ditampilkan.');
         }
 
+        // data_tambahan JSON -> decode
         $dataTambahan = json_decode($warga->data_tambahan, true);
 
         return view('admin.verifikasi-domisili.show', compact('warga', 'dataTambahan'));
     }
+
+
 }
+
+
