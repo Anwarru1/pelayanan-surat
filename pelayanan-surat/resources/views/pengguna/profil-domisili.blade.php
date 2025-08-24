@@ -136,10 +136,13 @@
                   $dataTambahan = Auth::user()->data_tambahan ? json_decode(Auth::user()->data_tambahan, true) : [];
                 @endphp
 
+                {{-- KTP --}}
                 <div class="form-group">
                   <label for="ktp">KTP</label>
                   <input type="file" name="data_tambahan[ktp]" class="form-control">
-                  {{-- KTP --}}
+                  <small class="form-text text-muted">
+                    Format: JPEG, JPG, PNG, atau PDF. Maksimal 2MB
+                  </small>
                   @if(isset($dataTambahan['ktp']))
                     <p class="mt-2">File saat ini: 
                       <a href="{{ asset($dataTambahan['ktp']) }}" target="_blank">
@@ -149,10 +152,13 @@
                   @endif
                 </div>
 
+                {{-- KK --}}
                 <div class="form-group">
                   <label for="kk">Kartu Keluarga</label>
                   <input type="file" name="data_tambahan[kk]" class="form-control">
-                  {{-- KK --}}
+                  <small class="form-text text-muted">
+                    Format: JPEG, JPG, PNG, atau PDF. Maksimal 2MB
+                  </small>
                   @if(isset($dataTambahan['kk']))
                     <p class="mt-2">File saat ini: 
                       <a href="{{ asset($dataTambahan['kk']) }}" target="_blank">
@@ -162,18 +168,70 @@
                   @endif
                 </div>
 
+                {{-- Surat Pengantar RT/RW --}}
                 <div class="form-group">
-                  <label for="akta">Akta Kelahiran</label>
-                  <input type="file" name="data_tambahan[akta]" class="form-control">
-                  {{-- Akta --}}
-                  @if(isset($dataTambahan['akta']))
+                  <label for="surat_rt">Surat Pengantar RT/RW</label>
+                  <input type="file" name="data_tambahan[surat_rt]" class="form-control">
+                  <small class="form-text text-muted">
+                    Format: JPEG, JPG, PNG, atau PDF. Maksimal 2MB
+                  </small>
+                  @if(isset($dataTambahan['surat_rt']))
                     <p class="mt-2">File saat ini: 
-                      <a href="{{ asset($dataTambahan['akta']) }}" target="_blank">
-                        {{ basename($dataTambahan['akta']) }}
+                      <a href="{{ asset($dataTambahan['surat_rt']) }}" target="_blank">
+                        {{ basename($dataTambahan['surat_rt']) }}
                       </a>
                     </p>
                   @endif
                 </div>
+
+                {{-- Surat Pindah --}}
+                <div class="form-group">
+                  <label for="surat_pindah">Surat Pindah (jika pendatang)</label>
+                  <input type="file" name="data_tambahan[surat_pindah]" class="form-control">
+                  <small class="form-text text-muted">
+                    Format: JPEG, JPG, PNG, atau PDF. Maksimal 2MB
+                  </small>
+                  @if(isset($dataTambahan['surat_pindah']))
+                    <p class="mt-2">File saat ini: 
+                      <a href="{{ asset($dataTambahan['surat_pindah']) }}" target="_blank">
+                        {{ basename($dataTambahan['surat_pindah']) }}
+                      </a>
+                    </p>
+                  @endif
+                </div>
+
+                {{-- Pas Foto --}}
+                <div class="form-group">
+                  <label for="foto">Pas Foto</label>
+                  <input type="file" name="data_tambahan[foto]" class="form-control">
+                  <small class="form-text text-muted">
+                    Format: JPEG, JPG, atau PNG. Maksimal 2MB
+                  </small>
+                  @if(isset($dataTambahan['foto']))
+                    <p class="mt-2">File saat ini: 
+                      <a href="{{ asset($dataTambahan['foto']) }}" target="_blank">
+                        {{ basename($dataTambahan['foto']) }}
+                      </a>
+                    </p>
+                  @endif
+                </div>
+
+                {{-- Surat Pernyataan Domisili --}}
+                <div class="form-group">
+                  <label for="pernyataan_domisili">Surat Pernyataan Domisili</label>
+                  <input type="file" name="data_tambahan[pernyataan_domisili]" class="form-control">
+                  <small class="form-text text-muted">
+                    Format: JPEG, JPG, PNG, atau PDF. Maksimal 2MB
+                  </small>
+                  @if(isset($dataTambahan['pernyataan_domisili']))
+                    <p class="mt-2">File saat ini: 
+                      <a href="{{ asset($dataTambahan['pernyataan_domisili']) }}" target="_blank">
+                        {{ basename($dataTambahan['pernyataan_domisili']) }}
+                      </a>
+                    </p>
+                  @endif
+                </div>
+
 
                 <div class="text-right">
                   <button type="submit" class="btn btn-primary">
@@ -183,6 +241,7 @@
               </form>
             </div>
           </div>
+
 
 
         </div>

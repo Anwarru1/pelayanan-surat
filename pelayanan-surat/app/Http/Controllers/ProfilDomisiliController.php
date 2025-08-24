@@ -34,34 +34,35 @@ class ProfilDomisiliController extends Controller
             'status'            => 'in:Kawin,Belum Kawin,Cerai Mati,Cerai Hidup',
             'pekerjaan'         => 'nullable|in:PNS,Wiraswasta,Petani,Buruh,Karyawan,Pensiun,IRT,Pelajar/Mahasiswa',
             'nomor_hp'          => 'nullable|numeric',
-            'data_tambahan.ktp' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'data_tambahan.kk'  => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'data_tambahan.akta'=> 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'data_tambahan.ktp'                 => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'data_tambahan.kk'                  => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'data_tambahan.surat_rt'            => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'data_tambahan.surat_pindah'        => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'data_tambahan.foto'                => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'data_tambahan.pernyataan_domisili' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         $user = Auth::guard('daftar')->user();
         $dataTambahan = $user->data_tambahan ? json_decode($user->data_tambahan, true) : [];
 
-        foreach (['ktp', 'kk', 'akta'] as $field) {
+        $fields = ['ktp', 'kk', 'surat_rt', 'surat_pindah', 'foto', 'pernyataan_domisili'];
+
+        foreach ($fields as $field) {
             if ($request->hasFile("data_tambahan.$field")) {
                 $file = $request->file("data_tambahan.$field");
-
-                // nama file unik → namaField-randomString.ext
                 $filename = $field . '-' . Str::random(10) . '.' . $file->getClientOriginalExtension();
 
-                // tujuan penyimpanan
-                $destinationPath = base_path('../storage/domisili/syarat-verifikasi/');
+                $destinationPath = storage_path('app/public/domisili/syarat-verifikasi/');
                 if (!file_exists($destinationPath)) {
                     mkdir($destinationPath, 0755, true);
                 }
 
-                // pindahkan file
                 $file->move($destinationPath, $filename);
 
-                // simpan path relatif di database
                 $dataTambahan[$field] = 'storage/domisili/syarat-verifikasi/' . $filename;
             }
         }
+
 
 
         $user->nama = $request->nama;

@@ -122,28 +122,45 @@
                         </table>
 
                         <h6>Data Tambahan</h6>
-                            @php
-                                $dataTambahan = json_decode($warga->data_tambahan, true);
-                            @endphp
+                          @php
+                              $dataTambahan = json_decode($warga->data_tambahan, true);
+                              $labels = [
+                                  'ktp' => 'KTP',
+                                  'kk' => 'Kartu Keluarga',
+                                  'surat_rt' => 'Surat Pengantar RT/RW',
+                                  'surat_pindah' => 'Surat Pindah (jika ada)',
+                                  'foto' => 'Pas Foto',
+                                  'surat_pernyataan' => 'Surat Pernyataan Domisili',
+                              ];
+                          @endphp
 
-                            @if($dataTambahan)
-                                <ul class="list-group">
-                                    @foreach($dataTambahan as $key => $value)
-                                        <li class="list-group-item">
-                                            <strong>{{ ucfirst($key) }}:</strong>
-                                            @if(\Illuminate\Support\Str::endsWith($value, ['.jpg','.jpeg','.png','.pdf','.doc','.docx']))
-                                                <a href="{{ asset('/'.$value) }}" target="_blank">
-                                                    Lihat File
-                                                </a>
-                                            @else
-                                                {{ $value }}
-                                            @endif
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @else
-                                <p class="text-muted">Tidak ada data tambahan.</p>
-                            @endif
+                          @if($dataTambahan)
+                              <ul class="list-group">
+                                  @foreach($dataTambahan as $key => $value)
+                                      <li class="list-group-item">
+                                          <strong>{{ $labels[$key] ?? ucfirst($key) }}:</strong>
+                                          @if(\Illuminate\Support\Str::endsWith($value, ['.jpg','.jpeg','.png']))
+                                              <div class="mt-2">
+                                                  <img src="{{ asset($value) }}" alt="{{ $key }}" 
+                                                      class="img-thumbnail" style="max-height:150px">
+                                              </div>
+                                              <a href="{{ asset($value) }}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+                                                  Lihat File
+                                              </a>
+                                          @elseif(\Illuminate\Support\Str::endsWith($value, ['.pdf','.doc','.docx']))
+                                              <a href="{{ asset($value) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                  Lihat File
+                                              </a>
+                                          @else
+                                              {{ $value }}
+                                          @endif
+                                      </li>
+                                  @endforeach
+                              </ul>
+                          @else
+                              <p class="text-muted">Tidak ada data tambahan.</p>
+                          @endif
+
 
                         </div>
 
