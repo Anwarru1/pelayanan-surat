@@ -6,7 +6,7 @@
 
         {{-- Logo Desa --}}
         <div class="flex justify-center mb-4">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo Desa" class="h-20">
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo Desa" style="width: 80px; height: auto;">
         </div>
 
         <h1 class="text-2xl font-bold mb-4 text-center text-green-700">
