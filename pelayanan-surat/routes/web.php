@@ -186,6 +186,8 @@ Route::middleware('auth:pengguna')->group(function () {
 Route::middleware('auth:daftar')->group(function(){
     Route::get('/domisili/dashboard', [ProfilDomisiliController::class, 'dashboard'])->name('domisili.dashboard');
     Route::get('/domisili/profile',[ProfilDomisiliController::class,'index'])->name('profil.index');
-    Route::post('/domisili/profile/update',[ProfilDomisiliController::class,'update'])->name('profil.update');
+    Route::post('/domisili/profil/update-data-diri', [ProfilController::class, 'updateDataDiri'])->name('profil.updateDataDiri');
+    Route::post('/domisili/profil/update-data-tambahan', [ProfilController::class, 'updateDataTambahan'])->name('profil.updateDataTambahan');
+
     
 });

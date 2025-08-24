@@ -27,7 +27,7 @@
               <h5 class="card-title mb-0">Data Diri</h5>
             </div>
             <div class="card-body">
-              <form action="{{ route('profil.update') }}" method="POST">
+              <form action="{{ route('profil.updateDataDiri') }}" method="POST">
                 @csrf
 
                 <div class="form-group">
@@ -129,7 +129,7 @@
               <h5 class="card-title mb-0">Upload Data Tambahan</h5>
             </div>
             <div class="card-body">
-              <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
+              <form action="{{ route('profil.updateDataTambahan') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 @php
