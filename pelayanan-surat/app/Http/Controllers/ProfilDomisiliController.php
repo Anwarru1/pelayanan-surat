@@ -80,7 +80,7 @@ class ProfilDomisiliController extends Controller
                 $file = $request->file($field);
                 $filename = $field . '-' . Str::random(10) . '.' . $file->getClientOriginalExtension();
 
-                $destinationPath = base_path('../storage/domisili/syarat-verifikasi/');
+                $destinationPath = $_SERVER['DOCUMENT_ROOT'] . '/storage/domisili/syarat-verifikasi/';
                 if (!file_exists($destinationPath)) {
                     mkdir($destinationPath, 0755, true);
                 }
