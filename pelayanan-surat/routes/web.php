@@ -191,3 +191,5 @@ Route::middleware('auth:daftar')->group(function(){
 
     
 });
+
+Route::get('/cek-surat/{id}', [BerkasSuratController::class, 'cekSurat'])->name('cek.surat');

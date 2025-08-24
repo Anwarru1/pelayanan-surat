@@ -109,12 +109,15 @@ class BerkasSuratController extends Controller
         // ------------------------------
         // QR Code
         // ------------------------------
+        /*
         $qrContent = "Nomor Surat: {$berkas->no_surat}\n";
         $qrContent .= "Nama Pemohon: " . ($berkas->pengajuanSurat->nama ?? '-') . "\n";
         $qrContent .= "Jenis Surat: " . ($berkas->pengajuanSurat->nama_jenis_surat ?? '-') . "\n";
         $qrContent .= "Tanggal: " . now()->format('d-m-Y') . "\n";
         $qrContent .= "Diverifikasi oleh: Kepala Desa Wiramastra " . $namaKepalaDesa;
+        */
 
+        $detailUrl = route('cek.surat', $berkas->id); // route publik
         $qrPath = storage_path('app/public/qrcode_' . $berkas->id . '.png');
         QrCode::format('png')->size(100)->generate($qrContent, $qrPath);
 
@@ -183,4 +186,17 @@ class BerkasSuratController extends Controller
 
         return back()->with('success', 'Pengajuan surat berhasil ditolak');
     }
+
+    public function cekSurat($id)
+    {
+        $berkas = BerkasSurat::with('pengajuanSurat')->findOrFail($id);
+
+        // hanya tampilkan jika status sudah diterima
+        if ($berkas->pengajuanSurat->status !== 'diterima') {
+            abort(403, 'Surat belum diverifikasi.');
+        }
+
+        return view('cek-surat', compact('berkas'));
+    }
+
 }
