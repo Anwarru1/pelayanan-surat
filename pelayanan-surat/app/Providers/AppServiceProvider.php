@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use App\Models\ResetPassword;
-use App\Models\Daftar; // huruf besar
+use App\Models\daftar; // huruf besar
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
                     ->latest()
                     ->get();
 
-                $wargaBaru = Daftar::where('is_verified', 0)->get();
+                $wargaBaru = daftar::where('is_verified', 0)->get();
 
                 $view->with(compact('resetBaru', 'wargaBaru'));
             }

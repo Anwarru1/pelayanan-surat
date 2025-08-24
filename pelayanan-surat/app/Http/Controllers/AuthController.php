@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Daftar;
+use App\Models\daftar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pengguna;
@@ -97,11 +97,11 @@ class AuthController extends Controller
 
     public function register(Request $request) {
         $request->validate([
-            'nik' => 'required|unique:Daftar,nik',
+            'nik' => 'required|unique:daftar,nik',
             'password' => 'required|min:8|confirmed',
         ]);
 
-        Daftar::create([
+        daftar::create([
             'nik' => $request->nik,
             'password' => Hash::make($request->password)
         ]);
