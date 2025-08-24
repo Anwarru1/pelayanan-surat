@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-class daftar extends Authenticatable
+class Daftar extends Authenticatable
 {
     protected $table = 'daftar';
     protected $fillable = [

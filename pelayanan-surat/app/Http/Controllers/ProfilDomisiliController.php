@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\daftar;
+use App\Models\Daftar;
 use App\Models\Pengguna;
 use Illuminate\Support\Str;
 
@@ -39,7 +39,7 @@ class ProfilDomisiliController extends Controller
             'data_tambahan.akta'=> 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-         $user = Auth::guard('daftar')->user();
+        $user = Auth::guard('daftar')->user();
         $dataTambahan = $user->data_tambahan ? json_decode($user->data_tambahan, true) : [];
 
         foreach (['ktp', 'kk', 'akta'] as $field) {
@@ -83,14 +83,14 @@ class ProfilDomisiliController extends Controller
     public function verifikasiIndex()
     {
         // ambil semua warga domisili yang belum diverifikasi
-        $wargaBaru = daftar::where('is_verified', 0)->get();
+        $wargaBaru = Daftar::where('is_verified', 0)->get();
 
         return view('admin.verifikasi-domisili', compact('wargaBaru'));
     }
 
     public function verifikasi($id)
     {
-        $domisili = daftar::findOrFail($id);
+        $domisili = Daftar::findOrFail($id);
 
         // pindahkan data ke tabel pengguna
         $pengguna = Pengguna::create([
@@ -116,7 +116,7 @@ class ProfilDomisiliController extends Controller
 
     public function tolak(Request $request, $id)
     {
-        $domisili = daftar::findOrFail($id);
+        $domisili = Daftar::findOrFail($id);
 
         // kalau mau hapus akun
         $domisili->delete();
@@ -126,7 +126,7 @@ class ProfilDomisiliController extends Controller
 
     public function show($id)
     {
-        $warga = daftar::findOrFail($id);
+        $warga = Daftar::findOrFail($id);
 
         // cek apakah semua field sudah lengkap
         $isLengkap = $warga->nik && $warga->nama && $warga->alamat && 
