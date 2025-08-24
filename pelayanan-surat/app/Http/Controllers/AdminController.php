@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Log;
-use App\Models\daftar;
+use App\Models\Daftar;
 
 class AdminController extends Controller
 {
@@ -104,12 +104,12 @@ class AdminController extends Controller
     }
 
     public function pendingUsers() {
-        $users = daftar::where('is_verified', false)->get();
+        $users = Daftar::where('is_verified', false)->get();
         return view('admin.domisili', compact('users'));
     }
 
     public function verify($id) {
-        $daftar = daftar::findOrFail($id);
+        $daftar = Daftar::findOrFail($id);
 
         // Pindahkan ke pengguna
         Pengguna::create([

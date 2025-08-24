@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\daftar;
+use App\Models\Daftar;
 use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -165,7 +165,7 @@ class PenggunaController extends Controller
             'password.min'       => 'Password minimal 6 karakter.',
         ]);
 
-        daftar::create([
+        Daftar::create([
             'nik'       => $request->nik,
             'password'  => Hash::make($request->password),
         ]);
