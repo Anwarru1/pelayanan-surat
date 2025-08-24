@@ -132,7 +132,7 @@
                                         <li class="list-group-item">
                                             <strong>{{ ucfirst($key) }}:</strong>
                                             @if(\Illuminate\Support\Str::endsWith($value, ['.jpg','.jpeg','.png','.pdf','.doc','.docx']))
-                                                <a href="{{ asset('storage/domisili/syarat-verifikasi/'.$value) }}" target="_blank">
+                                                <a href="{{ asset('/'.$value) }}" target="_blank">
                                                     Lihat File
                                                 </a>
                                             @else
