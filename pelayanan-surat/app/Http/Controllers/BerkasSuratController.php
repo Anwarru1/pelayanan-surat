@@ -119,7 +119,7 @@ class BerkasSuratController extends Controller
 
         $detailUrl = route('cek.surat', $berkas->id); // route publik
         $qrPath = storage_path('app/public/qrcode_' . $berkas->id . '.png');
-        QrCode::format('png')->size(100)->generate($qrContent, $qrPath);
+        QrCode::format('png')->size(100)->generate($detailUrl, $qrPath);
 
         if (!file_exists($qrPath)) {
             return back()->with('error', 'Gagal generate QR Code di: ' . $qrPath);
