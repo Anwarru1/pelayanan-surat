@@ -23,6 +23,7 @@ class Pengguna extends Authenticatable
         'pekerjaan',
         'tmp_lahir',
         'tgl_lahir',
+        'role'
     ];
 
     protected $hidden = [
