@@ -189,6 +189,7 @@ class BerkasSuratController extends Controller
 
     public function cekSurat($id)
     {
+        \Carbon\Carbon::setLocale('id');
         $berkas = BerkasSurat::with('pengajuanSurat')->findOrFail($id);
 
         // hanya tampilkan jika status sudah diterima
