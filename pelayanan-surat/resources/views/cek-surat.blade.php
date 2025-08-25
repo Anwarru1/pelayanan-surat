@@ -25,7 +25,7 @@
                     <p class="mb-2"><strong>Nomor Surat:</strong> {{ $berkas->no_surat }}</p>
                     <p class="mb-2"><strong>Nama Pemohon:</strong> {{ $berkas->pengajuanSurat->nama ?? '-' }}</p>
                     <p class="mb-2"><strong>Jenis Surat:</strong> {{ $berkas->pengajuanSurat->nama_jenis_surat ?? '-' }}</p>
-                    <p class="mb-2"><strong>Tanggal Pengajuan:</strong> {{ $berkas->created_at->format('l, d F Y H:i') }}</p>
+                    <p class="mb-2"><strong>Tanggal Pengajuan:</strong> {{ $berkas->created_at->translatedFormat('l, d F Y H:i') }}</p>
                     <p class="mb-2"><strong>Status:</strong> 
                         @if($berkas->pengajuanSurat->status === 'diterima')
                             <span class="text-success fw-semibold">✅ SAH (Diverifikasi)</span>

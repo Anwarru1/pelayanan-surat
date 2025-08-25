@@ -8,6 +8,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use App\Models\ResetPassword;
 use App\Models\daftar; // huruf besar
+use Illuminate\Support\Carbon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('components.pengguna', 'pengguna');
         Blade::component('components.edit-admin', 'editAdmin');
         Blade::component('components.edit-pengguna', 'editPengguna');
+
+        \Carbon\Carbon::setLocale('id');
 
         Paginator::useBootstrap();
 
